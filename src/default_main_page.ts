@@ -86,13 +86,15 @@ function renderMainPage<TObject>(
   const seedLine = document.createElement("p");
   seedLine.textContent = `Seed: ${exportData.seed}`;
 
+  app.append(topBar, seedLine, config.outputRenderer(exportData.objects));
+}
+
+export function debug_text_box<TObject>(inputs: TObject[]) : HTMLElement 
+{
   const textarea = document.createElement("textarea");
   textarea.readOnly = true;
   textarea.rows = 30;
   textarea.cols = 100;
-  textarea.value = config.renderObjectsForUi
-    ? config.renderObjectsForUi(exportData.objects)
-    : JSON.stringify(exportData.objects, null, 2);
-
-  app.append(topBar, seedLine, textarea);
+  textarea.value = JSON.stringify(inputs, null, 2);
+  return textarea;
 }

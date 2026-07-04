@@ -22,13 +22,6 @@ const weapons : WeaponsRow[] = rawWeapons;
 const weaponsNice = weapons.map(toWeaponsNice);
 
 export type StudentCharacter = {
-  // Student Stuff
-  studentStyle: string;
-  school: string;
-  gender: string;
-  gpa: string;
-  portrait: string;
-  age: number;
   firstName: string;
   lastName: string;
 
@@ -67,13 +60,10 @@ export type StudentCharacter = {
   attackMod: number;
   attackDamageMod: number;
 
-  bag: string;
-
   // Other Equipment
   equipment: string;
   equipment2: string;
   equipment3: string;
-  equipment4: string;
   startingFunds: number;
 
   // Lucky Sign
@@ -84,6 +74,28 @@ export type StudentCharacter = {
   languages: string;
   fantasyTraits: string;
   fantasyRace: string;
+
+  // Student Stuff
+  studentStyle: string;
+  gender: string;
+  gpa: string;
+  age: number;
+
+  bag: string;
+
+  lunchContainer: string;
+  lunchMain: string;
+  lunchSide1: string;
+  lunchSide2: string;
+  lunchDrink: string;
+
+  portraitImagePath: string;
+  luckysignImagePath: string;
+  schoolLogoImagePath: string;
+
+  studentId: string;
+  dob_string: string;
+  expiry_string: string;
 };  
 
 const MALE_FEMALE = ["Male", "Female"];
@@ -93,6 +105,8 @@ const US_STYLE = "US";
 const DEFAULT_SCHOOL = "St. Cuthbert's Prepatory Academy";
 
 const DEFAULT_PORTRAIT = "Default Portrait";
+
+const DEFAULT_LUCKYSIGN_IMAGE = "DEFAULT"
 
 const DEFAULT_AGE = 18;
 
@@ -104,7 +118,7 @@ export function default_build(seed: string): ExportFormat<StudentCharacter>
     let to_return : StudentCharacter[] = [];
     for (let i = 0; i < 4; i++) 
     {
-        to_return.push(build_dcc_student(rng, US_STYLE, DEFAULT_SCHOOL, DEFAULT_AGE));
+        to_return.push(build_dcc_student(rng, US_STYLE));
     }
     return autoflatten("Student DCC Characters", seed, to_return);
 }
@@ -112,7 +126,7 @@ export function default_build(seed: string): ExportFormat<StudentCharacter>
 
 
 
-function build_dcc_student(rng: seedrandom.PRNG, nationality: string, school: string, age: number): StudentCharacter 
+function build_dcc_student(rng: seedrandom.PRNG, nationality: string): StudentCharacter 
 {
     // randomly rolled and mods
 
@@ -164,21 +178,21 @@ function build_dcc_student(rng: seedrandom.PRNG, nationality: string, school: st
     let equipment1 = profession.tool.Item;
     let equipment2 = profession.cultural_item.Item;
     let equipment3 = profession.tradeGood.Item;
-    let equipment4 = profession.lunch;
 
     let languages_string = "English";
     let fantasyRace = "Human";
     let fantasyTraits = "";
     let startingFunds = 0;
 
-   return {
-        // Student Stuff
-        studentStyle: nationality,
-        school,
-        gender,
-        gpa: gpa.toFixed(1),
-        portrait: DEFAULT_PORTRAIT, // TODO: roll or assign portrait
-        age,
+    let age = DEFAULT_AGE;
+
+    let student_id = 100 + rng() * 200;
+    let expiry_string = randomDateInYear(rng, 1987);
+    let dob_string = randomDateInYear(rng, 1987-age);
+
+
+   let char : StudentCharacter =  {
+
         firstName: name[0],
         lastName: name[1],
 
@@ -217,13 +231,10 @@ function build_dcc_student(rng: seedrandom.PRNG, nationality: string, school: st
         attackMod,
         attackDamageMod,
 
-        bag,
-
         // Other Equipment
         equipment: equipment1,
         equipment2,
         equipment3,
-        equipment4,
         startingFunds,
 
         // Lucky Sign
@@ -234,7 +245,30 @@ function build_dcc_student(rng: seedrandom.PRNG, nationality: string, school: st
         languages: languages_string,
         fantasyTraits,
         fantasyRace,
+
+
+        studentStyle: US_STYLE,
+        portraitImagePath: DEFAULT_PORTRAIT,  
+        schoolLogoImagePath: DEFAULT_SCHOOL,
+        luckysignImagePath: DEFAULT_LUCKYSIGN_IMAGE,
+
+        gpa : gpa.toFixed(1),
+        age: age,
+        gender: gender,
+
+        bag: bag,
+        lunchContainer: profession.lunchContainer,
+        lunchMain: profession.lunchMain,
+        lunchSide1: profession.lunchSide1,
+        lunchSide2: profession.lunchContainer,
+        lunchDrink: profession.lunchContainer,
+
+        studentId: student_id.toFixed(0),
+        dob_string,
+        expiry_string
     };
+
+    return char;
 
 }
 
@@ -278,8 +312,13 @@ type ProfessionInfo = {
   wallet_item: ItemsNice;
   tradeGood: ItemsNice;
   tool: ItemsNice;
-  lunch: string;
   cultural_item: ItemsNice;
+  
+  lunchContainer: string;
+  lunchMain: string;
+  lunchSide1: string;
+  lunchSide2: string;
+  lunchDrink: string;
 };
 
 // FROM TABLE
@@ -355,7 +394,6 @@ function profession_info(rng: seedrandom.PRNG, gender: string): ProfessionInfo {
     rollable_items.filter(i => i.Category == "Cultural Goods")
   );
   
-  const lunchstring = `Lunch: ${food_bag.Item} - ${food_main.Item}, ${food_side_1.Item}, ${food_side_2.Item}, ${food_drink.Item}`;
 
   return {
     professionTitle: profession,
@@ -364,8 +402,12 @@ function profession_info(rng: seedrandom.PRNG, gender: string): ProfessionInfo {
     wallet_item,
     tradeGood: trade_good,
     tool: tool_item,
-    lunch: lunchstring,
     cultural_item,
+    lunchContainer: food_bag.Item,
+    lunchMain: food_main.Item,
+    lunchSide1: food_side_1.Item,
+    lunchSide2: food_side_2.Item,
+    lunchDrink: food_drink.Item,
   };
 }
 
@@ -373,4 +415,20 @@ function profession_info(rng: seedrandom.PRNG, gender: string): ProfessionInfo {
 function lucky_sign(rng:seedrandom.PRNG) : LuckyNice 
 {
     return random_multi(rng, luckyNice);
+}
+
+function randomDateInYear(rng: seedrandom.PRNG, year: number): string {
+  const start = Date.UTC(year, 0, 1);  // Jan 1, 1987
+  const end = Date.UTC(year+1, 0, 1);    // Jan 1, 1988, exclusive
+
+  const timestamp = start + Math.floor(rng() * (end - start));
+
+  let date = new Date(timestamp);
+
+  return new Intl.DateTimeFormat("en-US", {
+  timeZone: "UTC",
+  month: "2-digit",
+  day: "2-digit",
+  year: "numeric",
+  }).format(date);
 }

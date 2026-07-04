@@ -11,10 +11,11 @@ export type ExportFormat<TObject> = {
 export type DisplayFormat = "ui" | "csv" | "json" | "flat";
 
 export type Generator<TObject> = (seed: string) => ExportFormat<TObject>;
+export type OutputRenderer<TObject> = (objects: TObject[]) => HTMLElement;
 
 export type RandomRollPageConfig<TObject> = {
   generate: Generator<TObject>;
-  renderObjectsForUi?: (objects: TObject[]) => string;
+  outputRenderer: OutputRenderer<TObject>;
 };
 
 export function renderExportTextPage(app: HTMLElement, text: string): void {
