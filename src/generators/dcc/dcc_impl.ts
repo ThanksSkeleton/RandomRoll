@@ -156,7 +156,7 @@ function build_dcc_student(rng: seedrandom.PRNG, nationality: string): StudentCh
     // dependents
 
     let ac = 10 + agi_mod + luckySign.AC * luck_mod
-    let hitPoints = hit_points_base + con_mod + luckySign.HP * luck_mod;
+    let hitPoints = Math.max(hit_points_base + con_mod + luckySign.HP * luck_mod,1);
     let speed = 30 + luckySign.Speed * luck_mod;
     let initiative = agi_mod + luckySign.Init * luck_mod;
     let saveReflex = agi_mod + luckySign.Reflex_Save * luck_mod;
