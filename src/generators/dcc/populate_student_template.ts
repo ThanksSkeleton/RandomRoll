@@ -1,6 +1,30 @@
 import type { StudentCharacter } from "./dcc_impl";
 
 
+export function build_grid(characters: StudentCharacter[]): HTMLElement {
+  const template = document.querySelector<HTMLTemplateElement>(
+    "#dcc-student-sheet-template",
+  );
+
+  if (!template) {
+    throw new Error('Missing template: "#dcc-student-sheet-template"');
+  }
+
+  const grid = document.createElement("section");
+  grid.className = "dcc-sheet-grid";
+  grid.style.display = "grid";
+  grid.style.gridTemplateColumns = "repeat(2, max-content)";
+  grid.style.gap = "0.25in";
+
+  for (const character of characters) {
+    const sheet = populate_student_template(template, character);
+    grid.appendChild(sheet);
+  }
+
+  return grid;
+}
+
+
 export function populate_student_template(
   template: HTMLTemplateElement,
   character: StudentCharacter
@@ -60,8 +84,6 @@ export function populate_student_template(
     formatDamage(character.weaponDamageBase, character.attackDamageMod)
   );
 
-  // Administrative ID fields are present in the template, but not in StudentCharacter.
-  // Clear them so sample values from the prototype are not accidentally displayed.
   setText(root, "studentId", character.studentId);
   setText(root, "dob", character.dob_string);
   setText(root, "expiresOn", character.expiry_string);

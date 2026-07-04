@@ -260,8 +260,8 @@ function build_dcc_student(rng: seedrandom.PRNG, nationality: string): StudentCh
         lunchContainer: profession.lunchContainer,
         lunchMain: profession.lunchMain,
         lunchSide1: profession.lunchSide1,
-        lunchSide2: profession.lunchContainer,
-        lunchDrink: profession.lunchContainer,
+        lunchSide2: profession.lunchSide2,
+        lunchDrink: profession.lunchDrink,
 
         studentId: student_id.toFixed(0),
         dob_string,

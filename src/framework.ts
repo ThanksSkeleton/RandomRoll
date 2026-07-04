@@ -172,14 +172,6 @@ export type MultiColumnTable = {
   };
 };
 
-export function random_single(rng: seedrandom.PRNG, data:string[]) : string 
-{
-    let len = data.length;
-    if (len == 0) { throw Error("No Data"); }
-    let index = Math.floor(rng() * len);
-    return data[index];
-}
-
 export function random_multi<TData>(rng: seedrandom.PRNG, data:TData[]) : TData
 {
     let len = data.length;

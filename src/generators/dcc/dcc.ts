@@ -1,6 +1,7 @@
-import { debug_text_box, startRandomRollPage } from "../../default_main_page"
+import { startRandomRollPage } from "../../default_main_page"
 import { default_build } from "./dcc_impl";
+import { build_grid } from "./populate_student_template";
 
 startRandomRollPage({
-  generate: default_build, outputRenderer: debug_text_box
+  generate: default_build, outputRenderer: build_grid
 });
