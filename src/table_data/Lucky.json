@@ -33,7 +33,7 @@
   },
   {
     "Original_Name": "Fortunate date",
-    "Description": "Missile fire attack rolls",
+    "Description": "Ranged Attack",
     "Tarot": "Temperance",
     "Melee_Attack": "0",
     "Ranged_Attack": "1",
@@ -113,7 +113,7 @@
   },
   {
     "Original_Name": "Hawkeye",
-    "Description": "Missile fire damage rolls",
+    "Description": "Ranged Damage",
     "Tarot": "The Sun",
     "Melee_Attack": "0",
     "Ranged_Attack": "0",
@@ -129,7 +129,7 @@
   },
   {
     "Original_Name": "Pack hunter",
-    "Description": "Starting weapon attack and damage",
+    "Description": "1st Weapon ATK+DMG",
     "Tarot": "The Fool",
     "Melee_Attack": "1",
     "Ranged_Attack": "1",

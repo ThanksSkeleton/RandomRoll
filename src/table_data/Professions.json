@@ -1,13 +1,13 @@
 [
   {
-    "ProfessionTitle": "Student Council Member",
+    "ProfessionTitle": "Student Council",
     "Genderlock": "",
     "TradeGood": "Clipboard",
     "Weapon": "",
     "Source": "USSTUDENTS"
   },
   {
-    "ProfessionTitle": "Overprotected Kid",
+    "ProfessionTitle": "Overprotected",
     "Genderlock": "",
     "TradeGood": "Bike Helmet",
     "Weapon": "Umbrella",
@@ -63,7 +63,7 @@
     "Source": "USSTUDENTS"
   },
   {
-    "ProfessionTitle": "Foreign Exchange Student",
+    "ProfessionTitle": "Exchange Student",
     "Genderlock": "",
     "TradeGood": "Metal Lunchbox",
     "Weapon": "",
@@ -136,7 +136,7 @@
     "ProfessionTitle": "Goth",
     "Genderlock": "",
     "TradeGood": "Goth Makeup Kit",
-    "Weapon": "Ornate Letter Opener",
+    "Weapon": "Letter Opener",
     "Source": "USSTUDENTS"
   },
   {
@@ -184,7 +184,7 @@
   {
     "ProfessionTitle": "Football Jock",
     "Genderlock": "",
-    "TradeGood": "Football Gear (as Leather Armor)",
+    "TradeGood": "Football Gear (Leather Armor)",
     "Weapon": "",
     "Source": "USSTUDENTS"
   },
@@ -198,7 +198,7 @@
   {
     "ProfessionTitle": "Valley Girl",
     "Genderlock": "Female",
-    "TradeGood": "Hand Mirror And Makeup Kit",
+    "TradeGood": "Makeup Kit and Mirror",
     "Weapon": "",
     "Source": "USSTUDENTS"
   },
@@ -252,7 +252,7 @@
     "Source": "USSTUDENTS"
   },
   {
-    "ProfessionTitle": "Chess Club Strategist",
+    "ProfessionTitle": "Chess Club",
     "Genderlock": "",
     "TradeGood": "Chess Set",
     "Weapon": "",
@@ -261,7 +261,7 @@
   {
     "ProfessionTitle": "Comic Book Nerd",
     "Genderlock": "",
-    "TradeGood": "5 Mint Comics In Plastic Bags",
+    "TradeGood": "5 Mint Comics",
     "Weapon": "",
     "Source": "USSTUDENTS"
   },
@@ -273,7 +273,7 @@
     "Source": "USSTUDENTS"
   },
   {
-    "ProfessionTitle": "My Dad's A Doctor",
+    "ProfessionTitle": "Dad's A Doctor",
     "Genderlock": "",
     "TradeGood": "First Aid Kit",
     "Weapon": "Scalpel",
@@ -287,9 +287,9 @@
     "Source": "USSTUDENTS"
   },
   {
-    "ProfessionTitle": "School Newspaper Editor",
+    "ProfessionTitle": "Newspaper Editor",
     "Genderlock": "",
-    "TradeGood": "Flash Polaroid Camera (3 Shots)",
+    "TradeGood": "Polaroid Camera",
     "Weapon": "",
     "Source": "USSTUDENTS"
   },
@@ -331,7 +331,7 @@
   {
     "ProfessionTitle": "Breakdancer",
     "Genderlock": "",
-    "TradeGood": "Walkman Low On Batteries",
+    "TradeGood": "Walkman",
     "Weapon": "",
     "Source": "USSTUDENTS"
   },
@@ -357,9 +357,9 @@
     "Source": "USSTUDENTS"
   },
   {
-    "ProfessionTitle": "Grocer Store Worker",
+    "ProfessionTitle": "Grocery Worker",
     "Genderlock": "",
-    "TradeGood": "Roll Of \"sale\" Stickers",
+    "TradeGood": "\"Sale\" Stickers",
     "Weapon": "Cleaver",
     "Source": "USSTUDENTS"
   }

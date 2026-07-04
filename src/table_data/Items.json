@@ -14,7 +14,7 @@
     "Source": "USSTUDENTS"
   },
   {
-    "Item": "5 Mint Comics In Plastic Bags",
+    "Item": "5 Mint Comics",
     "Category": "Tool",
     "Genderlock": "",
     "Random": "FALSE",
@@ -399,7 +399,7 @@
     "Source": "USSTUDENTS"
   },
   {
-    "Item": "Flash Polaroid Camera (3 Shots)",
+    "Item": "Polaroid Camera",
     "Category": "Tool",
     "Genderlock": "",
     "Random": "FALSE",
@@ -413,7 +413,7 @@
     "Source": "USSTUDENTS"
   },
   {
-    "Item": "Football Gear (as Leather Armor)",
+    "Item": "Football Gear (Leather Armor)",
     "Category": "Tool",
     "Genderlock": "",
     "Random": "FALSE",
@@ -469,7 +469,7 @@
     "Source": "USSTUDENTS"
   },
   {
-    "Item": "Hand Mirror And Makeup Kit",
+    "Item": "Makeup Kit and Mirror",
     "Category": "Tool",
     "Genderlock": "Female",
     "Random": "TRUE",
@@ -644,7 +644,7 @@
     "Source": "USSTUDENTS"
   },
   {
-    "Item": "Roll Of \"sale\" Stickers",
+    "Item": "\"Sale\" Stickers",
     "Category": "Tool",
     "Genderlock": "",
     "Random": "FALSE",
@@ -826,7 +826,7 @@
     "Source": "USSTUDENTS"
   },
   {
-    "Item": "Rubber Bands, Paper Clips And String",
+    "Item": "Box of Tacks",
     "Category": "Tool",
     "Genderlock": "",
     "Random": "TRUE",
@@ -1015,7 +1015,7 @@
     "Source": "USSTUDENTS"
   },
   {
-    "Item": "Walkman Low On Batteries",
+    "Item": "Walkman",
     "Category": "Tool",
     "Genderlock": "",
     "Random": "FALSE",

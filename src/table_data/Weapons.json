@@ -45,7 +45,7 @@
     "Source": "USSTUDENTS"
   },
   {
-    "Weapon": "Bike Chain With Lock",
+    "Weapon": "Bike Chain",
     "WeaponType": "Melee",
     "WeaponUnderlying": "Flail",
     "WeaponDamageBase": "1d6",
@@ -135,7 +135,7 @@
     "Source": "USSTUDENTS"
   },
   {
-    "Weapon": "Heavy Textbook (choose topic)",
+    "Weapon": "Textbook (choose)",
     "WeaponType": "Melee",
     "WeaponUnderlying": "Club",
     "WeaponDamageBase": "1d4",
@@ -180,7 +180,7 @@
     "Source": "USSTUDENTS"
   },
   {
-    "Weapon": "Ornate Letter Opener",
+    "Weapon": "Letter Opener",
     "WeaponType": "Melee",
     "WeaponUnderlying": "Dagger",
     "WeaponDamageBase": "1d4",
