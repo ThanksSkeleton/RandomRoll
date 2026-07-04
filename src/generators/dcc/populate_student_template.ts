@@ -14,7 +14,8 @@ export function build_grid(characters: StudentCharacter[]): HTMLElement {
   grid.className = "dcc-sheet-grid";
   grid.style.display = "grid";
   grid.style.gridTemplateColumns = "repeat(2, max-content)";
-  grid.style.gap = "0.25in";
+  grid.style.columnGap = "0.25in";
+  grid.style.rowGap = "0.45in";
 
   for (const character of characters) {
     const sheet = populate_student_template(template, character);
@@ -35,6 +36,8 @@ export function populate_student_template(
   if (!root) {
     throw new Error('Template must contain an element with class ".dcc-sheet".');
   }
+
+  setPortrait(root, character);
 
   // Identity
   setText(root, "firstName", character.firstName);
@@ -179,4 +182,19 @@ function looksLikeImageReference(value: string): boolean {
 
 function cssUrlEscape(value: string): string {
   return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+}
+
+import malePortraitUrl from "../../assets/male_final.png";
+import femalePortraitUrl from "../../assets/female_final.png";
+
+function setPortrait(root: ParentNode, student: StudentCharacter): void {
+  const portrait = root.querySelector<HTMLElement>('[data-field="portrait"]');
+  if (!portrait) return;
+
+  const portraitUrl =
+    student.gender === "Female"
+      ? femalePortraitUrl
+      : malePortraitUrl;
+
+  portrait.style.backgroundImage = `url("${portraitUrl}")`;
 }

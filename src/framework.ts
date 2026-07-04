@@ -163,7 +163,7 @@ export type MultiColumnTable = {
   };
 };
 
-let TESTING_LONG_MODE = true;
+let TESTING_LONG_MODE = false;
 
 export function random_multi<TData extends FlatDto<TData>>(rng: seedrandom.PRNG, data:TData[]) : TData
 {

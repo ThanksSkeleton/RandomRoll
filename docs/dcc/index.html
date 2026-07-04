@@ -31,14 +31,14 @@
       --stat-mod-high: #247c3f;
 
       /* Sticker */
-      --sticker: #e7c44e;
-      --sticker-border-highlight: rgba(255, 255, 255, 0.68);
+      --sticker: #0c0050;
+      --sticker-border-highlight: rgb(255, 255, 255);
       --sticker-bottom-border: rgba(98, 66, 17, 0.55);
       --sticker-inset-highlight: rgba(255, 255, 255, 0.34);
       --sticker-drop-shadow: rgba(0, 0, 0, 0.34);
-      --sticker-name-ink: #9a2f21;
-      --sticker-effect-ink: #263b88;
-      --sticker-effect-rule: rgba(38, 59, 136, 0.75);
+      --sticker-name-ink: #ffd900;
+      --sticker-effect-ink: #ffd900;
+      --sticker-effect-rule: #ffd900;
 
       /* Notebook paper */
       --notebook: #f4eedf;
@@ -53,6 +53,10 @@
       /* Replaceable asset placeholders */
       --placeholder-pink: #ff00ff;
       --placeholder-pink-dark: #b000b0;
+
+      --font-id-printed: "Courier New", Courier, monospace;
+      --font-student-hand: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
+      --font-logo-text: "Arial Rounded MT Bold", "Trebuchet MS", Arial, Helvetica, sans-serif;
     }
     * {
       box-sizing: border-box;
@@ -70,7 +74,7 @@
       display: grid;
       place-items: center;
       padding: 0.4in;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: var(--font-id-printed);
     }
 
     .dcc-sheet {
@@ -126,12 +130,17 @@
 
     .student-name {
       min-width: 0;
-      font-size: 0.19in;
+      font-size: 0.18in;
       font-weight: 800;
       letter-spacing: -0.01in;
       white-space: nowrap;
     }
 
+    .profession-title {
+      font-family: var(--font-student-hand);
+      font-size: 0.14in;
+      font-weight: 700;
+    }
 
     .school-logo {
       width: 1.25in;
@@ -160,7 +169,9 @@
       overflow: hidden;
       border: 0.012in solid var(--placeholder-pink-dark);
       border-radius: 0.03in;
-      background: var(--placeholder-pink);
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
       box-shadow:
         0 0 0 0.012in var(--portrait-inset-highlight) inset,
         0 0.02in 0.04in var(--portrait-inset-shadow) inset;
@@ -168,7 +179,6 @@
 
     .stats-panel,
     .saves-panel {
-      font-family: "Courier New", Courier, monospace;
       font-weight: 700;
       font-size: 0.17in;
       line-height: 1;
@@ -248,7 +258,7 @@
       display: grid;
       place-items: center;
       color: var(--id-red);
-      font-family: Georgia, "Times New Roman", serif;
+      font-family: var(--font-logo-text);
       font-weight: 900;
       text-align: center;
       line-height: 0.82;
@@ -289,9 +299,8 @@
       display: grid;
       grid-template-columns: minmax(0, 1fr) 1.6in;
       min-height: 0.59in;
-      font-family: "Courier New", Courier, monospace;
       font-weight: 700;
-      font-size: 0.112in;
+      font-size: 0.1in;
       line-height: 1;
     }
 
@@ -319,6 +328,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      column-gap: 0.06in;
     }
 
     .weapon-row {
@@ -331,11 +341,10 @@
 
     .weapon-label,
     .junk-label {
-      margin-right: 0.035in;
+      margin-right: 0.5in;
       text-transform: uppercase;
       letter-spacing: 0.004in;
-      font-size: 0.086in;
-      opacity: 0.85;
+      font-size: 0.112in;
     }
 
     .weapon-value,
@@ -344,6 +353,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       text-align: left;
+      font-size: 0.112in;
     }
 
     /* The sticker deliberately ignores the card grid. */
@@ -356,7 +366,7 @@
       height: 0.72in;
       padding: 0.06in 0.08in;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 0.31in;
+      grid-template-columns: minmax(0, 1fr) 1.45in;
       grid-template-rows: auto auto;
       column-gap: 0.045in;
       align-content: center;
@@ -379,11 +389,11 @@
     }
 
     .sticker-sign-name {
-      grid-column: 1;
+      grid-column: 2;
       min-width: 0;
       color: var(--sticker-name-ink);
-      font-family: "Arial Narrow", Arial, Helvetica, sans-serif;
-      font-size: 0.103in;
+      font-family: var(--font-student-hand);
+      font-size: 0.15in;
       font-weight: 900;
       line-height: 0.96;
       letter-spacing: 0.002in;
@@ -393,11 +403,11 @@
     }
 
     .sticker-effect {
-      grid-column: 1;
+      grid-column: 2;
       min-width: 0;
       color: var(--sticker-effect-ink);
-      font-family: "Segoe Print", "Bradley Hand", cursive;
-      font-size: 0.084in;
+      font-family: var(--font-student-hand);
+      font-size: 0.115in;
       font-weight: 700;
       line-height: 0.98;
       padding-top: 0.018in;
@@ -409,15 +419,22 @@
     }
 
     .lucky-sign-mark {
-      grid-column: 2;
+      grid-column: 1;
       grid-row: 1 / span 2;
+
       width: 0.29in;
       height: 0.29in;
       align-self: center;
-      justify-self: end;
-      border: 0.012in solid var(--placeholder-pink-dark);
-      border-radius: 50%;
-      background: var(--placeholder-pink);
+      justify-self: start;
+
+      background-image: url("/assets/.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+
+      border: none;
+      border-radius: 0;
+      background-color: transparent;
     }
 
     /* ---------------------------------
@@ -434,7 +451,7 @@
       padding: 0.15in 0.18in 0.12in 0.78in;
       overflow: hidden;
       color: var(--hand-ink);
-      font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
+      font-family: var(--font-student-hand);
       font-size: 0.132in;
       line-height: 0.185in;
       /* Layout aid: red notebook margin line over repeated blue ruled-paper lines. */
@@ -520,7 +537,7 @@
       }
     }
   </style>
-  <script type="module" crossorigin src="/randomroll/assets/dcc-sRxm9pdi.js"></script>
+  <script type="module" crossorigin src="/randomroll/assets/dcc-DAobtsdn.js"></script>
   <link rel="modulepreload" crossorigin href="/randomroll/assets/default_main_page-CsPiOEjh.js">
   <link rel="modulepreload" crossorigin href="/randomroll/assets/modulepreload-polyfill-Dezn_h7o.js">
 </head>
@@ -587,9 +604,10 @@
         </footer>
 
         <aside class="lucky-sticker" aria-label="Lucky Sign sticker">
-          <div class="sticker-sign-name"><span data-field="luckySignName">Survived a spider bite</span>:</div>
-          <div class="sticker-effect"><span class="lucky-bonus" data-field="luckySignBonus">+0</span> <span data-field="luckySignEffect">Saving throws against poison</span></div>
           <div class="lucky-sign-mark" data-field="luckySignMark" aria-hidden="true"></div>
+          <div class="sticker-sign-name"><span data-field="luckySignName">Survived a spider bite</span></div>
+          <div class="sticker-effect"><span class="lucky-bonus" data-field="luckySignBonus">+0</span> 
+            <span data-field="luckySignEffect">Saving throws against poison</span></div></div>
         </aside>
       </section>
 

@@ -14,14 +14,14 @@
     "Source": "USSTUDENTS"
   },
   {
-    "ProfessionTitle": "Pastor's Daughter",
+    "ProfessionTitle": "Pastor's Kid",
     "Genderlock": "Female",
     "TradeGood": "Crucifix",
     "Weapon": "Bible",
     "Source": "USSTUDENTS"
   },
   {
-    "ProfessionTitle": "Pastor's Son",
+    "ProfessionTitle": "Pastor's Kid",
     "Genderlock": "Male",
     "TradeGood": "Crucifix",
     "Weapon": "Bible",
@@ -280,7 +280,7 @@
     "Source": "USSTUDENTS"
   },
   {
-    "ProfessionTitle": "Speech And Debate",
+    "ProfessionTitle": "Speech + Debate",
     "Genderlock": "",
     "TradeGood": "Whistle",
     "Weapon": "",

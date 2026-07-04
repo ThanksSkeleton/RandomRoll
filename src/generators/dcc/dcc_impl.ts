@@ -167,8 +167,8 @@ function build_dcc_student(rng: seedrandom.PRNG, nationality: string): StudentCh
     let weaponUnderlying = profession.weapon.WeaponUnderlying;
     let attackDamageBase = profession.weapon.WeaponDamageBase;
     let weaponType = profession.weapon.WeaponType;
-    let attackMod = weaponType == MELEE ? str_mod + luckySign.Melee_Attack * luck_mod : agi_mod + luckySign.Ranged_Attack * luck_mod;
-    let attackDamageMod = weaponType == MELEE ? str_mod + luckySign.Melee_Damage * luck_mod : agi_mod + luckySign.Ranged_Damage * luck_mod;
+    let attackMod = weaponType == MELEE ? str_mod + (luckySign.Melee_Attack * luck_mod) : agi_mod + (luckySign.Ranged_Attack * luck_mod);
+    let attackDamageMod = weaponType == MELEE ? str_mod + (luckySign.Melee_Damage * luck_mod) : agi_mod + (luckySign.Ranged_Damage * luck_mod);
 
     let luckySignName = luckySign.Tarot;
     let luckySignDescription = luckySign.Description;
