@@ -154,15 +154,6 @@ export function autoflatten<TObject extends Record<string, unknown>>(name: strin
     return buildExportFormat(name, seed, column_names, flattened, data_objects);
 }
 
-export type SingletonTable = {
-  version: string;
-  name: string;
-  label?: string;
-  table: {
-    entries: string[];
-  };
-};
-
 export type MultiColumnTable = {
   version: string;
   name: string;
@@ -172,10 +163,66 @@ export type MultiColumnTable = {
   };
 };
 
-export function random_multi<TData>(rng: seedrandom.PRNG, data:TData[]) : TData
+let TESTING_LONG_MODE = true;
+
+export function random_multi<TData extends FlatDto<TData>>(rng: seedrandom.PRNG, data:TData[]) : TData
+{
+  if (TESTING_LONG_MODE)  
+    {
+      return longest_object(data);
+    } else {
+      return random_multi_true(rng, data);
+    }
+}
+
+export function random_multi_true<TData extends FlatDto<TData>>(rng: seedrandom.PRNG, data:TData[]) : TData
 {
     let len = data.length;
     if (len == 0) { throw Error("No Data"); }
     let index = Math.floor(rng() * len);
     return data[index];
+}
+
+type FlatValue = string | number | boolean | null | undefined;
+
+type FlatDto<T> = {
+  [K in keyof T]: FlatValue;
+};
+
+function display_length(value: FlatValue): number {
+  if (value === null || value === undefined) {
+    return 0;
+  }
+
+  return String(value).length;
+}
+
+export function longest_object<TData extends FlatDto<TData>>(
+  data: TData[],
+): TData {
+  if (data.length === 0) {
+    throw Error("No Data");
+  }
+
+  const result: TData = { ...data[0] };
+  const keys = Object.keys(result) as (keyof TData)[];
+
+  for (const key of keys) {
+    let best_value = result[key];
+    let best_length = display_length(best_value);
+
+    for (const row of data) {
+      const candidate_value = row[key];
+      const candidate_length = display_length(candidate_value);
+
+      if (candidate_length > best_length) {
+        best_value = candidate_value;
+        best_length = candidate_length;
+      }
+    }
+
+    result[key] = best_value;
+  }
+
+  return result;
 }
