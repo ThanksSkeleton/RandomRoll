@@ -9,6 +9,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, "index.html"),
+        colors: resolve(__dirname, "colors/index.html"),
         dcc: resolve(__dirname, "dcc/index.html"),
         masks: resolve(__dirname, "masks/index.html"),
         swn: resolve(__dirname, "swn/index.html"),
