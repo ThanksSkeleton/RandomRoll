@@ -77,7 +77,7 @@ export interface BuiltPalette {
 
 export const DEFAULT_PALETTE_CONSTANTS: PaletteConstants = {
   baseH: 253, baseL: 62, baseC: 0.18,
-  anaOffset: 30, compOffset: 180, rightAngleOffset: 90, splitOffset: 30,
+  anaOffset: 45, compOffset: 180, rightAngleOffset: 90, splitOffset: 45,
   mainLightDelta: 18, mainDarkDelta: 18, mainDesat: 0.75,
   supportLightDelta: 18, supportDarkDelta: 18, supportDesat: 0.75,
   highlightLightDelta: 18, highlightDarkDelta: 18, highlightBoost: 1.25,
