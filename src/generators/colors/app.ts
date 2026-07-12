@@ -135,7 +135,40 @@ export { generate_palette, generate_palette as generatePalette, paintdoll as pai
 // Renders the clickable palette tiles and wires each tile to activate its palette.
 function renderPaletteButtons(palettes: BuiltPalette[]): void { const root = el("paletteButtons"); root.innerHTML = ""; palettes.forEach((palette, index) => { const button = document.createElement("button"); button.type = "button"; button.className = "palette-button" + (index === activeIndex ? " active" : ""); button.dataset.index = String(index); const miniRoles: DollRole[] = ["main", "support", "accent", "hair", "eyes", "power"]; const mini = miniRoles.map(role => `<span class="mini-swatch" title="${role} ${palette.doll[role] ?? "transparent"}" style="background:${palette.doll[role] ?? "transparent"}"></span>`).join(""); button.innerHTML = `<div class="palette-button-title">${index + 1}. ${palette.name}</div><div class="mini-swatches">${mini}</div>`; button.addEventListener("click", () => { activeIndex = index; render(); }); root.appendChild(button); }); }
 // Shows the active palette's important role mapping and every generated swatch.
-function renderSwatches(palette: BuiltPalette): void { const root = el("swatchList"); root.innerHTML = ""; const map = document.createElement("div"); map.className = "role-map-summary"; const roleNames = { costumePrimary: "Costume Primary", costumeSecondary: "Costume Secondary", costumeAccent: "Costume Accent", hair: "Hair", eyes: "Eyes", power: "Power" }; map.innerHTML = Object.entries(roleNames).map(([key, label]) => { const imp = palette.important[key as keyof typeof roleNames]; const chipBg = imp?.hex === "transparent" ? "transparent" : imp?.hex; return `<div class="paper-role"><span class="chip" style="background:${chipBg}"></span><span><strong>${label}</strong><code>${imp?.label ?? "N/A"} ${imp?.hex ?? "transparent"}</code></span></div>`; }).join(""); root.appendChild(map); for (const c of palette.colors) { const row = document.createElement("div"); row.className = "swatch-row"; row.innerHTML = `<div class="swatch" style="background:${c.hex}"></div><div><div class="swatch-title">${c.role} — ${c.label}</div><div class="swatch-meta">${oklchLabel(c)} · HEX ${c.hex}</div><div class="pill-row"><span class="pill">${c.group}</span><span class="pill">${c.variant}</span></div></div>`; root.appendChild(row); } }
+function renderSwatches(palette: BuiltPalette): void {
+  const root = el("swatchList");
+  root.innerHTML = "";
+
+  for (const color of palette.colors) {
+    const row = document.createElement("div");
+    row.className = "swatch-row";
+
+    row.innerHTML = `
+      <div
+        class="swatch"
+        style="background: ${color.hex}"
+      ></div>
+
+      <div>
+        <div class="swatch-title">
+          ${color.role} — ${color.label}
+        </div>
+
+        <div class="swatch-meta">
+          ${oklchLabel(color)} · HEX ${color.hex}
+        </div>
+
+        <div class="pill-row">
+          <span class="pill">${color.group}</span>
+          <span class="pill">${color.variant}</span>
+        </div>
+      </div>
+    `;
+
+    root.appendChild(row);
+  }
+}
+
 // Lists the exact paper-doll role colors currently applied to the figure preview.
 function renderPaperRoles(doll: BuiltPalette["doll"]): void { const root = el("paperRoles"); root.innerHTML = ""; for (const [role, label] of PAPER_ROLES) { const value = doll[role] ?? "transparent"; const row = document.createElement("div"); row.className = "paper-role"; row.innerHTML = `<span class="chip" style="background:${value}"></span><span><strong>${label}</strong><code>${role} ${value}</code></span>`; root.appendChild(row); } }
 // Shows the fixed school-uniform colors as read-only reference swatches.

@@ -108,13 +108,13 @@
 <body>
 <main>
   <header class="page-header">
-    <h1>Superhero Palette Paper Doll Generator v2</h1>
-    <p>One base OKLCH color generates eight complete palettes. Click a palette preview to compare student-uniform and full-palette paper dolls.</p>
+    <h1>Superhero Palette Playground</h1>
+    <p>Pick a base color and generate a palette based on complementary and analogous colors</p>
   </header>
 
   <section class="top-layout">
     <aside class="panel">
-      <div class="panel-head"><h2>Base OKLCH Color</h2><p>Color picker and OKLCH controls stay synchronized through clipped sRGB.</p></div>
+      <div class="panel-head"><h2>Base Color</h2><p>-</p></div>
       <div class="control-grid">
         <div class="field"><label for="baseColor">Color Picker <span class="hint">sRGB</span></label><input id="baseColor" type="color" value="#1b87ee"></div>
         <div class="field"><label for="baseH">Hue <span class="hint">H°</span></label><input id="baseH" type="number" min="0" max="360" step="1" value="253"></div>
@@ -128,10 +128,10 @@
     </aside>
     <section class="panel tableau-panel">
       <div class="panel-head">
-        <div><h2>Paper Doll Tableau</h2><p>Each stop compares the selected doll in student uniform and full palette.</p></div>
+        <div><h2>Paper Doll Tableau</h2><p>-</p></div>
         <div class="carousel-controls" aria-label="Paper doll carousel controls">
           <button id="prevDoll" class="icon-button" type="button" aria-label="Previous paper doll" title="Previous paper doll">‹</button>
-          <span id="dollCarouselLabel" class="carousel-label" aria-live="polite">Male 1 of 2</span>
+          <span id="dollCarouselLabel" class="carousel-label" aria-live="polite">1 of 2</span>
           <button id="nextDoll" class="icon-button" type="button" aria-label="Next paper doll" title="Next paper doll">›</button>
         </div>
       </div>
@@ -139,19 +139,19 @@
     </section>
   </section>
 
-  <section class="panel palette-strip" style="margin-top:18px"><div class="panel-head"><h2>Complete Palette Previews</h2><p>Each tile previews the complete palette. The active tile drives the paper dolls and details below.</p></div><div id="paletteButtons" class="palette-buttons"></div></section>
+  <section class="panel palette-strip" style="margin-top:18px"><div class="panel-head"><h2>Palettes</h2><p>-</p></div><div id="paletteButtons" class="palette-buttons"></div></section>
 
   <section class="detail-layout" style="margin-top:18px">
     <section class="panel"><div class="panel-head"><h2 id="activeTitle">Active Palette</h2><p id="activeNote"></p></div><div id="paperRoles" class="paper-role-grid" style="margin-bottom:14px"></div><div id="swatchList" class="swatch-list"></div></section>
     <details class="panel">
-      <summary class="collapsible-summary"><h2>Copyable Details</h2><p>Active complete palette and paper-doll role assignment.</p></summary>
+      <summary class="collapsible-summary"><h2>Copyable Details</h2><p>Full Color Information</p></summary>
       <div class="collapsible-body"><textarea id="activeOutput" readonly></textarea><div class="actions"><button id="copyActive" class="copy-button" type="button">Copy Active Palette</button></div></div>
     </details>
   </section>
 
   <section class="controls-stack">
     <details class="panel">
-      <summary class="collapsible-summary"><h2>Advanced Constants</h2><p>Palette tuning controls for hue geometry, color packages, neutral values, and fixed doll settings.</p></summary>
+      <summary class="collapsible-summary"><h2>Advanced Constants</h2><p>-</p></summary>
       <div class="collapsible-body nested-panels">
     <section class="subpanel"><div class="panel-head"><h2>Hue Geometry Constants</h2><p>Analog 1/2, square, and split-complement hues are generated from these offsets.</p></div><div class="control-grid"><div class="field"><label for="anaOffset">Analogous Offset <span class="hint">degrees</span></label><input data-render id="anaOffset" type="number" min="0" max="180" step="1" value="30"></div><div class="field"><label for="compOffset">Complement Offset <span class="hint">degrees</span></label><input data-render id="compOffset" type="number" min="0" max="360" step="1" value="180"></div><div class="field"><label for="rightAngleOffset">Right Angle Offset <span class="hint">degrees</span></label><input data-render id="rightAngleOffset" type="number" min="0" max="180" step="1" value="90"></div><div class="field"><label for="splitOffset">Split Complement Offset <span class="hint">degrees from complement</span></label><input data-render id="splitOffset" type="number" min="0" max="90" step="1" value="30"></div></div></section>
     <section class="subpanel"><div class="panel-head"><h2>Color Package Constants</h2><p>Deltas are applied around the base color's runtime L. Percent controls use whole-number arrows.</p></div><div class="control-grid">
