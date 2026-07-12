@@ -1,7 +1,7 @@
 [
   {
-    "name": "Simple Sat",
-    "note": "Primary costume uses the input hue; secondary uses Analog 1; accent uses the complement; hair and eyes share Analog 2.",
+    "name": "Simple Saturated",
+    "note": "-",
     "roleMap": {
       "costumePrimary": "input",
       "costumeSecondary": "analog1",
@@ -13,7 +13,7 @@
   },
   {
     "name": "OffWhite",
-    "note": "Costume primary is a desaturated input-tinted off-white; costume secondary restores the saturated input hue; accent uses the complement.",
+    "note": "-",
     "roleMap": {
       "costumePrimary": "inputDesat",
       "costumeSecondary": "input",
@@ -25,7 +25,7 @@
   },
   {
     "name": "OffBlack",
-    "note": "Costume primary is a desaturated dark neutral from the input hue; costume secondary restores the saturated input hue; accent uses the complement.",
+    "note": "-",
     "roleMap": {
       "costumePrimary": "inputDesatDark",
       "costumeSecondary": "input",
@@ -37,7 +37,7 @@
   },
   {
     "name": "PureWhite",
-    "note": "White costume primary; input hue as secondary; complement as accent; analogous hair and eyes.",
+    "note": "-",
     "roleMap": {
       "costumePrimary": "white",
       "costumeSecondary": "input",
@@ -49,7 +49,7 @@
   },
   {
     "name": "PureBlack",
-    "note": "Black costume primary; input hue as secondary; complement as accent; analogous hair and eyes.",
+    "note": "-",
     "roleMap": {
       "costumePrimary": "black",
       "costumeSecondary": "input",
@@ -61,7 +61,7 @@
   },
   {
     "name": "HairEyesMono WBW",
-    "note": "Hair and eyes carry the input hue while the costume follows a white-black-white neutral pattern; power uses the complement.",
+    "note": "-",
     "roleMap": {
       "costumePrimary": "white",
       "costumeSecondary": "black",
@@ -73,7 +73,7 @@
   },
   {
     "name": "HairEyesMono BWB",
-    "note": "Hair and eyes carry the input hue while the costume follows a black-white-black neutral pattern; power uses the complement.",
+    "note": "-",
     "roleMap": {
       "costumePrimary": "black",
       "costumeSecondary": "white",
@@ -85,7 +85,7 @@
   },
   {
     "name": "MessySat",
-    "note": "Colorful analogous costume: input, Analog 1, Analog 2; power is reserved for the complement.",
+    "note": "-",
     "roleMap": {
       "costumePrimary": "input",
       "costumeSecondary": "analog1",
@@ -97,7 +97,7 @@
   },
   {
     "name": "Power Monochrome WBWB",
-    "note": "Power-signature monochrome with a white-black-white-black neutral pattern across primary, secondary, accent, and hair; eyes and power use the input hue.",
+    "note": "-",
     "roleMap": {
       "costumePrimary": "white",
       "costumeSecondary": "black",
@@ -109,7 +109,7 @@
   },
   {
     "name": "Power Monochrome BWBW",
-    "note": "Power-signature monochrome with a black-white-black-white neutral pattern across primary, secondary, accent, and hair; eyes and power use the input hue.",
+    "note": "-",
     "roleMap": {
       "costumePrimary": "black",
       "costumeSecondary": "white",
@@ -121,7 +121,7 @@
   },
   {
     "name": "Square",
-    "note": "Four-point hue geometry: input, two right-angle hues, and complement.",
+    "note": "-",
     "roleMap": {
       "costumePrimary": "input",
       "costumeSecondary": "rightAngle1",
@@ -133,7 +133,7 @@
   },
   {
     "name": "Split Complementary White",
-    "note": "White costume primary with input secondary, split-complement accent, and second split-complement hair/eyes.",
+    "note": "-",
     "roleMap": {
       "costumePrimary": "white",
       "costumeSecondary": "primary",
@@ -145,7 +145,7 @@
   },
   {
     "name": "Split Complementary Black",
-    "note": "Black costume primary with input secondary, split-complement accent, and second split-complement hair/eyes.",
+    "note": "-",
     "roleMap": {
       "costumePrimary": "black",
       "costumeSecondary": "primary",
