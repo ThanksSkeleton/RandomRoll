@@ -1,5 +1,25 @@
 import { DEFAULT_PALETTE_CONSTANTS, buildPalettes, clamp, fmt, generate_palette, hexToOklch, oklchLabel, oklchToHex, wrapHue, type BuiltPalette, type DollRole, type PaletteConstants, type PaletteRecipe } from "../../colors.ts";
 
+import female_skin from "../../assets/female_layers/skin.png";
+import female_main from "../../assets/female_layers/main.png";
+import female_support from "../../assets/female_layers/support.png";
+import female_accent from "../../assets/female_layers/accent.png";
+import female_hair from "../../assets/female_layers/hair.png";
+import female_eyes from "../../assets/female_layers/eyes.png";
+import female_power from "../../assets/female_layers/power.png";
+
+import male_skin from "../../assets/male_layers/skin.png";
+import male_main from "../../assets/male_layers/main.png";
+import male_support from "../../assets/male_layers/support.png";
+import male_accent from "../../assets/male_layers/accent.png";
+import male_hair from "../../assets/male_layers/hair.png";
+import male_eyes from "../../assets/male_layers/eyes.png";
+import male_power from "../../assets/male_layers/power.png";
+
+import palettes_json from "../../assets/palettes.json";
+
+const paletteRecipes = palettes_json as PaletteRecipe[];
+
 export type FigureKind = "female" | "male";
 type LayerRole = DollRole;
 type WebkitMaskStyle = CSSStyleDeclaration & { webkitMaskImage: string };
@@ -16,7 +36,6 @@ const SCHOOL_UNIFORM_SWATCHES = [
 let activeIndex = 0;
 let activeDollIndex = 0;
 let suppressColorSync = false;
-let paletteRecipes: PaletteRecipe[] = [];
 let currentDollPair: { school: BuiltPalette["doll"]; full: BuiltPalette["doll"] } = { school: {}, full: {} };
 
 // Finds a required DOM element by id and gives callers a typed element back.
@@ -29,11 +48,29 @@ const el = <T extends HTMLElement = HTMLElement>(id: string): T => {
 // Reads a numeric input value, falling back when an optional control is absent or invalid.
 const readNum = (id: string, fallback = 0): number => { const node = document.getElementById(id) as HTMLInputElement | null; if (!node) return fallback; const value = parseFloat(node.value); return Number.isFinite(value) ? value : fallback; };
 
-// Builds browser-relative asset paths while trimming accidental leading/trailing slashes.
-const assetPath = (...parts: string[]): string => `./${parts.map(part => String(part).replace(/^\.?\//, "").replace(/\/$/, "")).filter(Boolean).join("/")}`;
+const femaleLayers: Record<LayerRole, string> = {
+  skin: female_skin,
+  main: female_main,
+  support: female_support,
+  accent: female_accent,
+  hair: female_hair,
+  eyes: female_eyes,
+  power: female_power,
+};
+
+const maleLayers: Record<LayerRole, string> = {
+  skin: male_skin,
+  main: male_main,
+  support: male_support,
+  accent: male_accent,
+  hair: male_hair,
+  eyes: male_eyes,
+  power: male_power,
+};
+
 const MASK_ASSETS: Record<FigureKind, Record<LayerRole, string>> = {
-  female: Object.fromEntries(LAYER_ORDER.map(role => [role, assetPath("female_layers", `${role}.png`)])) as Record<LayerRole, string>,
-  male: Object.fromEntries(LAYER_ORDER.map(role => [role, assetPath("male_layers", `${role}.png`)])) as Record<LayerRole, string>
+  female: femaleLayers,
+  male: maleLayers
 };
 
 // Collects all UI control values into the plain data object used by the palette engine.
@@ -53,8 +90,6 @@ function readConstants(): PaletteConstants {
     schoolUniformHighlightHex: (document.getElementById("schoolUniformHighlightColor") as HTMLInputElement | null)?.value ?? DEFAULT_PALETTE_CONSTANTS.schoolUniformHighlightHex
   };
 }
-// Loads the editable palette recipe data file before the first render.
-async function loadPaletteRecipes(): Promise<PaletteRecipe[]> { const response = await fetch("./palettes.json"); if (!response.ok) throw new Error(`Could not load palettes.json: ${response.status}`); return response.json() as Promise<PaletteRecipe[]>; }
 
 // Applies one mask image to an element using both standard and WebKit CSS properties.
 function applyMask(node: HTMLElement, url: string): void { const value = `url("${url}")`; const style = node.style as WebkitMaskStyle; style.maskImage = value; style.webkitMaskImage = value; }
@@ -116,7 +151,9 @@ function wireAppEvents(): void {
   // Re-renders when typed OKLCH base controls change.
   for (const id of ["baseH", "baseL", "baseC1000"]) el(id).addEventListener("input", () => render(true));
   // Re-renders when any derived palette adjustment control changes.
-  for (const node of document.querySelectorAll("[data-render]")) node.addEventListener("input", () => render(true));
+  for (const node of Array.from(document.querySelectorAll("[data-render]"))) {
+    node.addEventListener("input", () => render(true));
+  }  
   // Copies the active palette report, falling back to selection-based copy when needed.
   el("copyActive").addEventListener("click", async () => { const output = el<HTMLTextAreaElement>("activeOutput"); const text = output.value; try { await navigator.clipboard.writeText(text); } catch { output.select(); document.execCommand("copy"); } });
   el("prevDoll").addEventListener("click", () => moveDollCarousel(-1));
@@ -124,5 +161,5 @@ function wireAppEvents(): void {
 }
 
 // Loads data, creates the static preview DOM, and performs the first render.
-async function init(): Promise<void> { wireAppEvents(); paletteRecipes = await loadPaletteRecipes(); render(true); }
+async function init(): Promise<void> { wireAppEvents(); render(true); }
 if (typeof document !== "undefined" && document.getElementById("paperRoot")) void init();
