@@ -124,9 +124,10 @@ function hexToRgb(hex: string): { r: number; g: number; b: number } { const clea
 // Serializes sRGB channels into a clipped six-digit hex color string.
 function rgbToHex(r: number, g: number, b: number): string { return "#" + [r, g, b].map(x => clamp(Math.round(x), 0, 255).toString(16).padStart(2, "0")).join(""); }
 
-// Converts an OKLCH color into clipped sRGB hex for browser display.
-export function oklchToHex(L100: number, C: number, H: number): string {
-  const L = clamp(L100, 0, 100) / 100;
+type LinearRgb = { r: number; g: number; b: number };
+
+// Converts normalized OKLCH values into linear-light sRGB without gamut mapping.
+function oklchToLinearSrgb(L: number, C: number, H: number): LinearRgb {
   const hRad = wrapHue(H) * Math.PI / 180;
   const a = C * Math.cos(hRad);
   const b = C * Math.sin(hRad);
@@ -134,10 +135,56 @@ export function oklchToHex(L100: number, C: number, H: number): string {
   const m_ = L - 0.1055613458 * a - 0.0638541728 * b;
   const s_ = L - 0.0894841775 * a - 1.2914855480 * b;
   const l = l_ ** 3, m = m_ ** 3, s = s_ ** 3;
-  const rLin = +4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s;
-  const gLin = -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s;
-  const bLin = -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s;
-  return rgbToHex(linearToSrgb(rLin), linearToSrgb(gLin), linearToSrgb(bLin));
+  return {
+    r: +4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
+    g: -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
+    b: -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s
+  };
+}
+
+// Tests whether linear-light sRGB channels are displayable in the target sRGB gamut.
+function isLinearSrgbInGamut(rgb: LinearRgb, epsilon = 1e-7): boolean {
+  return (
+    rgb.r >= -epsilon && rgb.r <= 1 + epsilon &&
+    rgb.g >= -epsilon && rgb.g <= 1 + epsilon &&
+    rgb.b >= -epsilon && rgb.b <= 1 + epsilon
+  );
+}
+
+// Preserves OKLCH lightness and hue while reducing chroma until the color fits in sRGB.
+function reduceChromaToSrgbGamut(L: number, C: number, H: number): { C: number; rgb: LinearRgb; wasReduced: boolean } {
+  const safeC = Math.max(0, C);
+  const originalRgb = oklchToLinearSrgb(L, safeC, H);
+
+  if (isLinearSrgbInGamut(originalRgb)) {
+    return { C: safeC, rgb: originalRgb, wasReduced: false };
+  }
+
+  let low = 0;
+  let high = safeC;
+
+  // Binary-search the maximum in-gamut chroma on the fixed-L/fixed-H ray.
+  for (let i = 0; i < 40; i++) {
+    const mid = (low + high) / 2;
+    const midRgb = oklchToLinearSrgb(L, mid, H);
+    if (isLinearSrgbInGamut(midRgb)) {
+      low = mid;
+    } else {
+      high = mid;
+    }
+  }
+
+  return { C: low, rgb: oklchToLinearSrgb(L, low, H), wasReduced: true };
+}
+
+// Converts an OKLCH color into sRGB hex using L/H-preserving chroma reduction when needed.
+export function oklchToHex(L100: number, C: number, H: number): string {
+  const L = clamp(L100, 0, 100) / 100;
+  const mapped = reduceChromaToSrgbGamut(L, C, H);
+
+  // linearToSrgb still contains a tiny final clamp for floating-point overshoot.
+  // The gamut-mapping policy is the chroma reduction above, not RGB channel clipping.
+  return rgbToHex(linearToSrgb(mapped.rgb.r), linearToSrgb(mapped.rgb.g), linearToSrgb(mapped.rgb.b));
 }
 
 // Converts a browser hex color back into OKLCH controls for editing.
