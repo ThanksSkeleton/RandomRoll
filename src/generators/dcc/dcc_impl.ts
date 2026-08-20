@@ -337,7 +337,10 @@ function profession_info(rng: seedrandom.PRNG, gender: string): ProfessionInfo {
       : random_multi(
           rng,
           weaponsNice.filter(
-            w => w.Random && (w.Genderlock == "" || w.Genderlock == gender)
+            w =>
+              w.Source == "USSTUDENTS" &&
+              w.RandomPool &&
+              (w.Genderlock == "" || w.Genderlock == gender)
           )
         );
 

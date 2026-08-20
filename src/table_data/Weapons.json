@@ -5,8 +5,10 @@
     "WeaponUnderlying": "Club",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "FALSE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "FALSE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Baseball Bat",
@@ -14,8 +16,10 @@
     "WeaponUnderlying": "Mace",
     "WeaponDamageBase": "1d6",
     "Genderlock": "",
-    "Random": "TRUE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "TRUE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Baton",
@@ -23,8 +27,10 @@
     "WeaponUnderlying": "Staff",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "FALSE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "FALSE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Beer Bottle",
@@ -32,8 +38,10 @@
     "WeaponUnderlying": "Dagger",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "FALSE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "FALSE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Bible",
@@ -41,8 +49,10 @@
     "WeaponUnderlying": "Club",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "TRUE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "TRUE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Bike Chain",
@@ -50,8 +60,10 @@
     "WeaponUnderlying": "Flail",
     "WeaponDamageBase": "1d6",
     "Genderlock": "",
-    "Random": "TRUE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "TRUE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Box Cutter",
@@ -59,8 +71,10 @@
     "WeaponUnderlying": "Dagger",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "TRUE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "TRUE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Broom",
@@ -68,8 +82,10 @@
     "WeaponUnderlying": "Staff",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "TRUE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "TRUE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Chisel",
@@ -77,8 +93,10 @@
     "WeaponUnderlying": "Dagger",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "TRUE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "TRUE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Cleaver",
@@ -86,8 +104,10 @@
     "WeaponUnderlying": "Handaxe",
     "WeaponDamageBase": "1d6",
     "Genderlock": "",
-    "Random": "FALSE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "FALSE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Drumsticks",
@@ -95,8 +115,10 @@
     "WeaponUnderlying": "Club",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "TRUE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "TRUE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Electrical Cord",
@@ -104,8 +126,10 @@
     "WeaponUnderlying": "Garrote",
     "WeaponDamageBase": "1",
     "Genderlock": "",
-    "Random": "FALSE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "FALSE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Entrenching Tool",
@@ -113,8 +137,10 @@
     "WeaponUnderlying": "Hand Axe",
     "WeaponDamageBase": "1d6",
     "Genderlock": "",
-    "Random": "FALSE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "FALSE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Exacto Knife",
@@ -122,8 +148,10 @@
     "WeaponUnderlying": "Dagger",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "TRUE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "TRUE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Fountain Pen",
@@ -131,8 +159,10 @@
     "WeaponUnderlying": "Dagger",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "FALSE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "FALSE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Textbook (choose)",
@@ -140,8 +170,10 @@
     "WeaponUnderlying": "Club",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "TRUE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "TRUE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Hiking Stick",
@@ -149,8 +181,10 @@
     "WeaponUnderlying": "Staff",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "FALSE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "FALSE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Hunting Knife",
@@ -158,8 +192,10 @@
     "WeaponUnderlying": "Dagger",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "TRUE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "TRUE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Metal Lunchbox",
@@ -167,8 +203,10 @@
     "WeaponUnderlying": "Club",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "TRUE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "TRUE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Metal Ruler",
@@ -176,8 +214,10 @@
     "WeaponUnderlying": "Dagger",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "TRUE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "TRUE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Letter Opener",
@@ -185,8 +225,10 @@
     "WeaponUnderlying": "Dagger",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "FALSE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "FALSE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Pocketknife",
@@ -194,8 +236,10 @@
     "WeaponUnderlying": "Dagger",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "TRUE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "TRUE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Scalpel",
@@ -203,8 +247,10 @@
     "WeaponUnderlying": "Dagger",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "FALSE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "FALSE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Scissors",
@@ -212,8 +258,10 @@
     "WeaponUnderlying": "Dagger",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "TRUE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "TRUE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Screwdriver",
@@ -221,8 +269,10 @@
     "WeaponUnderlying": "Dagger",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "TRUE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "TRUE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Skateboard",
@@ -230,8 +280,10 @@
     "WeaponUnderlying": "Club",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "FALSE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "FALSE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Switchblade",
@@ -239,8 +291,10 @@
     "WeaponUnderlying": "Dagger",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "FALSE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "FALSE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Thermos",
@@ -248,8 +302,10 @@
     "WeaponUnderlying": "Club",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "TRUE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "TRUE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Trowel",
@@ -257,8 +313,10 @@
     "WeaponUnderlying": "Dagger",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "FALSE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "FALSE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Trumpet",
@@ -266,8 +324,10 @@
     "WeaponUnderlying": "Mace",
     "WeaponDamageBase": "1d6",
     "Genderlock": "",
-    "Random": "FALSE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "FALSE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Umbrella",
@@ -275,8 +335,10 @@
     "WeaponUnderlying": "Staff",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "TRUE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "TRUE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Wrench",
@@ -284,8 +346,10 @@
     "WeaponUnderlying": "Mace",
     "WeaponDamageBase": "1d6",
     "Genderlock": "",
-    "Random": "FALSE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "FALSE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   },
   {
     "Weapon": "Lacross Stick",
@@ -293,7 +357,328 @@
     "WeaponUnderlying": "Staff",
     "WeaponDamageBase": "1d4",
     "Genderlock": "",
-    "Random": "FALSE",
-    "Source": "USSTUDENTS"
+    "RandomPool": "FALSE",
+    "Source": "USSTUDENTS",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
+  },
+  {
+    "Weapon": "Battleaxe",
+    "WeaponType": "Melee",
+    "WeaponUnderlying": "Battleaxe",
+    "WeaponDamageBase": "1d10",
+    "Genderlock": "",
+    "RandomPool": "FALSE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "Two-handed",
+    "Range": "0"
+  },
+  {
+    "Weapon": "Club",
+    "WeaponType": "Melee",
+    "WeaponUnderlying": "Club",
+    "WeaponDamageBase": "1d4",
+    "Genderlock": "",
+    "RandomPool": "TRUE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
+  },
+  {
+    "Weapon": "Crossbow",
+    "WeaponType": "Ranged",
+    "WeaponUnderlying": "Crossbow",
+    "WeaponDamageBase": "1d6",
+    "Genderlock": "",
+    "RandomPool": "FALSE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "Two-handed,Reload",
+    "Range": "80/160/240"
+  },
+  {
+    "Weapon": "Hand Crossbow",
+    "WeaponType": "Ranged",
+    "WeaponUnderlying": "Hand Crossbow",
+    "WeaponDamageBase": "1d4",
+    "Genderlock": "",
+    "RandomPool": "FALSE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "Reload",
+    "Range": "20/40/60"
+  },
+  {
+    "Weapon": "Crossbow, Repeating",
+    "WeaponType": "Ranged",
+    "WeaponUnderlying": "Crossbow, Repeating",
+    "WeaponDamageBase": "1d6",
+    "Genderlock": "",
+    "RandomPool": "FALSE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "Two-handed",
+    "Range": "80/160/240"
+  },
+  {
+    "Weapon": "Dagger",
+    "WeaponType": "Ranged",
+    "WeaponUnderlying": "Dagger",
+    "WeaponDamageBase": "1d4",
+    "Genderlock": "",
+    "RandomPool": "TRUE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "Backstab,Hurl",
+    "Range": "10/20/30"
+  },
+  {
+    "Weapon": "Flail",
+    "WeaponType": "Melee",
+    "WeaponUnderlying": "Flail",
+    "WeaponDamageBase": "1d6",
+    "Genderlock": "",
+    "RandomPool": "FALSE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
+  },
+  {
+    "Weapon": "Javelin",
+    "WeaponType": "Ranged",
+    "WeaponUnderlying": "Javelin",
+    "WeaponDamageBase": "1d6",
+    "Genderlock": "",
+    "RandomPool": "FALSE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "Hurl",
+    "Range": "30/60/90"
+  },
+  {
+    "Weapon": "Handaxe",
+    "WeaponType": "Ranged",
+    "WeaponUnderlying": "Handaxe",
+    "WeaponDamageBase": "1d6",
+    "Genderlock": "",
+    "RandomPool": "FALSE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "Hurl",
+    "Range": "10/20/30"
+  },
+  {
+    "Weapon": "Lance",
+    "WeaponType": "Melee",
+    "WeaponUnderlying": "Lance",
+    "WeaponDamageBase": "1d12",
+    "Genderlock": "",
+    "RandomPool": "FALSE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "Mounted",
+    "Range": "0"
+  },
+  {
+    "Weapon": "Longbow",
+    "WeaponType": "Ranged",
+    "WeaponUnderlying": "Longbow",
+    "WeaponDamageBase": "1d6",
+    "Genderlock": "",
+    "RandomPool": "FALSE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "Two-handed",
+    "Range": "70/140/210"
+  },
+  {
+    "Weapon": "Longsword",
+    "WeaponType": "Melee",
+    "WeaponUnderlying": "Longsword",
+    "WeaponDamageBase": "1d8",
+    "Genderlock": "",
+    "RandomPool": "FALSE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
+  },
+  {
+    "Weapon": "Mace",
+    "WeaponType": "Melee",
+    "WeaponUnderlying": "Mace",
+    "WeaponDamageBase": "1d6",
+    "Genderlock": "",
+    "RandomPool": "FALSE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
+  },
+  {
+    "Weapon": "Nunchaku",
+    "WeaponType": "Melee",
+    "WeaponUnderlying": "Nunchaku",
+    "WeaponDamageBase": "1d5",
+    "Genderlock": "",
+    "RandomPool": "FALSE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
+  },
+  {
+    "Weapon": "Polearm",
+    "WeaponType": "Melee",
+    "WeaponUnderlying": "Polearm",
+    "WeaponDamageBase": "1d10",
+    "Genderlock": "",
+    "RandomPool": "FALSE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "Two-handed",
+    "Range": "0"
+  },
+  {
+    "Weapon": "Pick, Military",
+    "WeaponType": "Melee",
+    "WeaponUnderlying": "Pick, Military",
+    "WeaponDamageBase": "1d10",
+    "Genderlock": "",
+    "RandomPool": "FALSE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "Two-handed",
+    "Range": "0"
+  },
+  {
+    "Weapon": "Quarterstaff",
+    "WeaponType": "Melee",
+    "WeaponUnderlying": "Quarterstaff",
+    "WeaponDamageBase": "1d4",
+    "Genderlock": "",
+    "RandomPool": "FALSE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
+  },
+  {
+    "Weapon": "Rapier",
+    "WeaponType": "Melee",
+    "WeaponUnderlying": "Rapier",
+    "WeaponDamageBase": "1d5",
+    "Genderlock": "",
+    "RandomPool": "TRUE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "Agility",
+    "Range": "0"
+  },
+  {
+    "Weapon": "Scimitar",
+    "WeaponType": "Melee",
+    "WeaponUnderlying": "Scimitar",
+    "WeaponDamageBase": "1d6",
+    "Genderlock": "",
+    "RandomPool": "FALSE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
+  },
+  {
+    "Weapon": "Shield",
+    "WeaponType": "Melee",
+    "WeaponUnderlying": "Shield",
+    "WeaponDamageBase": "1d3",
+    "Genderlock": "",
+    "RandomPool": "FALSE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
+  },
+  {
+    "Weapon": "Sling",
+    "WeaponType": "Ranged",
+    "WeaponUnderlying": "Sling",
+    "WeaponDamageBase": "1d4",
+    "Genderlock": "",
+    "RandomPool": "TRUE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "40/80/120"
+  },
+  {
+    "Weapon": "Shortbow",
+    "WeaponType": "Ranged",
+    "WeaponUnderlying": "Shortbow",
+    "WeaponDamageBase": "1d6",
+    "Genderlock": "",
+    "RandomPool": "FALSE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "Two-handed",
+    "Range": "50/100/150"
+  },
+  {
+    "Weapon": "Short Sword",
+    "WeaponType": "Melee",
+    "WeaponUnderlying": "Short Sword",
+    "WeaponDamageBase": "1d6",
+    "Genderlock": "",
+    "RandomPool": "FALSE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
+  },
+  {
+    "Weapon": "Spear",
+    "WeaponType": "Melee",
+    "WeaponUnderlying": "Spear",
+    "WeaponDamageBase": "1d8",
+    "Genderlock": "",
+    "RandomPool": "TRUE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "Two-handed",
+    "Range": "0"
+  },
+  {
+    "Weapon": "Stiletto",
+    "WeaponType": "Ranged",
+    "WeaponUnderlying": "Stiletto",
+    "WeaponDamageBase": "1d3",
+    "Genderlock": "",
+    "RandomPool": "FALSE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "Concealable",
+    "Range": "10/15/20"
+  },
+  {
+    "Weapon": "Scythe",
+    "WeaponType": "Melee",
+    "WeaponUnderlying": "Scythe",
+    "WeaponDamageBase": "1d10",
+    "Genderlock": "",
+    "RandomPool": "FALSE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "Two-handed",
+    "Range": "0"
+  },
+  {
+    "Weapon": "Trident",
+    "WeaponType": "Melee",
+    "WeaponUnderlying": "Trident",
+    "WeaponDamageBase": "1d8",
+    "Genderlock": "",
+    "RandomPool": "FALSE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "Two-handed",
+    "Range": "0"
+  },
+  {
+    "Weapon": "Two-Handed Sword",
+    "WeaponType": "Melee",
+    "WeaponUnderlying": "Two-Handed Sword",
+    "WeaponDamageBase": "1d10",
+    "Genderlock": "",
+    "RandomPool": "FALSE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "Two-handed",
+    "Range": "0"
+  },
+  {
+    "Weapon": "Warhammer",
+    "WeaponType": "Melee",
+    "WeaponUnderlying": "Warhammer",
+    "WeaponDamageBase": "1d8",
+    "Genderlock": "",
+    "RandomPool": "FALSE",
+    "Source": "XCC",
+    "CommaSeparatedSpecialProperties": "",
+    "Range": "0"
   }
 ]

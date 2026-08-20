@@ -59,8 +59,9 @@ describe("DCC profession data integrity", () => {
     );
 
     const nonRandomUnassignedWeapons = weaponsNice
+      .filter((w) => w.Source === "USSTUDENTS")
       .filter((w) => !professionWeapons.has(w.Weapon))
-      .filter((w) => !w.Random)
+      .filter((w) => !w.RandomPool)
       .map((w) => w.Weapon);
 
     expect(nonRandomUnassignedWeapons).toEqual([]);
@@ -79,6 +80,50 @@ describe("DCC profession data integrity", () => {
       .map((i) => i.Item);
 
     expect(nonRandomUnassignedItems).toEqual([]);
+  });
+});
+
+describe("XCC weapon data integrity", () => {
+  const xccWeapons = weaponsNice.filter((weapon) => weapon.Source === "XCC");
+
+  it("contains the complete XCC weapon list", () => {
+    expect(xccWeapons).toHaveLength(29);
+  });
+
+  it("uses only the five XCC default weapons in the random pool", () => {
+    const randomPoolNames = xccWeapons
+      .filter((weapon) => weapon.RandomPool)
+      .map((weapon) => weapon.Weapon)
+      .sort();
+
+    expect(randomPoolNames).toEqual([
+      "Club",
+      "Dagger",
+      "Rapier",
+      "Sling",
+      "Spear",
+    ]);
+  });
+
+  it("stores range as zero or three slash-separated distances", () => {
+    expect(
+      xccWeapons.every((weapon) =>
+        weapon.Range === "0" || /^\d+\/\d+\/\d+$/.test(weapon.Range)
+      )
+    ).toBe(true);
+  });
+
+  it("stores XCC damage in dice notation", () => {
+    expect(
+      xccWeapons.every((weapon) => /^1d\d+$/.test(weapon.WeaponDamageBase))
+    ).toBe(true);
+  });
+
+  it("keeps dagger base damage separate from its backstab rule", () => {
+    const dagger = xccWeapons.find((weapon) => weapon.Weapon === "Dagger");
+
+    expect(dagger?.WeaponDamageBase).toBe("1d4");
+    expect(dagger?.CommaSeparatedSpecialProperties).toBe("Backstab,Hurl");
   });
 });
 

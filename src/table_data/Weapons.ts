@@ -9,8 +9,10 @@ export const WEAPONS_COLUMNS = [
   "WeaponUnderlying",
   "WeaponDamageBase",
   "Genderlock",
-  "Random",
+  "RandomPool",
   "Source",
+  "CommaSeparatedSpecialProperties",
+  "Range",
 ] as const;
 
 export type WeaponsColumn = typeof WEAPONS_COLUMNS[number];
@@ -21,8 +23,10 @@ export type WeaponsRow = {
   WeaponUnderlying: string;
   WeaponDamageBase: string;
   Genderlock: string;
-  Random: string;
+  RandomPool: string;
   Source: string;
+  CommaSeparatedSpecialProperties: string;
+  Range: string;
 };
 
 export type WeaponsNice = {
@@ -31,15 +35,17 @@ export type WeaponsNice = {
   WeaponUnderlying: string;
   WeaponDamageBase: string;
   Genderlock: string;
-  Random: boolean;
+  RandomPool: boolean;
   Source: string;
+  CommaSeparatedSpecialProperties: string;
+  Range: string;
 };
 
 export function toWeaponsNice(row: WeaponsRow): WeaponsNice {
   return {
     ...row,
 
-    Random: row.Random.toLowerCase() === "true",
+    RandomPool: row.RandomPool.toLowerCase() === "true",
     Source: row.Source
 
   };
