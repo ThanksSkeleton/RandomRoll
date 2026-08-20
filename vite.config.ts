@@ -4,7 +4,7 @@ import { resolve } from "path";
 export default defineConfig({
   base: "/randomroll/",
   build: {
-    outDir: "docs",
+    outDir: "dist",
     emptyOutDir: true,
     rollupOptions: {
       input: {
