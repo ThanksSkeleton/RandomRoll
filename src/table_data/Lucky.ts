@@ -18,6 +18,9 @@ export const LUCKY_COLUMNS = [
   "Init",
   "HP",
   "Speed",
+  "inDCC",
+  "inXCC",
+  "XCCName",
 ] as const;
 
 export type LuckyColumn = typeof LUCKY_COLUMNS[number];
@@ -37,6 +40,9 @@ export type LuckyRow = {
   Init: string;
   HP: string;
   Speed: string;
+  inDCC: string;
+  inXCC: string;
+  XCCName: string;
 };
 
 export type LuckyNice = {
@@ -57,6 +63,10 @@ export type LuckyNice = {
   Init: number;
   HP: number;
   Speed: number;
+
+  inDCC: boolean;
+  inXCC: boolean;
+  XCCName: string;
 };
 
 export function luckyRowToNice(row: LuckyRow): LuckyNice {
@@ -76,5 +86,8 @@ export function luckyRowToNice(row: LuckyRow): LuckyNice {
     Init: Number(row.Init),
     HP: Number(row.HP),
     Speed: Number(row.Speed),
+
+    inDCC: row.inDCC === "true",
+    inXCC: row.inXCC === "true",
   };
 }

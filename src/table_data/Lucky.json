@@ -13,7 +13,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "true",
+    "XCCName": "Early January - Champion of Juno"
   },
   {
     "Original_Name": "The bull",
@@ -29,7 +32,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "true",
+    "XCCName": "Late January - Armed by Vulcan"
   },
   {
     "Original_Name": "Fortunate date",
@@ -45,7 +51,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "true",
+    "XCCName": "Early April - Taught by Diana"
   },
   {
     "Original_Name": "Raised by wolves",
@@ -61,7 +70,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "false",
+    "XCCName": ""
   },
   {
     "Original_Name": "Conceived on horseback",
@@ -77,7 +89,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "false",
+    "XCCName": ""
   },
   {
     "Original_Name": "Born on the battlefield",
@@ -93,7 +108,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "true",
+    "XCCName": "Early November - Wraith of Neptune"
   },
   {
     "Original_Name": "Path of the bear",
@@ -109,7 +127,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "true",
+    "XCCName": "Late September - Revenged of the Furaie"
   },
   {
     "Original_Name": "Hawkeye",
@@ -125,7 +146,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "true",
+    "XCCName": "Late February - Guided by Minerva"
   },
   {
     "Original_Name": "Pack hunter",
@@ -141,7 +165,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "true",
+    "XCCName": "Early September - Forged of Vulcan"
   },
   {
     "Original_Name": "Born under the loom",
@@ -157,7 +184,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "false",
+    "XCCName": ""
   },
   {
     "Original_Name": "Fox’s cunning",
@@ -173,7 +203,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "false",
+    "XCCName": ""
   },
   {
     "Original_Name": "Four-leafed clover",
@@ -189,7 +222,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "false",
+    "XCCName": ""
   },
   {
     "Original_Name": "Seventh son",
@@ -205,7 +241,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "true",
+    "XCCName": "Late July - Invoked of the Kharites"
   },
   {
     "Original_Name": "The raging storm",
@@ -221,7 +260,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "false",
+    "XCCName": ""
   },
   {
     "Original_Name": "Righteous heart",
@@ -237,7 +279,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "false",
+    "XCCName": ""
   },
   {
     "Original_Name": "Survived the plague",
@@ -253,7 +298,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "false",
+    "XCCName": ""
   },
   {
     "Original_Name": "Lucky sign",
@@ -269,7 +317,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "true",
+    "XCCName": "Late June - Chosen of Fortuna"
   },
   {
     "Original_Name": "Guardian angel",
@@ -285,7 +336,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "false",
+    "XCCName": ""
   },
   {
     "Original_Name": "Survived a spider bite",
@@ -301,7 +355,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "false",
+    "XCCName": ""
   },
   {
     "Original_Name": "Struck by lightning",
@@ -317,7 +374,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "true",
+    "XCCName": "Early May - Quickened of Mercury"
   },
   {
     "Original_Name": "Lived through famine",
@@ -333,7 +393,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "true",
+    "XCCName": "Late December - Guarded of Pluto"
   },
   {
     "Original_Name": "Resisted temptation",
@@ -349,7 +412,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "true",
+    "XCCName": "Late October - Determined by Discordia"
   },
   {
     "Original_Name": "Charmed house",
@@ -365,7 +431,10 @@
     "AC": "1",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "true",
+    "XCCName": "Late August - Favored of Ceres"
   },
   {
     "Original_Name": "Speed of the cobra",
@@ -381,7 +450,10 @@
     "AC": "0",
     "Init": "1",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "true",
+    "XCCName": "Late April - Imperative of Jupiter"
   },
   {
     "Original_Name": "Bountiful harvest",
@@ -397,7 +469,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "1",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "true",
+    "XCCName": "Late November - Promised of Hesta"
   },
   {
     "Original_Name": "Warrior’s arm",
@@ -413,7 +488,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "true",
+    "XCCName": "Late May - Commanded of Mars"
   },
   {
     "Original_Name": "Unholy house",
@@ -429,7 +507,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "false",
+    "XCCName": ""
   },
   {
     "Original_Name": "The Broken Star",
@@ -445,7 +526,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "true",
+    "XCCName": "Early October - Stricken of Cupid"
   },
   {
     "Original_Name": "Birdsong",
@@ -461,7 +545,10 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "0"
+    "Speed": "0",
+    "inDCC": "true",
+    "inXCC": "true",
+    "XCCName": "Early August - Whispers of Trivia"
   },
   {
     "Original_Name": "Wild child",
@@ -477,6 +564,104 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "1"
+    "Speed": "1",
+    "inDCC": "true",
+    "inXCC": "true",
+    "XCCName": "Early December - Chased by Faunus"
+  },
+  {
+    "Original_Name": "",
+    "Description": "Personality-based Skill Checks",
+    "Tarot": "",
+    "Melee_Attack": "0",
+    "Ranged_Attack": "0",
+    "Melee_Damage": "0",
+    "Ranged_Damage": "0",
+    "Fortitude_Save": "0",
+    "Reflex_Save": "0",
+    "Will_Save": "0",
+    "AC": "0",
+    "Init": "0",
+    "HP": "0",
+    "Speed": "0",
+    "inDCC": "false",
+    "inXCC": "true",
+    "XCCName": "Early February - Radiance of Apollo"
+  },
+  {
+    "Original_Name": "",
+    "Description": "Intelligence-based Skill Checks",
+    "Tarot": "",
+    "Melee_Attack": "0",
+    "Ranged_Attack": "0",
+    "Melee_Damage": "0",
+    "Ranged_Damage": "0",
+    "Fortitude_Save": "0",
+    "Reflex_Save": "0",
+    "Will_Save": "0",
+    "AC": "0",
+    "Init": "0",
+    "HP": "0",
+    "Speed": "0",
+    "inDCC": "false",
+    "inXCC": "true",
+    "XCCName": "Early July - Informed by the Mora"
+  },
+  {
+    "Original_Name": "",
+    "Description": "Perception Skill Checks",
+    "Tarot": "",
+    "Melee_Attack": "0",
+    "Ranged_Attack": "0",
+    "Melee_Damage": "0",
+    "Ranged_Damage": "0",
+    "Fortitude_Save": "0",
+    "Reflex_Save": "0",
+    "Will_Save": "0",
+    "AC": "0",
+    "Init": "0",
+    "HP": "0",
+    "Speed": "0",
+    "inDCC": "false",
+    "inXCC": "true",
+    "XCCName": "Early June - Led by Sol"
+  },
+  {
+    "Original_Name": "",
+    "Description": "Strength-based Skill Checks",
+    "Tarot": "",
+    "Melee_Attack": "0",
+    "Ranged_Attack": "0",
+    "Melee_Damage": "0",
+    "Ranged_Damage": "0",
+    "Fortitude_Save": "0",
+    "Reflex_Save": "0",
+    "Will_Save": "0",
+    "AC": "0",
+    "Init": "0",
+    "HP": "0",
+    "Speed": "0",
+    "inDCC": "false",
+    "inXCC": "true",
+    "XCCName": "Early March - Fortified by Hercules"
+  },
+  {
+    "Original_Name": "",
+    "Description": "Stamina-based Skill Checks",
+    "Tarot": "",
+    "Melee_Attack": "0",
+    "Ranged_Attack": "0",
+    "Melee_Damage": "0",
+    "Ranged_Damage": "0",
+    "Fortitude_Save": "0",
+    "Reflex_Save": "0",
+    "Will_Save": "0",
+    "AC": "0",
+    "Init": "0",
+    "HP": "0",
+    "Speed": "0",
+    "inDCC": "false",
+    "inXCC": "true",
+    "XCCName": "Late March - Toasted by Bacchus"
   }
 ]

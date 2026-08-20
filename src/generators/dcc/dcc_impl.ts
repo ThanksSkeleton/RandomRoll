@@ -5,7 +5,9 @@ import { full_name } from "../../names_framework";
 import { luckyRowToNice, type LuckyNice, type LuckyRow } from "../../table_data/Lucky";
 import rawLucky from "../../table_data/Lucky.json";
 const lucky : LuckyRow[] = rawLucky;
-const luckyNice = lucky.map(luckyRowToNice)
+// The shared table also contains XCC-only signs. Keep the DCC roll table—and
+// therefore existing seeded DCC results—restricted to its original entries.
+const luckyNice = lucky.map(luckyRowToNice).filter(sign => sign.inDCC);
 
 import { type ItemsNice, type ItemsRow, toItemsNice } from "../../table_data/Items";
 import rawItems from "../../table_data/Items.json";

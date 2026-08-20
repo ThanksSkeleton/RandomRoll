@@ -11,6 +11,9 @@ import rawProfessions from "../table_data/Professions.json";
 import { toWeaponsNice, type WeaponsNice, type WeaponsRow } from "../table_data/Weapons";
 import rawWeapons from "../table_data/Weapons.json";
 
+import { luckyRowToNice, type LuckyRow } from "../table_data/Lucky";
+import rawLucky from "../table_data/Lucky.json";
+
 const items: ItemsRow[] = rawItems;
 const itemsNice: ItemsNice[] = items.map(toItemsNice);
 
@@ -18,6 +21,8 @@ const professions: ProfessionsRow[] = rawProfessions;
 
 const weapons: WeaponsRow[] = rawWeapons;
 const weaponsNice: WeaponsNice[] = weapons.map(toWeaponsNice);
+
+const lucky: LuckyRow[] = rawLucky;
 
 function nonEmpty(value: string): boolean {
   return value.trim() !== "";
@@ -74,6 +79,21 @@ describe("DCC profession data integrity", () => {
       .map((i) => i.Item);
 
     expect(nonRandomUnassignedItems).toEqual([]);
+  });
+});
+
+describe("Lucky sign variants", () => {
+  it("retains the original 30 DCC lucky signs", () => {
+    const dccSigns = lucky.map(luckyRowToNice).filter((sign) => sign.inDCC);
+
+    expect(dccSigns).toHaveLength(30);
+  });
+
+  it("includes all 24 XCC lucky signs", () => {
+    const xccSigns = lucky.map(luckyRowToNice).filter((sign) => sign.inXCC);
+
+    expect(xccSigns).toHaveLength(24);
+    expect(xccSigns.every((sign) => nonEmpty(sign.XCCName))).toBe(true);
   });
 });
 
