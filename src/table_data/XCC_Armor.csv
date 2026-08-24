@@ -1,0 +1,27 @@
+Armor,AC Bonus,Check Penalty,Speed,Fumble Dice,Cost
+Unarmored,0,0,0,4,0
+Sexy Leather,1,0,0,4,200
+Armored Jacket,1,1,0,6,40
+Leather,2,1,0,8,60
+Halfling Leather,2,0,0,6,200/600
+Micromesh Clothing,2,1,0,6,200/600
+"Composite Sport, Light",3,1,0,8,30
+Hide,3,4,10,12,20
+Micromesh,3,3,0,8,850
+Sexy Chainmail,3,2,0,8,1000
+"MiniLynx, Light",4,2,0,8,750
+Chainmail Shirt,4,2,0,10,100
+"Composite Sport, Heavy",5,4,10,12,300
+Chainmail,5,5,5,12,250
+Titanium Chainmail,5,4,0,10,750
+Breastplate,5,4,10,12,400
+Titanium Breastplate,5,3,10,10,1200
+Sexy Half Plate,5,5,10,12,800
+Elfmake Chainmail,5,3,0,8,Special
+Banded Mail,6,6,5,12,300
+MiniLynx,6,3,5,10,1300
+Half Plate,7,7,10,14,600
+Dwarvish Plate,8,5,10,12,5000
+Plate Mail,8,8,10,16,2225
+Titanium Plate Mail,8,6,10,14,7000
+Shield,1,1,0,0,30
