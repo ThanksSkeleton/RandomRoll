@@ -1,0 +1,10 @@
+{
+  "Agility": "The wielder of this weapon uses their Agility modifier to hit and damage instead of their Strength modifier.",
+  "Backstab": "A successful backstab with this weapon inflicts 1d10 damage.",
+  "Concealable": "Easier to conceal than most hand-to-hand weapons. It can be hidden in a pocket.",
+  "Hurl": "Strength modifier for damage applies with this weapon at close range only.",
+  "Mounted": "This weapon inflicts double damage on a mounted charge.",
+  "Reload": "It takes a movement action to reload this weapon.",
+  "Stretch": "This weapon can strike targets up to 10’ away.",
+  "Two-handed": "Characters using two-handed weapons use a d16 for initiative checks and may not wield a second weapon or a shield while using it."
+}

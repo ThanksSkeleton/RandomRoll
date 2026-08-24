@@ -70,7 +70,7 @@ export function populate_student_template(
   setStatMod(root, "luckMod", character.luckMod);
 
   // Attacks and defenses
-  setText(root, "armorClass", character.armorClass);
+  setText(root, "armorClass", character.AC);
   setText(root, "hitPoints", character.hitPoints);
   setText(root, "speed", character.speed);
   setText(root, "initiative", formatMod(character.initiative));

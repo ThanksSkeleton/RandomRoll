@@ -90,7 +90,7 @@ function buildDccStudent(
     racialTraits: STUDENT_RACIAL_TRAITS,
     languages: STUDENT_LANGUAGES,
     alignment: STUDENT_ALIGNMENT,
-    armor: STUDENT_ARMOR,
+    armorName: STUDENT_ARMOR,
     armorAC: STUDENT_ARMOR_AC,
     // Compatibility slots: tool, cultural item, then occupation trade good.
     equipment: profession.tool.Item,
@@ -137,9 +137,9 @@ function buildDccStudent(
     luckScore: core.luckScore,
     luckMod: core.luckMod,
 
-    armor: core.armor,
+    armorName: core.armorName,
     armorAC: core.armorAC,
-    armorClass: core.armorClass,
+    AC: core.AC,
     hitPoints: core.hitPoints,
     speed: core.speed,
     initiative: core.initiative,

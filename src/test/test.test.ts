@@ -7,7 +7,10 @@ import {
   buildBlankDccCoreCharacter,
   buildDccCoreCharacter,
 } from "../generators/dcc_core/dcc_core";
-import { buildBlankXccCharacter } from "../generators/xcc/xcc_impl";
+import {
+  buildBlankXccCharacter,
+  default_build as buildXcc,
+} from "../generators/xcc/xcc_impl";
 
 import { type ItemsNice, type ItemsRow, toItemsNice } from "../table_data/Items";
 import rawItems from "../table_data/Items.json";
@@ -21,6 +24,14 @@ import rawWeapons from "../table_data/Weapons.json";
 import { luckyRowToNice, type LuckyRow } from "../table_data/Lucky";
 import rawLucky from "../table_data/Lucky.json";
 
+import type { XccCelebrityHeadshotsRow } from "../table_data/xcc_celebrity_headshots";
+import rawXccHeadshots from "../table_data/xcc_celebrity_headshots.json";
+import type { XccOccupationsRow } from "../table_data/xcc_occupations";
+import rawXccOccupations from "../table_data/xcc_occupations.json";
+import rawXccArmor from "../table_data/XCC_Armor.json";
+import rawXccPacks from "../table_data/Starting_Adventurer_Packs.json";
+import rawRaceNotes from "../table_data/RaceNotes.json";
+
 const items: ItemsRow[] = rawItems;
 const itemsNice: ItemsNice[] = items.map(toItemsNice);
 
@@ -30,6 +41,8 @@ const weapons: WeaponsRow[] = rawWeapons;
 const weaponsNice: WeaponsNice[] = weapons.map(toWeaponsNice);
 
 const lucky: LuckyRow[] = rawLucky;
+const xccHeadshots: XccCelebrityHeadshotsRow[] = rawXccHeadshots;
+const xccOccupations: XccOccupationsRow[] = rawXccOccupations;
 
 function nonEmpty(value: string): boolean {
   return value.trim() !== "";
@@ -165,6 +178,106 @@ describe("XCC weapon data integrity", () => {
   });
 });
 
+describe("XCC character data integrity", () => {
+  const armorNames = new Set(Object.keys(rawXccArmor));
+  const packNames = new Set(Object.keys(rawXccPacks));
+  const raceNames = new Set(Object.keys(rawRaceNotes));
+
+  it("has complete occupation mappings", () => {
+    expect(xccOccupations).toHaveLength(100);
+
+    for (const occupation of xccOccupations) {
+      expect(raceNames.has(occupation.Race)).toBe(true);
+      expect(
+        occupation.AdventurePack === ""
+        || packNames.has(occupation.AdventurePack),
+      ).toBe(true);
+      expect(Number.isFinite(Number(occupation.StartingFunds))).toBe(true);
+    }
+
+    for (const pack of Object.values(rawXccPacks)) {
+      expect(armorNames.has(pack.armor)).toBe(true);
+    }
+  });
+
+  it("builds a deterministic, populated XCC character", () => {
+    const first = buildXcc("xcc-flow-check");
+    const second = buildXcc("xcc-flow-check");
+
+    expect(first.objects).toEqual(second.objects);
+    expect(first.objects).toHaveLength(1);
+
+    const character = first.objects[0];
+    const occupation = xccOccupations.find(
+      candidate => candidate.Title === character.professionTitle,
+    );
+    const portrait = xccHeadshots.find(
+      candidate => candidate.NAME === character.portraitActorName,
+    );
+
+    expect(occupation).toBeDefined();
+    expect(character).toMatchObject({
+      race: occupation?.Race,
+      gender: portrait?.GENDER,
+      startingFunds: Number(occupation?.StartingFunds),
+      mojo: 0,
+      fame: 0,
+      wealth: 11,
+      equipment: occupation?.AdventurePack,
+      equipment2: "",
+    });
+    expect(character).toHaveProperty("armorName");
+    expect(character).toHaveProperty("AC");
+    expect(character).not.toHaveProperty("armor");
+    expect(character).not.toHaveProperty("armorClass");
+    const pack = occupation?.AdventurePack
+      ? rawXccPacks[occupation.AdventurePack as keyof typeof rawXccPacks]
+      : undefined;
+    expect(character.packContents).toBe(pack?.otherEquipment.join(", ") ?? "");
+    expect(character.firstName).not.toBe("");
+    expect(character.lastName).not.toBe("");
+    expect(character.racialTraits).toBe(rawRaceNotes[character.race as keyof typeof rawRaceNotes].racialTraits);
+    expect(character.languages).toContain(
+      rawRaceNotes[character.race as keyof typeof rawRaceNotes].racialLanguage,
+    );
+    expect(character.languages).toContain("English");
+    expect(character.portraitImagePath).toBe(portrait?.HEADSHOT_URL);
+    expect(["Lawful", "Neutral", "Chaotic"]).toContain(character.alignment);
+    expect(character.armorAC).toBeGreaterThanOrEqual(10);
+    expect(character.hitPoints).toBeGreaterThanOrEqual(1);
+    expect(
+      character.weaponDisplay === "Unarmed"
+      || weaponsNice.some(weapon =>
+        weapon.Source === "XCC"
+        && weapon.Weapon === character.weaponDisplay
+      ),
+    ).toBe(true);
+    expect(
+      lucky.map(luckyRowToNice).some(sign =>
+        sign.inXCC && sign.XCCName === character.luckySignName
+      ),
+    ).toBe(true);
+  });
+
+  it("generates valid relationships across a broad seed sample", () => {
+    const portraitNames = new Set(xccHeadshots.map(row => row.NAME));
+    const occupationNames = new Set(xccOccupations.map(row => row.Title));
+
+    for (let seed = 0; seed < 250; seed++) {
+      const character = buildXcc(`xcc-sample-${seed}`).objects[0];
+
+      expect(occupationNames.has(character.professionTitle)).toBe(true);
+      expect(raceNames.has(character.race)).toBe(true);
+      expect(portraitNames.has(character.portraitActorName)).toBe(true);
+      expect(character.portraitImagePath).toMatch(/^https:\/\/image\.tmdb\.org\//);
+      expect(character.strengthScore).toBeGreaterThanOrEqual(3);
+      expect(character.strengthScore).toBeLessThanOrEqual(18);
+      expect(character.equipment2).toBe("");
+      expect(character.languages).toContain("English");
+    }
+  });
+});
+
 describe("Lucky sign variants", () => {
   it("retains the original 30 DCC lucky signs", () => {
     const dccSigns = lucky.map(luckyRowToNice).filter((sign) => sign.inDCC);
@@ -208,6 +321,7 @@ describe("DCC core", () => {
       equipment2: "",
       equipment3: "",
       startingFunds: null,
+      packContents: "",
     });
     expect(xccCharacter).not.toHaveProperty("adventurerPack");
   });
@@ -220,7 +334,7 @@ describe("DCC core", () => {
       racialTraits: "Test Trait",
       languages: "Test Language",
       alignment: "Neutral",
-      armor: "Test Armor",
+      armorName: "Test Armor",
       armorAC: 14,
       equipment: "Test Pack",
       equipment2: "",
@@ -251,9 +365,9 @@ describe("DCC core", () => {
       }),
     });
 
-    expect(character.armorClass).toBe(14 + character.agilityMod);
+    expect(character.AC).toBe(14 + character.agilityMod);
     expect(character).toMatchObject({
-      armor: "Test Armor",
+      armorName: "Test Armor",
       armorAC: 14,
       weaponRange: "10/20/30",
       weaponSpecialProperties: "Test Property",
@@ -264,6 +378,49 @@ describe("DCC core", () => {
       equipment3: "Test Trade Good",
       startingFunds: 0,
     });
+  });
+
+  it("uses Agility for melee weapons with the Agility property", () => {
+    const character = buildDccCoreCharacter(seedrandom("agility-weapon"), {
+      professionTitle: "Test Profession",
+      gender: "Test Gender",
+      race: "Test Race",
+      racialTraits: "",
+      languages: "English",
+      alignment: "Neutral",
+      armorName: "Unarmored",
+      armorAC: 10,
+      equipment: "",
+      equipment2: "",
+      equipment3: "",
+      startingFunds: 0,
+      weapon: {
+        displayName: "Rapier",
+        underlyingName: "Rapier",
+        damageBase: "1d5",
+        weaponType: "Melee",
+        range: "0",
+        specialProperties: "Agility",
+      },
+      rollLuckySign: () => ({
+        name: "Test Sign",
+        description: "",
+        meleeAttack: 0,
+        rangedAttack: 0,
+        meleeDamage: 0,
+        rangedDamage: 0,
+        fortitudeSave: 0,
+        reflexSave: 0,
+        willSave: 0,
+        armorClass: 0,
+        initiative: 0,
+        hitPoints: 0,
+        speed: 0,
+      }),
+    });
+
+    expect(character.attackMod).toBe(character.agilityMod);
+    expect(character.attackDamageMod).toBe(character.agilityMod);
   });
 });
 
@@ -290,7 +447,7 @@ describe("DCC student seed compatibility", () => {
         race: "Human",
         racialTraits: "",
         languages: "English",
-        armor: "None",
+        armorName: "None",
         armorAC: 10,
         alignment: "Neutral",
       });

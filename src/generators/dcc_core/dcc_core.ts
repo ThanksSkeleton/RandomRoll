@@ -47,9 +47,9 @@ export type DccCoreCharacter = {
   luckScore: number;
   luckMod: number;
 
-  armor: string;
+  armorName: string;
   armorAC: number;
-  armorClass: number;
+  AC: number;
   hitPoints: number;
   speed: number;
   initiative: number;
@@ -92,7 +92,7 @@ export type BuildDccCoreCharacterOptions = {
   racialTraits: string;
   languages: string;
   alignment: string;
-  armor: string;
+  armorName: string;
   armorAC: number;
   equipment: string;
   equipment2: string;
@@ -128,6 +128,9 @@ export function buildDccCoreCharacter(
   const baseHitPoints = rollDie(rng, 4);
   const baseSpeed = options.baseSpeed ?? 30;
   const isMelee = options.weapon.weaponType === MELEE;
+  const usesAgility =
+    !isMelee
+    || options.weapon.specialProperties.split(",").includes("Agility");
 
   return {
     professionTitle: options.professionTitle,
@@ -151,9 +154,9 @@ export function buildDccCoreCharacter(
     luckScore,
     luckMod,
 
-    armor: options.armor,
+    armorName: options.armorName,
     armorAC: options.armorAC,
-    armorClass: options.armorAC + agilityMod + luckySign.armorClass * luckMod,
+    AC: options.armorAC + agilityMod + luckySign.armorClass * luckMod,
     hitPoints: Math.max(
       baseHitPoints + staminaMod + luckySign.hitPoints * luckMod,
       1,
@@ -171,10 +174,10 @@ export function buildDccCoreCharacter(
     weaponRange: options.weapon.range,
     weaponSpecialProperties: options.weapon.specialProperties,
     attackMod:
-      (isMelee ? strengthMod : agilityMod)
+      (usesAgility ? agilityMod : strengthMod)
       + (isMelee ? luckySign.meleeAttack : luckySign.rangedAttack) * luckMod,
     attackDamageMod:
-      (isMelee ? strengthMod : agilityMod)
+      (usesAgility ? agilityMod : strengthMod)
       + (isMelee ? luckySign.meleeDamage : luckySign.rangedDamage) * luckMod,
 
     luckySignName: luckySign.name,
@@ -210,9 +213,9 @@ export function buildBlankDccCoreCharacter(): BlankDccCoreCharacter {
     luckScore: null,
     luckMod: null,
 
-    armor: "",
+    armorName: "",
     armorAC: null,
-    armorClass: null,
+    AC: null,
     hitPoints: null,
     speed: null,
     initiative: null,
