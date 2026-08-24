@@ -29,8 +29,8 @@ export function populateXccTemplate(
 
   setText(root, "firstName", character.firstName);
   setText(root, "lastName", character.lastName);
-  setText(root, "professionTitle", character.professionTitle);
-  setText(root, "luckySignGod", character.luckySignGod);
+  setText(root, "professionTitle", character.professionPresentation);
+  setText(root, "luckySignName", character.luckySignName);
   setPortrait(root, character);
 
   setText(root, "strengthScore", character.strengthScore);
@@ -50,7 +50,7 @@ export function populateXccTemplate(
   setText(root, "reflexSave", formatModifier(character.saveReflex));
   setText(root, "willSave", formatModifier(character.saveWill));
   setText(root, "alignment", character.alignment);
-  setText(root, "race", character.race);
+  setRace(root, character.race);
 
   setText(root, "hitPoints", character.hitPoints);
   setText(root, "armorClass", character.AC);
@@ -72,6 +72,16 @@ export function populateXccTemplate(
 
 function setText(root: ParentNode, field: string, value: string | number): void {
   getField(root, field).textContent = String(value);
+}
+
+function setRace(root: ParentNode, race: string): void {
+  setText(root, "race", race);
+
+  if (race === "Human") {
+    const row = getField(root, "raceRow");
+    row.classList.add("blank");
+    row.setAttribute("aria-hidden", "true");
+  }
 }
 
 function setPortrait(root: ParentNode, character: XccCharacter): void {

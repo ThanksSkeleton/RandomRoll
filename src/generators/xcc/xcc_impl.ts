@@ -84,6 +84,7 @@ const EXTRA_GEAR = "extra piece of gear";
 export type XccCharacter = DccCoreCharacter & {
   firstName: string;
   lastName: string;
+  professionPresentation: string;
   armorCheckPenalty: number;
   armorSpeedPenalty: number;
   armorFumbleDie: string;
@@ -100,6 +101,7 @@ export type XccCharacter = DccCoreCharacter & {
 export type BlankXccCharacter = BlankDccCoreCharacter & {
   firstName: string;
   lastName: string;
+  professionPresentation: string;
   armorCheckPenalty: number | null;
   armorSpeedPenalty: number | null;
   armorFumbleDie: string;
@@ -116,6 +118,7 @@ export type BlankXccCharacter = BlankDccCoreCharacter & {
 const BLANK_XCC_CHARACTER: BlankXccCharacter = {
   firstName: "",
   lastName: "",
+  professionPresentation: "",
   ...buildBlankDccCoreCharacter(),
   armorCheckPenalty: null,
   armorSpeedPenalty: null,
@@ -194,6 +197,7 @@ export function buildXccCharacter(rng: seedrandom.PRNG): XccCharacter {
   return {
     firstName,
     lastName,
+    professionPresentation: occupation.XCCPresentation,
     ...core,
     languages: formatLanguages(race.racialLanguage, core.intelligenceMod),
     armorCheckPenalty: armor.checkPenalty,

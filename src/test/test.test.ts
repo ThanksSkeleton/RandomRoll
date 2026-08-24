@@ -244,6 +244,7 @@ describe("XCC character data integrity", () => {
     expect(occupation).toBeDefined();
     expect(character).toMatchObject({
       race: occupation?.Race,
+      professionPresentation: occupation?.XCCPresentation,
       gender: portrait?.GENDER,
       startingFunds: occupation?.StartingFunds,
       mojo: 0,
@@ -311,6 +312,7 @@ describe("XCC character data integrity", () => {
       ];
 
       expect(occupationNames.has(character.professionTitle)).toBe(true);
+      expect(character.professionPresentation).toBe(occupation?.XCCPresentation);
       expect(raceNames.has(character.race)).toBe(true);
       expect(portraitNames.has(character.portraitActorName)).toBe(true);
       expect(character.portraitImagePath).toMatch(/^https:\/\/image\.tmdb\.org\//);

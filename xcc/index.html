@@ -81,6 +81,10 @@
         grid-template-rows: repeat(6, minmax(1.5rem, auto));
       }
 
+      .stat-line.blank {
+        visibility: hidden;
+      }
+
       .weapon-row {
         display: grid;
         grid-template-columns: max-content minmax(0, 1fr) max-content minmax(0, 0.5fr) max-content minmax(0, 1fr) max-content minmax(0, 1fr);
@@ -113,7 +117,7 @@
               </div>
               <div class="bio-row">
                 <span class="bio-label">Olympian Boon</span>
-                <span class="bio-value">Guided by <span data-field="luckySignGod">Hera</span></span>
+                <span class="bio-value" data-field="luckySignName">Guided by Hera</span>
               </div>
             </div>
           </section>
@@ -139,7 +143,7 @@
             <div class="stat-line"><span>WILL</span><span data-field="willSave">0</span></div>
             <div class="stat-line blank" aria-hidden="true"><span>&nbsp;</span><span>&nbsp;</span></div>
             <div class="stat-line"><span>ALIGN</span><span data-field="alignment">Chaotic</span></div>
-            <div class="stat-line"><span>RACE</span><span data-field="race">Elf</span></div>
+            <div class="stat-line" data-field="raceRow"><span>RACE</span><span data-field="race">Elf</span></div>
           </section>
 
           <section class="combat-stats" aria-label="Combat statistics">
