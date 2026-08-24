@@ -14,6 +14,7 @@ export default defineConfig({
         masks: resolve(__dirname, "masks/index.html"),
         swn: resolve(__dirname, "swn/index.html"),
         supers: resolve(__dirname, "supers/index.html"),
+        xcc: resolve(__dirname, "xcc/index.html"),
       },
     },
   },

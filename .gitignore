@@ -28,4 +28,6 @@ dist-ssr
 *.sqlite-shm
 *.sqlite-wal
 
+
+.playwright-mcp
 /temp/
