@@ -11,13 +11,18 @@
   --xcc-portrait-horizontal-alignment: end;
   --xcc-portrait-border-width: 0.7rem;
   --xcc-portrait-border-radius: 0rem;
-  --xcc-divider-width: 0.1rem;
+  --xcc-vertical-divider-width: 0.1rem;
+  --xcc-vertical-divider-height: 100%;
+  --xcc-horizontal-divider-width: 100%;
+  --xcc-horizontal-divider-height: 0.1rem;
+  --xcc-vertical-divider-padding-inline: 0rem;
+  --xcc-horizontal-divider-padding-block: 0rem;
   --xcc-divider-color: #d8c52b;
-  --xcc-divider-logo-name-subtitle-style: none;
-  --xcc-divider-logo-bio-style: none;
-  --xcc-divider-bio-stats-style: none;
-  --xcc-divider-stats-columns-style: none;
-  --xcc-divider-stats-weapon-armor-style: none;
+  --xcc-divider-logo-name-subtitle-display: none;
+  --xcc-divider-logo-bio-display: none;
+  --xcc-divider-bio-stats-display: none;
+  --xcc-divider-stats-columns-display: none;
+  --xcc-divider-stats-weapon-armor-display: none;
   --identity-stripe-bottom: -14.24rem;
   --identity-stripe-left: 6.31rem;
   --identity-stripe-width: 188%;
@@ -101,26 +106,35 @@
 
 .everything-else-column {
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto;
-  gap: 1.25rem;
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+  gap: 0;
   min-width: 0;
   min-height: 0;
 }
 
 .logo-bio {
   display: grid;
-  grid-template-rows: auto auto;
-  gap: 2rem;
-  border-bottom: var(--xcc-divider-width) var(--xcc-divider-bio-stats-style) var(--xcc-divider-color);
+  grid-template-rows: auto auto auto;
+  gap: 0;
+  margin-bottom: 1.25rem;
 }
 
 .xcc-logo {
   display: grid;
-  grid-template-columns: max-content 1fr;
+  grid-template-columns: max-content auto 1fr;
   align-items: center;
-  gap: 0.9rem;
+  gap: 0;
+  margin-bottom: 2rem;
   min-width: 0;
   justify-content: var(--xcc-logo-horizontal-alignment);
+}
+
+.xcc-logo-name {
+  margin-inline-end: 0.45rem;
+}
+
+.xcc-logo-subtitle {
+  margin-inline-start: 0.45rem;
 }
 
 .xcc-logo-name,
@@ -134,7 +148,6 @@
 .xcc-logo-name {
   color: var(--xcc-white);
   font-size: var(--xcc-logo-name-font-size);
-  border-inline-end: var(--xcc-divider-width) var(--xcc-divider-logo-name-subtitle-style) var(--xcc-divider-color);
 }
 
 .xcc-logo-subtitle {
@@ -143,9 +156,44 @@
   font-size: var(--xcc-logo-subtitle-font-size);
 }
 
-.xcc-logo {
-  border-bottom: var(--xcc-divider-width) var(--xcc-divider-logo-bio-style) var(--xcc-divider-color);
+.xcc-divider {
+  pointer-events: none;
 }
+
+.xcc-divider-line {
+  display: block;
+  background: var(--xcc-divider-color);
+}
+
+.xcc-divider--vertical {
+  align-self: center;
+  justify-self: center;
+  height: 100%;
+  padding-inline: var(--xcc-vertical-divider-padding-inline);
+}
+
+.xcc-divider--vertical .xcc-divider-line {
+  width: var(--xcc-vertical-divider-width);
+  height: var(--xcc-vertical-divider-height);
+}
+
+.xcc-divider--horizontal {
+  align-self: center;
+  justify-self: center;
+  width: 100%;
+  padding-block: var(--xcc-horizontal-divider-padding-block);
+}
+
+.xcc-divider--horizontal .xcc-divider-line {
+  width: var(--xcc-horizontal-divider-width);
+  height: var(--xcc-horizontal-divider-height);
+}
+
+.xcc-divider--logo-name-subtitle { display: var(--xcc-divider-logo-name-subtitle-display); }
+.xcc-divider--logo-bio { display: var(--xcc-divider-logo-bio-display); }
+.xcc-divider--bio-stats { display: var(--xcc-divider-bio-stats-display); }
+.xcc-divider--stats-columns { display: var(--xcc-divider-stats-columns-display); }
+.xcc-divider--stats-weapon-armor { display: var(--xcc-divider-stats-weapon-armor-display); }
 
 .bio {
   display: grid;
@@ -216,12 +264,12 @@
 
 .stats-row {
   display: grid;
-  grid-template-columns: minmax(0, var(--xcc-stats-base-column-weight)) minmax(0, var(--xcc-stats-secondary-column-weight));
+  grid-template-columns: minmax(0, var(--xcc-stats-base-column-weight)) auto minmax(0, var(--xcc-stats-secondary-column-weight));
   justify-self: var(--xcc-stats-horizontal-alignment);
-  column-gap: var(--xcc-stats-column-gap);
+  column-gap: 0;
+  margin-bottom: 1.25rem;
   min-height: 0;
   font-size: var(--xcc-stats-font-size);
-  border-bottom: var(--xcc-divider-width) var(--xcc-divider-stats-weapon-armor-style) var(--xcc-divider-color);
 }
 
 .base-stats .stat-line {
@@ -246,12 +294,13 @@
 .base-stats {
   grid-column: 1;
   align-self: var(--xcc-base-stats-vertical-alignment);
-  border-inline-end: var(--xcc-divider-width) var(--xcc-divider-stats-columns-style) var(--xcc-divider-color);
+  margin-inline-end: calc(var(--xcc-stats-column-gap) / 2);
 }
 
 .secondary-stats {
-  grid-column: 2;
+  grid-column: 3;
   align-self: var(--xcc-secondary-stats-vertical-alignment);
+  margin-inline-start: calc(var(--xcc-stats-column-gap) / 2);
 }
 
 .base-stats .stat-line.wide-value {
@@ -346,10 +395,19 @@
   }
 
   .everything-else-column {
-    gap: 0.75rem;
+    gap: 0;
   }
 
   .logo-bio {
-    gap: 1rem;
+    gap: 0;
+    margin-bottom: 0.75rem;
+  }
+
+  .xcc-logo {
+    margin-bottom: 1rem;
+  }
+
+  .stats-row {
+    margin-bottom: 0.75rem;
   }
 }

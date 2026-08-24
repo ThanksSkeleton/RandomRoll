@@ -95,16 +95,31 @@
         padding-right: 0.35rem;
       }
 
-      .cedalion-group {
-        display: grid;
-        gap: 0.6rem;
-        border: 1px solid #c8c8d2;
-        padding: 0.75rem;
+      .cedalion-supercategory,
+      .cedalion-category,
+      .cedalion-section {
+        border: 1px solid #aeb0bd;
+        background: #fff;
       }
 
-      .cedalion-group legend {
-        padding-inline: 0.25rem;
+      .cedalion-supercategory > summary,
+      .cedalion-category > summary,
+      .cedalion-section > summary {
+        cursor: pointer;
+        padding: 0.75rem;
         font-weight: 700;
+      }
+
+      .cedalion-supercategory-content,
+      .cedalion-category-settings,
+      .cedalion-section-settings {
+        display: grid;
+        gap: 0.75rem;
+        padding: 0 0.75rem 0.75rem;
+      }
+
+      .cedalion-category {
+        border: 1px solid #c8c8d2;
       }
 
       .cedalion-field {
@@ -159,8 +174,11 @@
           <section class="logo-bio" aria-label="Competitor biography">
             <header class="xcc-logo">
               <span class="xcc-logo-name">XCrawl</span>
+              <div class="xcc-divider xcc-divider--vertical xcc-divider--logo-name-subtitle" aria-hidden="true"><span class="xcc-divider-line"></span></div>
               <span class="xcc-logo-subtitle">Competitor<br />Spotlight</span>
             </header>
+
+            <div class="xcc-divider xcc-divider--horizontal xcc-divider--logo-bio" aria-hidden="true"><span class="xcc-divider-line"></span></div>
 
             <div class="bio">
               <div class="bio-row">
@@ -181,6 +199,8 @@
             </div>
           </section>
 
+          <div class="xcc-divider xcc-divider--horizontal xcc-divider--bio-stats" aria-hidden="true"><span class="xcc-divider-line"></span></div>
+
           <div class="xcc-sheet-row stats-row">
             <section class="base-stats" aria-label="Base statistics">
               <div class="stat-line"><span>STR</span><span data-field="strengthScore">13</span><span data-field="strengthMod">+1</span></div>
@@ -192,6 +212,8 @@
               <div class="stat-line wide-value"><span>ALIGN</span><span data-field="alignment">Chaotic</span></div>
             </section>
 
+            <div class="xcc-divider xcc-divider--vertical xcc-divider--stats-columns" aria-hidden="true"><span class="xcc-divider-line"></span></div>
+
             <section class="secondary-stats" aria-label="Secondary statistics">
               <div class="stat-line"><span>FORT</span><span data-field="fortitudeSave">+1</span></div>
               <div class="stat-line"><span>REF</span><span data-field="reflexSave">+1</span></div>
@@ -202,6 +224,8 @@
               <div class="stat-line"><span>SPEED</span><span data-field="speed">30</span></div>
             </section>
           </div>
+
+          <div class="xcc-divider xcc-divider--horizontal xcc-divider--stats-weapon-armor" aria-hidden="true"><span class="xcc-divider-line"></span></div>
 
           <section class="weapon-armor-section" aria-label="Weapon and armor statistics">
             <span class="weapon-label">Weapon</span>

@@ -160,13 +160,18 @@ const controls: CedalionControl[] = [
   { kind: "numeric", group: "Weapon / Armor", label: "Left value column width weight", property: "--xcc-weapon-left-value-column-weight", defaultValue: 2.1, min: 0.1, max: 10, step: 0.01, unit: "fr" },
   { kind: "numeric", group: "Weapon / Armor", label: "Right value column width weight", property: "--xcc-weapon-right-value-column-weight", defaultValue: 2.06, min: 0.1, max: 10, step: 0.01, unit: "fr" },
 
-  { kind: "numeric", group: "Dividers", label: "Shared divider width", property: "--xcc-divider-width", defaultValue: 0.1, min: 0, max: 3, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Dividers", label: "Vertical divider width", property: "--xcc-vertical-divider-width", defaultValue: 0.1, min: 0, max: 5, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Dividers", label: "Vertical divider height", property: "--xcc-vertical-divider-height", defaultValue: 100, min: 0, max: 300, step: 1, unit: "%" },
+  { kind: "numeric", group: "Dividers", label: "Horizontal divider width", property: "--xcc-horizontal-divider-width", defaultValue: 100, min: 0, max: 300, step: 1, unit: "%" },
+  { kind: "numeric", group: "Dividers", label: "Horizontal divider height", property: "--xcc-horizontal-divider-height", defaultValue: 0.1, min: 0, max: 5, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Dividers", label: "Vertical divider left/right padding", property: "--xcc-vertical-divider-padding-inline", defaultValue: 0, min: 0, max: 15, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Dividers", label: "Horizontal divider up/down padding", property: "--xcc-horizontal-divider-padding-block", defaultValue: 0, min: 0, max: 15, step: 0.01, unit: "rem" },
   { kind: "color", group: "Dividers", label: "Shared divider color", property: "--xcc-divider-color", defaultValue: "#d8c52b" },
-  { kind: "toggle", group: "Dividers", label: "Divider between XCrawl and Competitor Spotlight", property: "--xcc-divider-logo-name-subtitle-style", defaultValue: false, enabledValue: "solid", disabledValue: "none" },
-  { kind: "toggle", group: "Dividers", label: "Divider between logo section and bio section", property: "--xcc-divider-logo-bio-style", defaultValue: false, enabledValue: "solid", disabledValue: "none" },
-  { kind: "toggle", group: "Dividers", label: "Divider between bio section and stats section", property: "--xcc-divider-bio-stats-style", defaultValue: false, enabledValue: "solid", disabledValue: "none" },
-  { kind: "toggle", group: "Dividers", label: "Divider between base and secondary stats columns", property: "--xcc-divider-stats-columns-style", defaultValue: false, enabledValue: "solid", disabledValue: "none" },
-  { kind: "toggle", group: "Dividers", label: "Divider between stats and weapon/armor sections", property: "--xcc-divider-stats-weapon-armor-style", defaultValue: false, enabledValue: "solid", disabledValue: "none" },
+  { kind: "toggle", group: "Dividers", label: "Divider between XCrawl and Competitor Spotlight", property: "--xcc-divider-logo-name-subtitle-display", defaultValue: false, enabledValue: "block", disabledValue: "none" },
+  { kind: "toggle", group: "Dividers", label: "Divider between logo section and bio section", property: "--xcc-divider-logo-bio-display", defaultValue: false, enabledValue: "block", disabledValue: "none" },
+  { kind: "toggle", group: "Dividers", label: "Divider between bio section and stats section", property: "--xcc-divider-bio-stats-display", defaultValue: false, enabledValue: "block", disabledValue: "none" },
+  { kind: "toggle", group: "Dividers", label: "Divider between base and secondary stats columns", property: "--xcc-divider-stats-columns-display", defaultValue: false, enabledValue: "block", disabledValue: "none" },
+  { kind: "toggle", group: "Dividers", label: "Divider between stats and weapon/armor sections", property: "--xcc-divider-stats-weapon-armor-display", defaultValue: false, enabledValue: "block", disabledValue: "none" },
 ];
 
 const liveState = new Map<string, string>();
@@ -200,7 +205,29 @@ panelHeader.append(panelTitle, panelDescription, stateBox, resetAll);
 
 const controlsContainer = document.createElement("div");
 controlsContainer.className = "cedalion-controls";
-const groups = new Map<string, HTMLFieldSetElement>();
+
+function createSupercategory(name: string): {
+  details: HTMLDetailsElement;
+  content: HTMLDivElement;
+} {
+  const details = document.createElement("details");
+  details.className = "cedalion-supercategory";
+
+  const summary = document.createElement("summary");
+  summary.textContent = name;
+
+  const content = document.createElement("div");
+  content.className = "cedalion-supercategory-content";
+  details.append(summary, content);
+  controlsContainer.append(details);
+  return { details, content };
+}
+
+const globalSupercategory = createSupercategory("Global / Meta");
+const sectionsSupercategory = createSupercategory("Sections");
+const globalCategories = new Map<string, HTMLDivElement>();
+const localizedSections = new Map<string, HTMLDivElement>();
+const globalGroupNames = new Set(["Font sizes", "Alignment", "Dividers"]);
 
 function updateStateBox(): void {
   stateBox.value = JSON.stringify(Object.fromEntries(liveState), null, 2);
@@ -214,18 +241,36 @@ function applyProperty(property: string, value: string): void {
   updateStateBox();
 }
 
-function getGroup(name: string): HTMLFieldSetElement {
-  const existing = groups.get(name);
+function getControlContainer(name: string): HTMLElement {
+  if (globalGroupNames.has(name)) {
+    const existing = globalCategories.get(name);
+    if (existing) return existing;
+
+    const category = document.createElement("details");
+    category.className = "cedalion-category";
+    const summary = document.createElement("summary");
+    summary.textContent = name;
+    const settings = document.createElement("div");
+    settings.className = "cedalion-category-settings";
+    category.append(summary, settings);
+    globalSupercategory.content.append(category);
+    globalCategories.set(name, settings);
+    return settings;
+  }
+
+  const existing = localizedSections.get(name);
   if (existing) return existing;
 
-  const fieldset = document.createElement("fieldset");
-  fieldset.className = "cedalion-group";
-  const legend = document.createElement("legend");
-  legend.textContent = name;
-  fieldset.append(legend);
-  controlsContainer.append(fieldset);
-  groups.set(name, fieldset);
-  return fieldset;
+  const section = document.createElement("details");
+  section.className = "cedalion-section";
+  const summary = document.createElement("summary");
+  summary.textContent = name;
+  const settings = document.createElement("div");
+  settings.className = "cedalion-section-settings";
+  section.append(summary, settings);
+  sectionsSupercategory.content.append(section);
+  localizedSections.set(name, settings);
+  return settings;
 }
 
 controls.forEach((control, index) => {
@@ -327,7 +372,7 @@ controls.forEach((control, index) => {
     setValue(control.defaultValue);
   }
 
-  getGroup(control.group).append(field);
+  getControlContainer(control.group).append(field);
 });
 
 resetAll.addEventListener("click", () => {
