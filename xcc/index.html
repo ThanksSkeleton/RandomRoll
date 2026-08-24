@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/randomroll/favicon.svg" />
+    <title>XCC Competitor Spotlight</title>
+    <style>
+      .xcc-sheet {
+        display: grid;
+        grid-template-rows: minmax(14rem, auto) auto auto;
+        gap: 1rem;
+        width: min(60rem, 100%);
+        min-width: 44rem;
+        margin-inline: auto;
+      }
+
+      .identity-row {
+        display: grid;
+        grid-template-columns: minmax(0, 3fr) minmax(14rem, 2fr);
+        gap: 1rem;
+      }
+
+      .logo-bio {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        gap: 1rem;
+      }
+
+      .xcc-logo {
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        align-items: stretch;
+      }
+
+      .bio {
+        display: grid;
+        align-content: end;
+        gap: 0.5rem;
+      }
+
+      .bio-row {
+        display: grid;
+        grid-template-columns: 8rem minmax(0, 1fr);
+        gap: 0.5rem;
+      }
+
+      .portrait {
+        min-width: 0;
+        min-height: 14rem;
+      }
+
+      .portrait-frame {
+        width: 100%;
+        height: 100%;
+      }
+
+      .stats-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+      }
+
+      .base-stats .stat-line {
+        display: grid;
+        grid-template-columns: minmax(3rem, 1fr) minmax(2rem, 0.5fr) minmax(2rem, 0.5fr);
+        gap: 0.5rem;
+      }
+
+      .secondary-stats .stat-line,
+      .combat-stats .stat-line {
+        display: grid;
+        grid-template-columns: minmax(4rem, 1fr) minmax(0, 1fr);
+        gap: 0.5rem;
+      }
+
+      .base-stats,
+      .secondary-stats,
+      .combat-stats {
+        display: grid;
+        grid-template-rows: repeat(6, minmax(1.5rem, auto));
+      }
+
+      .weapon-row {
+        display: grid;
+        grid-template-columns: max-content minmax(0, 1fr) max-content minmax(0, 0.5fr) max-content minmax(0, 1fr) max-content minmax(0, 1fr);
+        gap: 0.75rem;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <template id="xcc-character-sheet-template">
+      <article class="xcc-sheet">
+        <div class="xcc-sheet-row identity-row">
+          <section class="logo-bio" aria-label="Competitor biography">
+            <header class="xcc-logo">
+              <span class="xcc-logo-name">XCrawl:</span>
+              <span class="xcc-logo-subtitle">Competitor<br />Spotlight</span>
+            </header>
+
+            <div class="bio">
+              <div class="bio-row">
+                <span class="bio-label">Name</span>
+                <span class="bio-value">
+                  <span data-field="firstName">Alice</span>
+                  <span data-field="lastName">Cooper</span>
+                </span>
+              </div>
+              <div class="bio-row">
+                <span class="bio-label">Occupation</span>
+                <span class="bio-value" data-field="professionTitle">Bootblack</span>
+              </div>
+              <div class="bio-row">
+                <span class="bio-label">Olympian Boon</span>
+                <span class="bio-value">Guided by <span data-field="luckySignGod">Hera</span></span>
+              </div>
+            </div>
+          </section>
+
+          <section class="portrait" aria-label="Competitor portrait">
+            <div class="portrait-frame" data-field="portrait"></div>
+          </section>
+        </div>
+
+        <div class="xcc-sheet-row stats-row">
+          <section class="base-stats" aria-label="Base statistics">
+            <div class="stat-line"><span>STR</span><span data-field="strengthScore">13</span><span data-field="strengthMod">+1</span></div>
+            <div class="stat-line"><span>AGI</span><span data-field="agilityScore">14</span><span data-field="agilityMod">+1</span></div>
+            <div class="stat-line"><span>STA</span><span data-field="staminaScore">13</span><span data-field="staminaMod">+1</span></div>
+            <div class="stat-line"><span>PER</span><span data-field="personalityScore">8</span><span data-field="personalityMod">0</span></div>
+            <div class="stat-line"><span>INT</span><span data-field="intelligenceScore">7</span><span data-field="intelligenceMod">-1</span></div>
+            <div class="stat-line"><span>LCK</span><span data-field="luckScore">14</span><span data-field="luckMod">+1</span></div>
+          </section>
+
+          <section class="secondary-stats" aria-label="Secondary statistics">
+            <div class="stat-line"><span>FORT</span><span data-field="fortitudeSave">+1</span></div>
+            <div class="stat-line"><span>REF</span><span data-field="reflexSave">+1</span></div>
+            <div class="stat-line"><span>WILL</span><span data-field="willSave">0</span></div>
+            <div class="stat-line blank" aria-hidden="true"><span>&nbsp;</span><span>&nbsp;</span></div>
+            <div class="stat-line"><span>ALIGN</span><span data-field="alignment">Chaotic</span></div>
+            <div class="stat-line"><span>RACE</span><span data-field="race">Elf</span></div>
+          </section>
+
+          <section class="combat-stats" aria-label="Combat statistics">
+            <div class="stat-line"><span>HP</span><span data-field="hitPoints">1</span></div>
+            <div class="stat-line"><span>AC</span><span data-field="armorClass">11</span></div>
+            <div class="stat-line"><span>INIT</span><span data-field="initiative">+1</span></div>
+            <div class="stat-line"><span>SPEED</span><span data-field="speed">30</span></div>
+            <div class="stat-line blank" aria-hidden="true"><span>&nbsp;</span><span>&nbsp;</span></div>
+            <div class="stat-line"><span>ARMOR</span><span data-field="armorName">Leather</span></div>
+          </section>
+        </div>
+
+        <section class="xcc-sheet-row weapon-row" aria-label="Weapon statistics">
+          <span class="weapon-label">Weapon</span>
+          <span class="weapon-value" data-field="weaponDisplay">Dagger</span>
+          <span class="weapon-label">ATK</span>
+          <span class="weapon-value" data-field="attackBonus">+1</span>
+          <span class="weapon-label">DMG</span>
+          <span class="weapon-value" data-field="weaponDamage">1d4+1</span>
+          <span class="weapon-label">Range</span>
+          <span class="weapon-value" data-field="weaponRange">10/20/30</span>
+        </section>
+      </article>
+    </template>
+
+    <div id="app"></div>
+    <script>
+      const template = document.querySelector("#xcc-character-sheet-template");
+      const app = document.querySelector("#app");
+
+      if (template instanceof HTMLTemplateElement && app) {
+        app.append(template.content.cloneNode(true));
+      }
+    </script>
+  </body>
+</html>
