@@ -46,10 +46,12 @@ type Armor = {
 };
 
 type AdventurerPack = {
-  weaponOfChoice: boolean;
-  includedWeapon: string;
-  armor: string;
   otherEquipment: string[];
+};
+
+type XccLuckySign = DccCoreLuckySign & {
+  when: string;
+  god: string;
 };
 
 const raceNotes = rawRaceNotes as Record<string, RaceNote>;
@@ -79,18 +81,14 @@ const DEFAULT_FAME = 0;
 const DEFAULT_WEALTH = 11;
 const EXTRA_GEAR = "extra piece of gear";
 
-const UNARMED_WEAPON: DccCoreWeapon = {
-  displayName: "Unarmed",
-  underlyingName: "Unarmed",
-  damageBase: "1d3",
-  weaponType: "Melee",
-  range: "0",
-  specialProperties: "",
-};
-
 export type XccCharacter = DccCoreCharacter & {
   firstName: string;
   lastName: string;
+  armorCheckPenalty: number;
+  armorSpeedPenalty: number;
+  armorFumbleDie: string;
+  luckySignWhen: string;
+  luckySignGod: string;
   mojo: number;
   fame: number;
   wealth: number;
@@ -102,6 +100,11 @@ export type XccCharacter = DccCoreCharacter & {
 export type BlankXccCharacter = BlankDccCoreCharacter & {
   firstName: string;
   lastName: string;
+  armorCheckPenalty: number | null;
+  armorSpeedPenalty: number | null;
+  armorFumbleDie: string;
+  luckySignWhen: string;
+  luckySignGod: string;
   mojo: number;
   fame: number;
   wealth: number;
@@ -114,6 +117,11 @@ const BLANK_XCC_CHARACTER: BlankXccCharacter = {
   firstName: "",
   lastName: "",
   ...buildBlankDccCoreCharacter(),
+  armorCheckPenalty: null,
+  armorSpeedPenalty: null,
+  armorFumbleDie: "",
+  luckySignWhen: "",
+  luckySignGod: "",
   mojo: DEFAULT_MOJO,
   fame: DEFAULT_FAME,
   wealth: DEFAULT_WEALTH,
@@ -141,14 +149,12 @@ export function buildXccCharacter(rng: seedrandom.PRNG): XccCharacter {
     : requireMapping(packsByName, occupation.AdventurePack, "adventurer pack");
   const armor = requireMapping(
     armorByName,
-    pack?.armor ?? "Unarmored",
+    occupation.ArmorEquipped === "None"
+      ? "Unarmored"
+      : occupation.ArmorEquipped,
     "armor",
   );
-  const hasShield = pack?.otherEquipment.includes("Shield") ?? false;
-  const shield = hasShield
-    ? requireMapping(armorByName, "Shield", "armor")
-    : undefined;
-  const weapon = chooseWeapon(rng, pack);
+  const weapon = chooseWeapon(rng);
   const alignment = random_multi(rng, [...ALIGNMENTS]);
   const portrait = random_multi(
     rng,
@@ -156,9 +162,9 @@ export function buildXccCharacter(rng: seedrandom.PRNG): XccCharacter {
   );
   const tradeGood = resolveTradeGood(rng, occupation);
   const packContents = pack?.otherEquipment.join(", ") ?? "";
-  const displayedArmor = hasShield
-    ? `${pack?.armor} + Shield`
-    : pack?.armor ?? "Unarmored";
+  const armorName = occupation.ArmorEquipped;
+  const armorAC = BASE_ARMOR_CLASS + armor.acBonus;
+  const rolledLuckySign: { value?: XccLuckySign } = {};
 
   const core = buildDccCoreCharacter(rng, {
     professionTitle: occupation.ProfessionTitle,
@@ -167,25 +173,34 @@ export function buildXccCharacter(rng: seedrandom.PRNG): XccCharacter {
     racialTraits: race.racialTraits,
     languages: race.racialLanguage,
     alignment,
-    armorName: displayedArmor,
-    armorAC: BASE_ARMOR_CLASS + armor.acBonus + (shield?.acBonus ?? 0),
+    armorName,
+    armorAC,
     equipment: occupation.AdventurePack,
     equipment2: "",
     equipment3: tradeGood,
     startingFunds: occupation.StartingFunds,
     weapon,
-    rollLuckySign: rollXccLuckySign,
+    rollLuckySign: luckyRng => {
+      const sign = rollXccLuckySign(luckyRng);
+      rolledLuckySign.value = sign;
+      return sign;
+    },
     baseSpeed:
       race.baseSpeed
-      - armor.speedPenalty
-      - (shield?.speedPenalty ?? 0),
+      - armor.speedPenalty,
   });
+  const luckySign = requireRolledLuckySign(rolledLuckySign.value);
 
   return {
     firstName,
     lastName,
     ...core,
     languages: formatLanguages(race.racialLanguage, core.intelligenceMod),
+    armorCheckPenalty: armor.checkPenalty,
+    armorSpeedPenalty: armor.speedPenalty,
+    armorFumbleDie: `d${armor.fumbleDie}`,
+    luckySignWhen: luckySign.when,
+    luckySignGod: luckySign.god,
     mojo: DEFAULT_MOJO,
     fame: DEFAULT_FAME,
     wealth: DEFAULT_WEALTH,
@@ -195,21 +210,11 @@ export function buildXccCharacter(rng: seedrandom.PRNG): XccCharacter {
   };
 }
 
-function chooseWeapon(
-  rng: seedrandom.PRNG,
-  pack: AdventurerPack | undefined,
-): DccCoreWeapon {
-  if (!pack) {
-    return UNARMED_WEAPON;
-  }
-
-  const weapon = pack.weaponOfChoice
-    ? random_multi(rng, xccWeapons.filter(candidate => candidate.RandomPool))
-    : xccWeapons.find(candidate => candidate.Weapon === pack.includedWeapon);
-
-  if (!weapon) {
-    throw new Error(`No XCC weapon is configured for pack weapon "${pack.includedWeapon}".`);
-  }
+function chooseWeapon(rng: seedrandom.PRNG): DccCoreWeapon {
+  const weapon = random_multi(
+    rng,
+    xccWeapons.filter(candidate => candidate.RandomPool),
+  );
 
   return {
     displayName: weapon.Weapon,
@@ -221,7 +226,7 @@ function chooseWeapon(
   };
 }
 
-function rollXccLuckySign(rng: seedrandom.PRNG): DccCoreLuckySign {
+function rollXccLuckySign(rng: seedrandom.PRNG): XccLuckySign {
   const sign = random_multi(rng, xccLuckySigns);
 
   return {
@@ -238,7 +243,19 @@ function rollXccLuckySign(rng: seedrandom.PRNG): DccCoreLuckySign {
     initiative: sign.Init,
     hitPoints: sign.HP,
     speed: sign.Speed,
+    when: sign.XCCWhen,
+    god: sign.XCCGod,
   };
+}
+
+function requireRolledLuckySign(
+  sign: XccLuckySign | undefined,
+): XccLuckySign {
+  if (!sign) {
+    throw new Error("XCC core generation did not roll a lucky sign.");
+  }
+
+  return sign;
 }
 
 function resolveTradeGood(

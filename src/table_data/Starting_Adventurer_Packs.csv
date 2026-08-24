@@ -1,6 +1,6 @@
-Pack,Weapon Of Choice,Armor,Other equipment
-A,Yes,Armored Jacket,"Backpack, 20’ Rope, sports bottle, ration bar, flashlight"
-B,Yes,Leather,"Backpack, 50’ Rope, grappling hook, 1 day’s iron rations, battery lantern"
-C,Yes,Leather,"Backpack, crowbar, expandable 10’ pole, flashlight"
-D,No,Chainmail Shirt,"Backpack, Shield, 3 Spikes, Mallet, Handaxe"
-E,Yes,"Composite Sport, Light","Waterproof Backpack, Alchemist Charge, Smoke Bomb, Holy Water, Holy Symbol, Bento Box Lunch, Mineral Water, Spellphone"
+Pack,Other equipment
+A,"Backpack, 20’ Rope, sports bottle, ration bar, flashlight"
+B,"Backpack, 50’ Rope, grappling hook, 1 day’s iron rations, battery lantern"
+C,"Backpack, crowbar, expandable 10’ pole, flashlight"
+D,"Backpack, Shield, 3 Spikes, Mallet, Handaxe"
+E,"Waterproof Backpack, Alchemist Charge, Smoke Bomb, Holy Water, Holy Symbol, Bento Box Lunch, Mineral Water, Spellphone"

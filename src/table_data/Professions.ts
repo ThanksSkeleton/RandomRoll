@@ -12,6 +12,7 @@ export const PROFESSIONS_COLUMNS = [
   "Race",
   "AdventurePack",
   "StartingFunds",
+  "ArmorEquipped",
 ] as const;
 
 export type ProfessionsColumn = typeof PROFESSIONS_COLUMNS[number];
@@ -25,6 +26,7 @@ export type ProfessionsRow = {
   Race: string;
   AdventurePack: string;
   StartingFunds: string;
+  ArmorEquipped: string;
 };
 
 export type Profession = Omit<ProfessionsRow, "StartingFunds"> & {

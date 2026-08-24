@@ -200,11 +200,30 @@ describe("XCC character data integrity", () => {
         || packNames.has(occupation.AdventurePack),
       ).toBe(true);
       expect(Number.isFinite(occupation.StartingFunds)).toBe(true);
+      expect(
+        occupation.ArmorEquipped === "None"
+        || armorNames.has(occupation.ArmorEquipped),
+      ).toBe(true);
     }
 
     for (const pack of Object.values(rawXccPacks)) {
-      expect(armorNames.has(pack.armor)).toBe(true);
+      expect(Object.keys(pack)).toEqual(["otherEquipment"]);
     }
+
+    expect(rawXccPacks["Pack D"].otherEquipment).toContain("Shield");
+
+    expect(xccOccupations.find(
+      occupation => occupation.ProfessionTitle === "Half-orc-crawler",
+    )).toMatchObject({
+      TradeGood: "Battleaxe",
+      ArmorEquipped: "Chainmail",
+    });
+    expect(xccOccupations.find(
+      occupation => occupation.ProfessionTitle === "Fitness instructor",
+    )?.TradeGood).toBe("Healthy (+1 Stamina)");
+    expect(xccOccupations.find(
+      occupation => occupation.ProfessionTitle === "Hunter",
+    )?.TradeGood).toBe("longbow & quiver(24)");
   });
 
   it("builds a deterministic, populated XCC character", () => {
@@ -235,8 +254,13 @@ describe("XCC character data integrity", () => {
     });
     expect(character).toHaveProperty("armorName");
     expect(character).toHaveProperty("AC");
+    expect(character).toHaveProperty("armorCheckPenalty");
+    expect(character).toHaveProperty("armorSpeedPenalty");
+    expect(character.armorFumbleDie).toMatch(/^d\d+$/);
     expect(character).not.toHaveProperty("armor");
     expect(character).not.toHaveProperty("armorClass");
+    expect(character).not.toHaveProperty("shieldName");
+    expect(character).not.toHaveProperty("shieldACBonus");
     const pack = occupation?.AdventurePack
       ? rawXccPacks[occupation.AdventurePack as keyof typeof rawXccPacks]
       : undefined;
@@ -252,16 +276,17 @@ describe("XCC character data integrity", () => {
     expect(["Lawful", "Neutral", "Chaotic"]).toContain(character.alignment);
     expect(character.armorAC).toBeGreaterThanOrEqual(10);
     expect(character.hitPoints).toBeGreaterThanOrEqual(1);
-    expect(
-      character.weaponDisplay === "Unarmed"
-      || weaponsNice.some(weapon =>
-        weapon.Source === "XCC"
-        && weapon.Weapon === character.weaponDisplay
-      ),
-    ).toBe(true);
+    expect(weaponsNice.some(weapon =>
+      weapon.Source === "XCC"
+      && weapon.RandomPool
+      && weapon.Weapon === character.weaponDisplay
+    )).toBe(true);
     expect(
       lucky.map(luckyRowToNice).some(sign =>
-        sign.inXCC && sign.XCCName === character.luckySignName
+        sign.inXCC
+        && sign.XCCName === character.luckySignName
+        && sign.XCCWhen === character.luckySignWhen
+        && sign.XCCGod === character.luckySignGod
       ),
     ).toBe(true);
   });
@@ -271,9 +296,19 @@ describe("XCC character data integrity", () => {
     const occupationNames = new Set(
       xccOccupations.map(row => row.ProfessionTitle),
     );
+    const occupationsByName = new Map(
+      xccOccupations.map(row => [row.ProfessionTitle, row]),
+    );
 
     for (let seed = 0; seed < 250; seed++) {
       const character = buildXcc(`xcc-sample-${seed}`).objects[0];
+      const occupation = occupationsByName.get(character.professionTitle);
+      const armorMappingName = occupation?.ArmorEquipped === "None"
+        ? "Unarmored"
+        : occupation?.ArmorEquipped;
+      const armor = rawXccArmor[
+        armorMappingName as keyof typeof rawXccArmor
+      ];
 
       expect(occupationNames.has(character.professionTitle)).toBe(true);
       expect(raceNames.has(character.race)).toBe(true);
@@ -283,6 +318,19 @@ describe("XCC character data integrity", () => {
       expect(character.strengthScore).toBeLessThanOrEqual(18);
       expect(character.equipment2).toBe("");
       expect(character.languages).toContain("English");
+      expect(character.armorName).toBe(occupation?.ArmorEquipped);
+      expect(character.armorAC).toBe(10 + armor.acBonus);
+      expect(character.armorCheckPenalty).toBe(armor.checkPenalty);
+      expect(character.armorSpeedPenalty).toBe(armor.speedPenalty);
+      expect(character.armorFumbleDie).toBe(`d${armor.fumbleDie}`);
+
+      expect(weaponsNice.some(weapon =>
+        weapon.Source === "XCC"
+        && weapon.RandomPool
+        && weapon.Weapon === character.weaponDisplay
+      )).toBe(true);
+      expect(character).not.toHaveProperty("shieldName");
+      expect(character).not.toHaveProperty("shieldACBonus");
     }
   });
 });
@@ -331,6 +379,11 @@ describe("DCC core", () => {
       equipment3: "",
       startingFunds: null,
       packContents: "",
+      armorCheckPenalty: null,
+      armorSpeedPenalty: null,
+      armorFumbleDie: "",
+      luckySignWhen: "",
+      luckySignGod: "",
     });
     expect(xccCharacter).not.toHaveProperty("adventurerPack");
   });

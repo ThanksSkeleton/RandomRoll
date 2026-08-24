@@ -1,32 +1,17 @@
 {
   "Pack A": {
-    "weaponOfChoice": true,
-    "includedWeapon": "",
-    "armor": "Armored Jacket",
     "otherEquipment": ["Backpack", "20’ Rope", "sports bottle", "ration bar", "flashlight"]
   },
   "Pack B": {
-    "weaponOfChoice": true,
-    "includedWeapon": "",
-    "armor": "Leather",
     "otherEquipment": ["Backpack", "50’ Rope", "grappling hook", "1 day’s iron rations", "battery lantern"]
   },
   "Pack C": {
-    "weaponOfChoice": true,
-    "includedWeapon": "",
-    "armor": "Leather",
     "otherEquipment": ["Backpack", "crowbar", "expandable 10’ pole", "flashlight"]
   },
   "Pack D": {
-    "weaponOfChoice": false,
-    "includedWeapon": "Handaxe",
-    "armor": "Chainmail Shirt",
     "otherEquipment": ["Backpack", "Shield", "3 Spikes", "Mallet", "Handaxe"]
   },
   "Pack E": {
-    "weaponOfChoice": true,
-    "includedWeapon": "",
-    "armor": "Composite Sport, Light",
     "otherEquipment": ["Waterproof Backpack", "Alchemist Charge", "Smoke Bomb", "Holy Water", "Holy Symbol", "Bento Box Lunch", "Mineral Water", "Spellphone"]
   }
 }
