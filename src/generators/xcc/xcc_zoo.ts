@@ -2,9 +2,14 @@ import { buildXccSheet } from "./populate_xcc_template";
 import { default_build } from "./xcc_impl";
 
 const specimens = [
-  { seed: "stripe-0", label: "No banner — Human non-Noble" },
-  { seed: "stripe-7", label: "Race banner — Gnome" },
+  { seed: "race-0", label: "No banner — Human non-Noble" },
   { seed: "stripe-139", label: "Noble banner — Human Nobility" },
+  { seed: "race-1", label: "Nonhuman banner — Dwarf" },
+  { seed: "race-81", label: "Nonhuman banner — Elf" },
+  { seed: "race-24", label: "Nonhuman banner — Gnome" },
+  { seed: "race-57", label: "Nonhuman banner — Half-Elf" },
+  { seed: "race-55", label: "Nonhuman banner — Half-Orc" },
+  { seed: "race-18", label: "Nonhuman banner — Halfling" },
 ] as const;
 
 const app = document.querySelector<HTMLElement>("#app");
@@ -104,7 +109,6 @@ const portraitShapeOptions = [
 ] as const;
 
 const controls: CedalionControl[] = [
-  { kind: "numeric", group: "Font sizes", label: "Content font size", property: "--xcc-content-font-size", defaultValue: 0.84, min: 0.35, max: 4, step: 0.01, unit: "rem" },
   { kind: "numeric", group: "Font sizes", label: "XCrawl logo font size", property: "--xcc-logo-name-font-size", defaultValue: 3.56, min: 0.5, max: 8, step: 0.01, unit: "rem" },
   { kind: "numeric", group: "Font sizes", label: "Spotlight subtitle font size", property: "--xcc-logo-subtitle-font-size", defaultValue: 1.24, min: 0.35, max: 6, step: 0.01, unit: "rem" },
   { kind: "numeric", group: "Font sizes", label: "Banner font size", property: "--identity-stripe-font-size", defaultValue: 3.23, min: 0.25, max: 5, step: 0.01, unit: "rem" },
@@ -119,7 +123,7 @@ const controls: CedalionControl[] = [
   { kind: "numeric", group: "Banner geometry", label: "Banner width", property: "--identity-stripe-width", defaultValue: 188, min: 10, max: 500, step: 1, unit: "%" },
   { kind: "numeric", group: "Banner geometry", label: "Banner height", property: "--identity-stripe-height", defaultValue: 5.56, min: 0.25, max: 15, step: 0.01, unit: "rem" },
 
-  { kind: "numeric", group: "Bio", label: "Bio font size", property: "--xcc-bio-font-size", defaultValue: 1.19, min: 0.25, max: 5, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Bio", label: "Bio font size", property: "--xcc-bio-font-size", defaultValue: 1.03, min: 0.25, max: 5, step: 0.01, unit: "rem" },
   { kind: "choice", group: "Bio", label: "Whole bio horizontal alignment", property: "--xcc-bio-horizontal-alignment", defaultValue: "center", options: blockAlignmentOptions },
   { kind: "choice", group: "Bio", label: "Label column text alignment", property: "--xcc-bio-label-text-align", defaultValue: "left", options: textAlignmentOptions },
   { kind: "choice", group: "Bio", label: "Value column text alignment", property: "--xcc-bio-value-text-align", defaultValue: "right", options: textAlignmentOptions },
@@ -191,10 +195,17 @@ const controls: CedalionControl[] = [
   { kind: "numeric", group: "Divider — Stats / Weapon-Armor", label: "Height", property: "--xcc-divider-stats-weapon-armor-height", defaultValue: 0.1, min: 0, max: 5, step: 0.01, unit: "rem" },
   { kind: "numeric", group: "Divider — Stats / Weapon-Armor", label: "Top margin", property: "--xcc-divider-stats-weapon-armor-margin-top", defaultValue: -1.82, min: -15, max: 15, step: 0.01, unit: "rem" },
   { kind: "numeric", group: "Divider — Stats / Weapon-Armor", label: "Bottom margin", property: "--xcc-divider-stats-weapon-armor-margin-bottom", defaultValue: 0, min: -15, max: 15, step: 0.01, unit: "rem" },
+
+  { kind: "color", group: "Banner colors — Nonhuman", label: "Dwarf banner", property: "--stripe-dwarf", defaultValue: "#8a4b2a" },
+  { kind: "color", group: "Banner colors — Nonhuman", label: "Elf banner", property: "--stripe-elf", defaultValue: "#276749" },
+  { kind: "color", group: "Banner colors — Nonhuman", label: "Gnome banner", property: "--stripe-gnome", defaultValue: "#654a91" },
+  { kind: "color", group: "Banner colors — Nonhuman", label: "Half-Elf banner", property: "--stripe-half-elf", defaultValue: "#246f78" },
+  { kind: "color", group: "Banner colors — Nonhuman", label: "Half-Orc banner", property: "--stripe-half-orc", defaultValue: "#87364a" },
+  { kind: "color", group: "Banner colors — Nonhuman", label: "Halfling banner", property: "--stripe-halfling", defaultValue: "#8a6b20" },
 ];
 
 type D1TextCategory = {
-  id: "logo" | "yellow" | "white" | "stripe";
+  id: "logo" | "yellow" | "white" | "nonhuman-stripe" | "noble-stripe";
   group: string;
   defaults: {
     face: string;
@@ -260,8 +271,24 @@ const d1TextCategories: readonly D1TextCategory[] = [
     },
   },
   {
-    id: "stripe",
-    group: "Artistic Text — Stripe",
+    id: "nonhuman-stripe",
+    group: "Artistic Text — Nonhuman Banner",
+    defaults: {
+      face: "#ffffff",
+      edgeColor: "#000000",
+      edgeThickness: 1,
+      iterations: 0,
+      xStep: 0.6,
+      yStep: -0.45,
+      nearColor: "#000000",
+      farColor: "#050b55",
+      transition: 0.25,
+      nearHold: 1,
+    },
+  },
+  {
+    id: "noble-stripe",
+    group: "Artistic Text — Noble Banner",
     defaults: {
       face: "#ffffff",
       edgeColor: "#000000",
@@ -295,6 +322,28 @@ for (const category of d1TextCategories) {
     { kind: "numeric", group: category.group, label: "Near-color hold", property: d1Property(category, "near-hold"), defaultValue: category.defaults.nearHold, min: 0, max: 32, step: 1, unit: "" },
   );
 }
+
+const portraitFrameD1Defaults = {
+  borderColor: "#d8c52b",
+  iterations: 8,
+  xStep: 0.5,
+  yStep: 1.25,
+  nearColor: "#bd9f32",
+  farColor: "#0b17c1",
+  transition: 0.66,
+  nearHold: 4,
+} as const;
+
+controls.push(
+  { kind: "color", group: "Artistic Portrait Frame", label: "Frame color", property: "--xcc-portrait-frame-d1-border-color", defaultValue: portraitFrameD1Defaults.borderColor },
+  { kind: "numeric", group: "Artistic Portrait Frame", label: "Shadow iterations", property: "--xcc-portrait-frame-d1-iterations", defaultValue: portraitFrameD1Defaults.iterations, min: 0, max: 32, step: 1, unit: "" },
+  { kind: "numeric", group: "Artistic Portrait Frame", label: "Horizontal step per iteration", property: "--xcc-portrait-frame-d1-x-step", defaultValue: portraitFrameD1Defaults.xStep, min: -8, max: 12, step: 0.05, unit: "px" },
+  { kind: "numeric", group: "Artistic Portrait Frame", label: "Vertical step per iteration", property: "--xcc-portrait-frame-d1-y-step", defaultValue: portraitFrameD1Defaults.yStep, min: -8, max: 12, step: 0.05, unit: "px" },
+  { kind: "color", group: "Artistic Portrait Frame", label: "Near shadow color", property: "--xcc-portrait-frame-d1-near-color", defaultValue: portraitFrameD1Defaults.nearColor },
+  { kind: "color", group: "Artistic Portrait Frame", label: "Far shadow color", property: "--xcc-portrait-frame-d1-far-color", defaultValue: portraitFrameD1Defaults.farColor },
+  { kind: "numeric", group: "Artistic Portrait Frame", label: "Color transition", property: "--xcc-portrait-frame-d1-transition", defaultValue: portraitFrameD1Defaults.transition, min: 0, max: 1, step: 0.01, unit: "" },
+  { kind: "numeric", group: "Artistic Portrait Frame", label: "Near-color hold", property: "--xcc-portrait-frame-d1-near-hold", defaultValue: portraitFrameD1Defaults.nearHold, min: 0, max: 32, step: 1, unit: "" },
+);
 
 const liveState = new Map<string, string>();
 const fieldResets: Array<() => void> = [];
@@ -386,8 +435,68 @@ function refreshD1Style(category: D1TextCategory): void {
   }
 }
 
+function refreshPortraitFrameD1Style(): void {
+  const properties = {
+    borderColor: "--xcc-portrait-frame-d1-border-color",
+    iterations: "--xcc-portrait-frame-d1-iterations",
+    xStep: "--xcc-portrait-frame-d1-x-step",
+    yStep: "--xcc-portrait-frame-d1-y-step",
+    nearColor: "--xcc-portrait-frame-d1-near-color",
+    farColor: "--xcc-portrait-frame-d1-far-color",
+    transition: "--xcc-portrait-frame-d1-transition",
+    nearHold: "--xcc-portrait-frame-d1-near-hold",
+  } as const;
+
+  if (Object.values(properties).some((property) => !liveState.has(property))) {
+    return;
+  }
+
+  const numericValue = (property: string): number =>
+    Number.parseFloat(liveState.get(property) ?? "0");
+  const borderColor = liveState.get(properties.borderColor) ?? portraitFrameD1Defaults.borderColor;
+  const iterations = Math.max(0, Math.round(numericValue(properties.iterations)));
+  const xStep = numericValue(properties.xStep);
+  const yStep = numericValue(properties.yStep);
+  const nearColor = liveState.get(properties.nearColor) ?? portraitFrameD1Defaults.nearColor;
+  const farColor = liveState.get(properties.farColor) ?? portraitFrameD1Defaults.farColor;
+  const transition = numericValue(properties.transition);
+  const nearHold = Math.max(0, Math.round(numericValue(properties.nearHold)));
+  const shadows: string[] = [];
+
+  for (let iteration = 1; iteration <= iterations; iteration += 1) {
+    let colorAmount = 0;
+    if (iteration > nearHold) {
+      const rawAmount = (iteration - nearHold) / Math.max(1, iterations - nearHold);
+      if (transition <= 0) {
+        colorAmount = 1;
+      } else if (transition >= 1) {
+        colorAmount = rawAmount >= 1 ? 1 : 0;
+      } else {
+        const gamma = Math.log(0.5) / Math.log(Math.max(0.001, transition));
+        colorAmount = Math.pow(rawAmount, gamma);
+      }
+    }
+
+    const color = mixHexColors(
+      nearColor,
+      farColor,
+      Math.min(1, Math.max(0, colorAmount)),
+    );
+    shadows.push(`${formatPixelValue(xStep * iteration)}px ${formatPixelValue(yStep * iteration)}px 0 0 ${color}`);
+  }
+
+  for (const sheet of sheets) {
+    sheet.style.setProperty("--xcc-portrait-border-color", borderColor);
+    sheet.style.setProperty(
+      "--xcc-portrait-frame-box-shadow",
+      shadows.length > 0 ? shadows.join(", ") : "none",
+    );
+  }
+}
+
 function refreshD1Styles(): void {
   for (const category of d1TextCategories) refreshD1Style(category);
+  refreshPortraitFrameD1Style();
 }
 
 const panel = document.createElement("aside");
