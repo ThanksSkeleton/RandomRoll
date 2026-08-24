@@ -119,7 +119,7 @@
           </section>
 
           <section class="portrait" aria-label="Competitor portrait">
-            <div class="portrait-frame" data-field="portrait"></div>
+            <div class="portrait-frame" data-field="portrait" role="img"></div>
           </section>
         </div>
 
@@ -166,13 +166,6 @@
     </template>
 
     <div id="app"></div>
-    <script>
-      const template = document.querySelector("#xcc-character-sheet-template");
-      const app = document.querySelector("#app");
-
-      if (template instanceof HTMLTemplateElement && app) {
-        app.append(template.content.cloneNode(true));
-      }
-    </script>
+    <script type="module" src="/src/generators/xcc/xcc.ts"></script>
   </body>
 </html>

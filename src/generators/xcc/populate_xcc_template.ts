@@ -1,0 +1,116 @@
+import type { XccCharacter } from "./xcc_impl";
+
+export function buildXccSheet(characters: XccCharacter[]): HTMLElement {
+  if (characters.length !== 1) {
+    throw new Error(`XCC sheet renderer requires one character; received ${characters.length}.`);
+  }
+
+  const template = document.querySelector<HTMLTemplateElement>(
+    "#xcc-character-sheet-template",
+  );
+
+  if (!template) {
+    throw new Error('Missing template: "#xcc-character-sheet-template"');
+  }
+
+  return populateXccTemplate(template, characters[0]);
+}
+
+export function populateXccTemplate(
+  template: HTMLTemplateElement,
+  character: XccCharacter,
+): HTMLElement {
+  const fragment = template.content.cloneNode(true) as DocumentFragment;
+  const root = fragment.querySelector<HTMLElement>(".xcc-sheet");
+
+  if (!root) {
+    throw new Error('Template must contain an element with class ".xcc-sheet".');
+  }
+
+  setText(root, "firstName", character.firstName);
+  setText(root, "lastName", character.lastName);
+  setText(root, "professionTitle", character.professionTitle);
+  setText(root, "luckySignGod", character.luckySignGod);
+  setPortrait(root, character);
+
+  setText(root, "strengthScore", character.strengthScore);
+  setText(root, "strengthMod", formatModifier(character.strengthMod));
+  setText(root, "agilityScore", character.agilityScore);
+  setText(root, "agilityMod", formatModifier(character.agilityMod));
+  setText(root, "staminaScore", character.staminaScore);
+  setText(root, "staminaMod", formatModifier(character.staminaMod));
+  setText(root, "personalityScore", character.personalityScore);
+  setText(root, "personalityMod", formatModifier(character.personalityMod));
+  setText(root, "intelligenceScore", character.intelligenceScore);
+  setText(root, "intelligenceMod", formatModifier(character.intelligenceMod));
+  setText(root, "luckScore", character.luckScore);
+  setText(root, "luckMod", formatModifier(character.luckMod));
+
+  setText(root, "fortitudeSave", formatModifier(character.saveFort));
+  setText(root, "reflexSave", formatModifier(character.saveReflex));
+  setText(root, "willSave", formatModifier(character.saveWill));
+  setText(root, "alignment", character.alignment);
+  setText(root, "race", character.race);
+
+  setText(root, "hitPoints", character.hitPoints);
+  setText(root, "armorClass", character.AC);
+  setText(root, "initiative", formatModifier(character.initiative));
+  setText(root, "speed", character.speed);
+  setText(root, "armorName", character.armorName);
+
+  setText(root, "weaponDisplay", character.weaponDisplay);
+  setText(root, "attackBonus", formatModifier(character.attackMod));
+  setText(
+    root,
+    "weaponDamage",
+    formatDamage(character.weaponDamageBase, character.attackDamageMod),
+  );
+  setText(root, "weaponRange", character.weaponRange || "—");
+
+  return root;
+}
+
+function setText(root: ParentNode, field: string, value: string | number): void {
+  getField(root, field).textContent = String(value);
+}
+
+function setPortrait(root: ParentNode, character: XccCharacter): void {
+  const portrait = getField(root, "portrait");
+
+  portrait.dataset.portrait = character.portraitImagePath;
+  portrait.dataset.actor = character.portraitActorName;
+  portrait.setAttribute(
+    "aria-label",
+    `Competitor portrait represented by ${character.portraitActorName}`,
+  );
+  portrait.style.backgroundImage = `url("${cssUrlEscape(character.portraitImagePath)}")`;
+  portrait.style.backgroundSize = "cover";
+  portrait.style.backgroundPosition = "center";
+  portrait.style.backgroundRepeat = "no-repeat";
+}
+
+function getField(root: ParentNode, field: string): HTMLElement {
+  const element = root.querySelector<HTMLElement>(`[data-field="${field}"]`);
+
+  if (!element) {
+    throw new Error(`Template is missing data-field="${field}".`);
+  }
+
+  return element;
+}
+
+function formatModifier(value: number): string {
+  return value > 0 ? `+${value}` : String(value);
+}
+
+function formatDamage(baseDamage: string, damageMod: number): string {
+  if (damageMod === 0) {
+    return baseDamage;
+  }
+
+  return `${baseDamage}${formatModifier(damageMod)}`;
+}
+
+function cssUrlEscape(value: string): string {
+  return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+}
