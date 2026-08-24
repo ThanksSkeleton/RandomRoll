@@ -105,8 +105,8 @@ const portraitShapeOptions = [
 
 const controls: CedalionControl[] = [
   { kind: "numeric", group: "Font sizes", label: "Content font size", property: "--xcc-content-font-size", defaultValue: 0.84, min: 0.35, max: 4, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Font sizes", label: "XCrawl logo font size", property: "--xcc-logo-name-font-size", defaultValue: 3.29, min: 0.5, max: 8, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Font sizes", label: "Spotlight subtitle font size", property: "--xcc-logo-subtitle-font-size", defaultValue: 1.47, min: 0.35, max: 6, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Font sizes", label: "XCrawl logo font size", property: "--xcc-logo-name-font-size", defaultValue: 3.56, min: 0.5, max: 8, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Font sizes", label: "Spotlight subtitle font size", property: "--xcc-logo-subtitle-font-size", defaultValue: 1.24, min: 0.35, max: 6, step: 0.01, unit: "rem" },
   { kind: "numeric", group: "Font sizes", label: "Banner font size", property: "--identity-stripe-font-size", defaultValue: 3.23, min: 0.25, max: 5, step: 0.01, unit: "rem" },
   { kind: "choice", group: "Alignment", label: "All sheet text alignment", property: "--xcc-text-align", defaultValue: "left", options: textAlignmentOptions },
   { kind: "choice", group: "Alignment", label: "Logo horizontal alignment", property: "--xcc-logo-horizontal-alignment", defaultValue: "start", options: elementAlignmentOptions },
@@ -160,18 +160,37 @@ const controls: CedalionControl[] = [
   { kind: "numeric", group: "Weapon / Armor", label: "Left value column width weight", property: "--xcc-weapon-left-value-column-weight", defaultValue: 2.1, min: 0.1, max: 10, step: 0.01, unit: "fr" },
   { kind: "numeric", group: "Weapon / Armor", label: "Right value column width weight", property: "--xcc-weapon-right-value-column-weight", defaultValue: 2.06, min: 0.1, max: 10, step: 0.01, unit: "fr" },
 
-  { kind: "numeric", group: "Dividers", label: "Vertical divider width", property: "--xcc-vertical-divider-width", defaultValue: 0.1, min: 0, max: 5, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Dividers", label: "Vertical divider height", property: "--xcc-vertical-divider-height", defaultValue: 100, min: 0, max: 300, step: 1, unit: "%" },
-  { kind: "numeric", group: "Dividers", label: "Horizontal divider width", property: "--xcc-horizontal-divider-width", defaultValue: 100, min: 0, max: 300, step: 1, unit: "%" },
-  { kind: "numeric", group: "Dividers", label: "Horizontal divider height", property: "--xcc-horizontal-divider-height", defaultValue: 0.1, min: 0, max: 5, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Dividers", label: "Vertical divider left/right padding", property: "--xcc-vertical-divider-padding-inline", defaultValue: 0, min: 0, max: 15, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Dividers", label: "Horizontal divider up/down padding", property: "--xcc-horizontal-divider-padding-block", defaultValue: 0, min: 0, max: 15, step: 0.01, unit: "rem" },
-  { kind: "color", group: "Dividers", label: "Shared divider color", property: "--xcc-divider-color", defaultValue: "#d8c52b" },
-  { kind: "toggle", group: "Dividers", label: "Divider between XCrawl and Competitor Spotlight", property: "--xcc-divider-logo-name-subtitle-display", defaultValue: false, enabledValue: "block", disabledValue: "none" },
-  { kind: "toggle", group: "Dividers", label: "Divider between logo section and bio section", property: "--xcc-divider-logo-bio-display", defaultValue: false, enabledValue: "block", disabledValue: "none" },
-  { kind: "toggle", group: "Dividers", label: "Divider between bio section and stats section", property: "--xcc-divider-bio-stats-display", defaultValue: false, enabledValue: "block", disabledValue: "none" },
-  { kind: "toggle", group: "Dividers", label: "Divider between base and secondary stats columns", property: "--xcc-divider-stats-columns-display", defaultValue: false, enabledValue: "block", disabledValue: "none" },
-  { kind: "toggle", group: "Dividers", label: "Divider between stats and weapon/armor sections", property: "--xcc-divider-stats-weapon-armor-display", defaultValue: false, enabledValue: "block", disabledValue: "none" },
+  { kind: "color", group: "Divider styling", label: "Shared divider color", property: "--xcc-divider-color", defaultValue: "#d8c52b" },
+
+  { kind: "toggle", group: "Divider — XCrawl / Spotlight", label: "Show divider", property: "--xcc-divider-logo-name-subtitle-display", defaultValue: false, enabledValue: "block", disabledValue: "none" },
+  { kind: "numeric", group: "Divider — XCrawl / Spotlight", label: "Width", property: "--xcc-divider-logo-name-subtitle-width", defaultValue: 0.1, min: 0, max: 5, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Divider — XCrawl / Spotlight", label: "Height", property: "--xcc-divider-logo-name-subtitle-height", defaultValue: 100, min: 0, max: 300, step: 1, unit: "%" },
+  { kind: "numeric", group: "Divider — XCrawl / Spotlight", label: "Left margin", property: "--xcc-divider-logo-name-subtitle-margin-left", defaultValue: 0, min: -15, max: 15, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Divider — XCrawl / Spotlight", label: "Right margin", property: "--xcc-divider-logo-name-subtitle-margin-right", defaultValue: 0, min: -15, max: 15, step: 0.01, unit: "rem" },
+
+  { kind: "toggle", group: "Divider — Logo / Bio", label: "Show divider", property: "--xcc-divider-logo-bio-display", defaultValue: false, enabledValue: "block", disabledValue: "none" },
+  { kind: "numeric", group: "Divider — Logo / Bio", label: "Width", property: "--xcc-divider-logo-bio-width", defaultValue: 100, min: 0, max: 300, step: 1, unit: "%" },
+  { kind: "numeric", group: "Divider — Logo / Bio", label: "Height", property: "--xcc-divider-logo-bio-height", defaultValue: 0.1, min: 0, max: 5, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Divider — Logo / Bio", label: "Top margin", property: "--xcc-divider-logo-bio-margin-top", defaultValue: -2.09, min: -15, max: 15, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Divider — Logo / Bio", label: "Bottom margin", property: "--xcc-divider-logo-bio-margin-bottom", defaultValue: -0.21, min: -15, max: 15, step: 0.01, unit: "rem" },
+
+  { kind: "toggle", group: "Divider — Bio / Stats", label: "Show divider", property: "--xcc-divider-bio-stats-display", defaultValue: true, enabledValue: "block", disabledValue: "none" },
+  { kind: "numeric", group: "Divider — Bio / Stats", label: "Width", property: "--xcc-divider-bio-stats-width", defaultValue: 100, min: 0, max: 300, step: 1, unit: "%" },
+  { kind: "numeric", group: "Divider — Bio / Stats", label: "Height", property: "--xcc-divider-bio-stats-height", defaultValue: 0.1, min: 0, max: 5, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Divider — Bio / Stats", label: "Top margin", property: "--xcc-divider-bio-stats-margin-top", defaultValue: -1.02, min: -15, max: 15, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Divider — Bio / Stats", label: "Bottom margin", property: "--xcc-divider-bio-stats-margin-bottom", defaultValue: 0, min: -15, max: 15, step: 0.01, unit: "rem" },
+
+  { kind: "toggle", group: "Divider — Stats Columns", label: "Show divider", property: "--xcc-divider-stats-columns-display", defaultValue: false, enabledValue: "block", disabledValue: "none" },
+  { kind: "numeric", group: "Divider — Stats Columns", label: "Width", property: "--xcc-divider-stats-columns-width", defaultValue: 0.1, min: 0, max: 5, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Divider — Stats Columns", label: "Height", property: "--xcc-divider-stats-columns-height", defaultValue: 100, min: 0, max: 300, step: 1, unit: "%" },
+  { kind: "numeric", group: "Divider — Stats Columns", label: "Left margin", property: "--xcc-divider-stats-columns-margin-left", defaultValue: 0, min: -15, max: 15, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Divider — Stats Columns", label: "Right margin", property: "--xcc-divider-stats-columns-margin-right", defaultValue: 0, min: -15, max: 15, step: 0.01, unit: "rem" },
+
+  { kind: "toggle", group: "Divider — Stats / Weapon-Armor", label: "Show divider", property: "--xcc-divider-stats-weapon-armor-display", defaultValue: true, enabledValue: "block", disabledValue: "none" },
+  { kind: "numeric", group: "Divider — Stats / Weapon-Armor", label: "Width", property: "--xcc-divider-stats-weapon-armor-width", defaultValue: 100, min: 0, max: 300, step: 1, unit: "%" },
+  { kind: "numeric", group: "Divider — Stats / Weapon-Armor", label: "Height", property: "--xcc-divider-stats-weapon-armor-height", defaultValue: 0.1, min: 0, max: 5, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Divider — Stats / Weapon-Armor", label: "Top margin", property: "--xcc-divider-stats-weapon-armor-margin-top", defaultValue: -1.82, min: -15, max: 15, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Divider — Stats / Weapon-Armor", label: "Bottom margin", property: "--xcc-divider-stats-weapon-armor-margin-bottom", defaultValue: 0, min: -15, max: 15, step: 0.01, unit: "rem" },
 ];
 
 const liveState = new Map<string, string>();
@@ -227,7 +246,7 @@ const globalSupercategory = createSupercategory("Global / Meta");
 const sectionsSupercategory = createSupercategory("Sections");
 const globalCategories = new Map<string, HTMLDivElement>();
 const localizedSections = new Map<string, HTMLDivElement>();
-const globalGroupNames = new Set(["Font sizes", "Alignment", "Dividers"]);
+const globalGroupNames = new Set(["Font sizes", "Alignment", "Divider styling"]);
 
 function updateStateBox(): void {
   stateBox.value = JSON.stringify(Object.fromEntries(liveState), null, 2);
@@ -376,6 +395,11 @@ controls.forEach((control, index) => {
 });
 
 resetAll.addEventListener("click", () => {
+  const confirmed = window.confirm(
+    "Reset every Cedalion setting to its baked default?",
+  );
+  if (!confirmed) return;
+
   for (const reset of fieldResets) reset();
 });
 

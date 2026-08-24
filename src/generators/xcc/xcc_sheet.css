@@ -4,25 +4,39 @@
   --xcc-yellow: #d8c52b;
   --xcc-white: #e4e2d4;
   --xcc-content-font-size: 0.84rem;
-  --xcc-logo-name-font-size: 3.29rem;
-  --xcc-logo-subtitle-font-size: 1.47rem;
+  --xcc-logo-name-font-size: 3.56rem;
+  --xcc-logo-subtitle-font-size: 1.24rem;
   --xcc-text-align: left;
   --xcc-logo-horizontal-alignment: start;
   --xcc-portrait-horizontal-alignment: end;
   --xcc-portrait-border-width: 0.7rem;
   --xcc-portrait-border-radius: 0rem;
-  --xcc-vertical-divider-width: 0.1rem;
-  --xcc-vertical-divider-height: 100%;
-  --xcc-horizontal-divider-width: 100%;
-  --xcc-horizontal-divider-height: 0.1rem;
-  --xcc-vertical-divider-padding-inline: 0rem;
-  --xcc-horizontal-divider-padding-block: 0rem;
   --xcc-divider-color: #d8c52b;
   --xcc-divider-logo-name-subtitle-display: none;
+  --xcc-divider-logo-name-subtitle-width: 0.1rem;
+  --xcc-divider-logo-name-subtitle-height: 100%;
+  --xcc-divider-logo-name-subtitle-margin-left: 0rem;
+  --xcc-divider-logo-name-subtitle-margin-right: 0rem;
   --xcc-divider-logo-bio-display: none;
-  --xcc-divider-bio-stats-display: none;
+  --xcc-divider-logo-bio-width: 100%;
+  --xcc-divider-logo-bio-height: 0.1rem;
+  --xcc-divider-logo-bio-margin-top: -2.09rem;
+  --xcc-divider-logo-bio-margin-bottom: -0.21rem;
+  --xcc-divider-bio-stats-display: block;
+  --xcc-divider-bio-stats-width: 100%;
+  --xcc-divider-bio-stats-height: 0.1rem;
+  --xcc-divider-bio-stats-margin-top: -1.02rem;
+  --xcc-divider-bio-stats-margin-bottom: 0rem;
   --xcc-divider-stats-columns-display: none;
-  --xcc-divider-stats-weapon-armor-display: none;
+  --xcc-divider-stats-columns-width: 0.1rem;
+  --xcc-divider-stats-columns-height: 100%;
+  --xcc-divider-stats-columns-margin-left: 0rem;
+  --xcc-divider-stats-columns-margin-right: 0rem;
+  --xcc-divider-stats-weapon-armor-display: block;
+  --xcc-divider-stats-weapon-armor-width: 100%;
+  --xcc-divider-stats-weapon-armor-height: 0.1rem;
+  --xcc-divider-stats-weapon-armor-margin-top: -1.82rem;
+  --xcc-divider-stats-weapon-armor-margin-bottom: 0rem;
   --identity-stripe-bottom: -14.24rem;
   --identity-stripe-left: 6.31rem;
   --identity-stripe-width: 188%;
@@ -169,31 +183,76 @@
   align-self: center;
   justify-self: center;
   height: 100%;
-  padding-inline: var(--xcc-vertical-divider-padding-inline);
 }
 
 .xcc-divider--vertical .xcc-divider-line {
-  width: var(--xcc-vertical-divider-width);
-  height: var(--xcc-vertical-divider-height);
+  margin: auto;
 }
 
 .xcc-divider--horizontal {
   align-self: center;
   justify-self: center;
   width: 100%;
-  padding-block: var(--xcc-horizontal-divider-padding-block);
 }
 
 .xcc-divider--horizontal .xcc-divider-line {
-  width: var(--xcc-horizontal-divider-width);
-  height: var(--xcc-horizontal-divider-height);
+  margin: auto;
 }
 
-.xcc-divider--logo-name-subtitle { display: var(--xcc-divider-logo-name-subtitle-display); }
-.xcc-divider--logo-bio { display: var(--xcc-divider-logo-bio-display); }
-.xcc-divider--bio-stats { display: var(--xcc-divider-bio-stats-display); }
-.xcc-divider--stats-columns { display: var(--xcc-divider-stats-columns-display); }
-.xcc-divider--stats-weapon-armor { display: var(--xcc-divider-stats-weapon-armor-display); }
+.xcc-divider--logo-name-subtitle {
+  display: var(--xcc-divider-logo-name-subtitle-display);
+  margin-left: var(--xcc-divider-logo-name-subtitle-margin-left);
+  margin-right: var(--xcc-divider-logo-name-subtitle-margin-right);
+}
+
+.xcc-divider--logo-name-subtitle .xcc-divider-line {
+  width: var(--xcc-divider-logo-name-subtitle-width);
+  height: var(--xcc-divider-logo-name-subtitle-height);
+}
+
+.xcc-divider--logo-bio {
+  display: var(--xcc-divider-logo-bio-display);
+  margin-top: var(--xcc-divider-logo-bio-margin-top);
+  margin-bottom: var(--xcc-divider-logo-bio-margin-bottom);
+}
+
+.xcc-divider--logo-bio .xcc-divider-line {
+  width: var(--xcc-divider-logo-bio-width);
+  height: var(--xcc-divider-logo-bio-height);
+}
+
+.xcc-divider--bio-stats {
+  display: var(--xcc-divider-bio-stats-display);
+  margin-top: var(--xcc-divider-bio-stats-margin-top);
+  margin-bottom: var(--xcc-divider-bio-stats-margin-bottom);
+}
+
+.xcc-divider--bio-stats .xcc-divider-line {
+  width: var(--xcc-divider-bio-stats-width);
+  height: var(--xcc-divider-bio-stats-height);
+}
+
+.xcc-divider--stats-columns {
+  display: var(--xcc-divider-stats-columns-display);
+  margin-left: var(--xcc-divider-stats-columns-margin-left);
+  margin-right: var(--xcc-divider-stats-columns-margin-right);
+}
+
+.xcc-divider--stats-columns .xcc-divider-line {
+  width: var(--xcc-divider-stats-columns-width);
+  height: var(--xcc-divider-stats-columns-height);
+}
+
+.xcc-divider--stats-weapon-armor {
+  display: var(--xcc-divider-stats-weapon-armor-display);
+  margin-top: var(--xcc-divider-stats-weapon-armor-margin-top);
+  margin-bottom: var(--xcc-divider-stats-weapon-armor-margin-bottom);
+}
+
+.xcc-divider--stats-weapon-armor .xcc-divider-line {
+  width: var(--xcc-divider-stats-weapon-armor-width);
+  height: var(--xcc-divider-stats-weapon-armor-height);
+}
 
 .bio {
   display: grid;
