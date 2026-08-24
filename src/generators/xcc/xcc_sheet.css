@@ -3,34 +3,44 @@
   --xcc-blue-dark: #050b55;
   --xcc-yellow: #d8c52b;
   --xcc-white: #e4e2d4;
-  --xcc-content-font-size: 1.25rem;
+  --xcc-content-font-size: 0.84rem;
   --xcc-logo-name-font-size: 3.29rem;
-  --xcc-logo-subtitle-font-size: 1.16rem;
+  --xcc-logo-subtitle-font-size: 1.47rem;
   --xcc-text-align: left;
   --xcc-logo-horizontal-alignment: start;
   --xcc-portrait-horizontal-alignment: end;
+  --xcc-portrait-border-width: 0.7rem;
+  --xcc-portrait-border-radius: 0rem;
+  --xcc-divider-width: 0.1rem;
+  --xcc-divider-color: #d8c52b;
+  --xcc-divider-logo-name-subtitle-style: none;
+  --xcc-divider-logo-bio-style: none;
+  --xcc-divider-bio-stats-style: none;
+  --xcc-divider-stats-columns-style: none;
+  --xcc-divider-stats-weapon-armor-style: none;
   --identity-stripe-bottom: -14.24rem;
   --identity-stripe-left: 6.31rem;
   --identity-stripe-width: 188%;
   --identity-stripe-height: 5.56rem;
   --identity-stripe-font-size: 3.23rem;
   --identity-stripe-label-horizontal-alignment: center;
-  --xcc-bio-font-size: 1.08rem;
+  --xcc-bio-font-size: 1.19rem;
   --xcc-bio-horizontal-alignment: center;
   --xcc-bio-label-text-align: left;
   --xcc-bio-value-text-align: right;
   --xcc-bio-row-vertical-alignment: center;
-  --xcc-bio-label-column-width: 11.46rem;
+  --xcc-bio-label-column-width: 10.19rem;
   --xcc-bio-column-gap: 0.5rem;
   --xcc-bio-row-gap: 0.65rem;
   --xcc-stats-font-size: 1.6rem;
   --xcc-stats-horizontal-alignment: stretch;
   --xcc-stats-row-vertical-alignment: center;
+  --xcc-stats-row-gap: 1.87rem;
   --xcc-stats-column-gap: 3.97rem;
   --xcc-stats-base-column-weight: 1.64fr;
   --xcc-stats-secondary-column-weight: 1.64fr;
-  --xcc-base-stats-vertical-alignment: stretch;
-  --xcc-secondary-stats-vertical-alignment: stretch;
+  --xcc-base-stats-vertical-alignment: start;
+  --xcc-secondary-stats-vertical-alignment: start;
   --xcc-base-stat-column-gap: 2.34rem;
   --xcc-secondary-stat-column-gap: 1.24rem;
   --xcc-base-stat-label-column-weight: 2.84fr;
@@ -41,12 +51,12 @@
   --xcc-base-stat-modifier-text-align: right;
   --xcc-secondary-stat-label-text-align: right;
   --xcc-secondary-stat-value-text-align: right;
-  --xcc-weapon-armor-font-size: 1.14rem;
+  --xcc-weapon-armor-font-size: 1.32rem;
   --xcc-weapon-armor-horizontal-alignment: center;
   --xcc-weapon-armor-row-vertical-alignment: end;
   --xcc-weapon-armor-column-gap: 1.32rem;
-  --xcc-weapon-armor-row-gap: 1.21rem;
-  --xcc-weapon-left-value-column-weight: 2.34fr;
+  --xcc-weapon-armor-row-gap: 0.79rem;
+  --xcc-weapon-left-value-column-weight: 2.1fr;
   --xcc-weapon-right-value-column-weight: 2.06fr;
   --xcc-weapon-left-label-text-align: right;
   --xcc-weapon-left-value-text-align: left;
@@ -101,6 +111,7 @@
   display: grid;
   grid-template-rows: auto auto;
   gap: 2rem;
+  border-bottom: var(--xcc-divider-width) var(--xcc-divider-bio-stats-style) var(--xcc-divider-color);
 }
 
 .xcc-logo {
@@ -123,12 +134,17 @@
 .xcc-logo-name {
   color: var(--xcc-white);
   font-size: var(--xcc-logo-name-font-size);
+  border-inline-end: var(--xcc-divider-width) var(--xcc-divider-logo-name-subtitle-style) var(--xcc-divider-color);
 }
 
 .xcc-logo-subtitle {
   min-width: 0;
   color: var(--xcc-yellow);
   font-size: var(--xcc-logo-subtitle-font-size);
+}
+
+.xcc-logo {
+  border-bottom: var(--xcc-divider-width) var(--xcc-divider-logo-bio-style) var(--xcc-divider-color);
 }
 
 .bio {
@@ -186,7 +202,8 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  border: 0.2rem solid var(--xcc-yellow);
+  border: var(--xcc-portrait-border-width) solid var(--xcc-yellow);
+  border-radius: var(--xcc-portrait-border-radius);
   background-color: var(--xcc-blue-dark);
   box-shadow: 0.35rem 0.35rem 0 var(--xcc-blue-dark);
 }
@@ -204,6 +221,7 @@
   column-gap: var(--xcc-stats-column-gap);
   min-height: 0;
   font-size: var(--xcc-stats-font-size);
+  border-bottom: var(--xcc-divider-width) var(--xcc-divider-stats-weapon-armor-style) var(--xcc-divider-color);
 }
 
 .base-stats .stat-line {
@@ -222,11 +240,13 @@
 .secondary-stats {
   display: grid;
   grid-template-rows: repeat(7, minmax(1.5rem, auto));
+  row-gap: var(--xcc-stats-row-gap);
 }
 
 .base-stats {
   grid-column: 1;
   align-self: var(--xcc-base-stats-vertical-alignment);
+  border-inline-end: var(--xcc-divider-width) var(--xcc-divider-stats-columns-style) var(--xcc-divider-color);
 }
 
 .secondary-stats {

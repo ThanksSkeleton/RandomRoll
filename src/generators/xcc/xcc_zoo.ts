@@ -47,7 +47,25 @@ type ChoiceControl = {
   options: ReadonlyArray<{ label: string; value: string }>;
 };
 
-type CedalionControl = NumericControl | ChoiceControl;
+type ColorControl = {
+  kind: "color";
+  group: string;
+  label: string;
+  property: string;
+  defaultValue: string;
+};
+
+type ToggleControl = {
+  kind: "toggle";
+  group: string;
+  label: string;
+  property: string;
+  defaultValue: boolean;
+  enabledValue: string;
+  disabledValue: string;
+};
+
+type CedalionControl = NumericControl | ChoiceControl | ColorControl | ToggleControl;
 
 const textAlignmentOptions = [
   { label: "Left", value: "left" },
@@ -80,33 +98,41 @@ const verticalColumnAlignmentOptions = [
   { label: "Bottom", value: "end" },
 ] as const;
 
+const portraitShapeOptions = [
+  { label: "Square", value: "0rem" },
+  { label: "Rounded", value: "1.5rem" },
+] as const;
+
 const controls: CedalionControl[] = [
-  { kind: "numeric", group: "Font sizes", label: "Content font size", property: "--xcc-content-font-size", defaultValue: 1.25, min: 0.35, max: 4, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Font sizes", label: "Content font size", property: "--xcc-content-font-size", defaultValue: 0.84, min: 0.35, max: 4, step: 0.01, unit: "rem" },
   { kind: "numeric", group: "Font sizes", label: "XCrawl logo font size", property: "--xcc-logo-name-font-size", defaultValue: 3.29, min: 0.5, max: 8, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Font sizes", label: "Spotlight subtitle font size", property: "--xcc-logo-subtitle-font-size", defaultValue: 1.16, min: 0.35, max: 6, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Font sizes", label: "Spotlight subtitle font size", property: "--xcc-logo-subtitle-font-size", defaultValue: 1.47, min: 0.35, max: 6, step: 0.01, unit: "rem" },
   { kind: "numeric", group: "Font sizes", label: "Banner font size", property: "--identity-stripe-font-size", defaultValue: 3.23, min: 0.25, max: 5, step: 0.01, unit: "rem" },
   { kind: "choice", group: "Alignment", label: "All sheet text alignment", property: "--xcc-text-align", defaultValue: "left", options: textAlignmentOptions },
   { kind: "choice", group: "Alignment", label: "Logo horizontal alignment", property: "--xcc-logo-horizontal-alignment", defaultValue: "start", options: elementAlignmentOptions },
   { kind: "choice", group: "Alignment", label: "Portrait horizontal alignment", property: "--xcc-portrait-horizontal-alignment", defaultValue: "end", options: elementAlignmentOptions },
   { kind: "choice", group: "Alignment", label: "Banner label horizontal alignment", property: "--identity-stripe-label-horizontal-alignment", defaultValue: "center", options: elementAlignmentOptions },
+  { kind: "numeric", group: "Portrait", label: "Portrait border width", property: "--xcc-portrait-border-width", defaultValue: 0.7, min: 0, max: 5, step: 0.01, unit: "rem" },
+  { kind: "choice", group: "Portrait", label: "Portrait border shape", property: "--xcc-portrait-border-radius", defaultValue: "0rem", options: portraitShapeOptions },
   { kind: "numeric", group: "Banner geometry", label: "Banner bottom offset", property: "--identity-stripe-bottom", defaultValue: -14.24, min: -15, max: 15, step: 0.01, unit: "rem" },
   { kind: "numeric", group: "Banner geometry", label: "Banner left offset", property: "--identity-stripe-left", defaultValue: 6.31, min: -15, max: 15, step: 0.01, unit: "rem" },
   { kind: "numeric", group: "Banner geometry", label: "Banner width", property: "--identity-stripe-width", defaultValue: 188, min: 10, max: 500, step: 1, unit: "%" },
   { kind: "numeric", group: "Banner geometry", label: "Banner height", property: "--identity-stripe-height", defaultValue: 5.56, min: 0.25, max: 15, step: 0.01, unit: "rem" },
 
-  { kind: "numeric", group: "Bio", label: "Bio font size", property: "--xcc-bio-font-size", defaultValue: 1.08, min: 0.25, max: 5, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Bio", label: "Bio font size", property: "--xcc-bio-font-size", defaultValue: 1.19, min: 0.25, max: 5, step: 0.01, unit: "rem" },
   { kind: "choice", group: "Bio", label: "Whole bio horizontal alignment", property: "--xcc-bio-horizontal-alignment", defaultValue: "center", options: blockAlignmentOptions },
   { kind: "choice", group: "Bio", label: "Label column text alignment", property: "--xcc-bio-label-text-align", defaultValue: "left", options: textAlignmentOptions },
   { kind: "choice", group: "Bio", label: "Value column text alignment", property: "--xcc-bio-value-text-align", defaultValue: "right", options: textAlignmentOptions },
   { kind: "choice", group: "Bio", label: "Label/value vertical alignment", property: "--xcc-bio-row-vertical-alignment", defaultValue: "center", options: rowAlignmentOptions },
-  { kind: "numeric", group: "Bio", label: "Label column width", property: "--xcc-bio-label-column-width", defaultValue: 11.46, min: 0.5, max: 30, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Bio", label: "Label column width", property: "--xcc-bio-label-column-width", defaultValue: 10.19, min: 0.5, max: 30, step: 0.01, unit: "rem" },
   { kind: "numeric", group: "Bio", label: "Gap between label/value columns", property: "--xcc-bio-column-gap", defaultValue: 0.5, min: 0, max: 15, step: 0.01, unit: "rem" },
   { kind: "numeric", group: "Bio", label: "Gap between bio rows", property: "--xcc-bio-row-gap", defaultValue: 0.65, min: 0, max: 15, step: 0.01, unit: "rem" },
 
   { kind: "numeric", group: "Stats", label: "Stats font size", property: "--xcc-stats-font-size", defaultValue: 1.6, min: 0.25, max: 5, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Stats", label: "Vertical gap between stat rows", property: "--xcc-stats-row-gap", defaultValue: 1.87, min: 0, max: 10, step: 0.01, unit: "rem" },
   { kind: "choice", group: "Stats", label: "Whole stats block horizontal alignment", property: "--xcc-stats-horizontal-alignment", defaultValue: "stretch", options: blockAlignmentOptions },
-  { kind: "choice", group: "Stats", label: "Base stats column vertical alignment", property: "--xcc-base-stats-vertical-alignment", defaultValue: "stretch", options: verticalColumnAlignmentOptions },
-  { kind: "choice", group: "Stats", label: "Secondary stats column vertical alignment", property: "--xcc-secondary-stats-vertical-alignment", defaultValue: "stretch", options: verticalColumnAlignmentOptions },
+  { kind: "choice", group: "Stats", label: "Base stats column vertical alignment", property: "--xcc-base-stats-vertical-alignment", defaultValue: "start", options: verticalColumnAlignmentOptions },
+  { kind: "choice", group: "Stats", label: "Secondary stats column vertical alignment", property: "--xcc-secondary-stats-vertical-alignment", defaultValue: "start", options: verticalColumnAlignmentOptions },
   { kind: "choice", group: "Stats", label: "Cells within each stats row", property: "--xcc-stats-row-vertical-alignment", defaultValue: "center", options: rowAlignmentOptions },
   { kind: "choice", group: "Stats", label: "Base label column text alignment", property: "--xcc-base-stat-label-text-align", defaultValue: "left", options: textAlignmentOptions },
   { kind: "choice", group: "Stats", label: "Base score column text alignment", property: "--xcc-base-stat-score-text-align", defaultValue: "right", options: textAlignmentOptions },
@@ -122,7 +148,7 @@ const controls: CedalionControl[] = [
   { kind: "numeric", group: "Stats", label: "Base score column width weight", property: "--xcc-base-stat-score-column-weight", defaultValue: 1.87, min: 0.1, max: 10, step: 0.01, unit: "fr" },
   { kind: "numeric", group: "Stats", label: "Base modifier column width weight", property: "--xcc-base-stat-modifier-column-weight", defaultValue: 1.95, min: 0.1, max: 10, step: 0.01, unit: "fr" },
 
-  { kind: "numeric", group: "Weapon / Armor", label: "Weapon/armor font size", property: "--xcc-weapon-armor-font-size", defaultValue: 1.14, min: 0.25, max: 5, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Weapon / Armor", label: "Weapon/armor font size", property: "--xcc-weapon-armor-font-size", defaultValue: 1.32, min: 0.25, max: 5, step: 0.01, unit: "rem" },
   { kind: "choice", group: "Weapon / Armor", label: "Whole weapon/armor block horizontal alignment", property: "--xcc-weapon-armor-horizontal-alignment", defaultValue: "center", options: blockAlignmentOptions },
   { kind: "choice", group: "Weapon / Armor", label: "Cells within each weapon/armor row", property: "--xcc-weapon-armor-row-vertical-alignment", defaultValue: "end", options: rowAlignmentOptions },
   { kind: "choice", group: "Weapon / Armor", label: "Left label column text alignment", property: "--xcc-weapon-left-label-text-align", defaultValue: "right", options: textAlignmentOptions },
@@ -130,9 +156,17 @@ const controls: CedalionControl[] = [
   { kind: "choice", group: "Weapon / Armor", label: "Right label column text alignment", property: "--xcc-weapon-right-label-text-align", defaultValue: "right", options: textAlignmentOptions },
   { kind: "choice", group: "Weapon / Armor", label: "Right value column text alignment", property: "--xcc-weapon-right-value-text-align", defaultValue: "right", options: textAlignmentOptions },
   { kind: "numeric", group: "Weapon / Armor", label: "Gap between weapon/armor columns", property: "--xcc-weapon-armor-column-gap", defaultValue: 1.32, min: 0, max: 15, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Weapon / Armor", label: "Gap between weapon/armor rows", property: "--xcc-weapon-armor-row-gap", defaultValue: 1.21, min: 0, max: 15, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Weapon / Armor", label: "Left value column width weight", property: "--xcc-weapon-left-value-column-weight", defaultValue: 2.34, min: 0.1, max: 10, step: 0.01, unit: "fr" },
+  { kind: "numeric", group: "Weapon / Armor", label: "Gap between weapon/armor rows", property: "--xcc-weapon-armor-row-gap", defaultValue: 0.79, min: 0, max: 15, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Weapon / Armor", label: "Left value column width weight", property: "--xcc-weapon-left-value-column-weight", defaultValue: 2.1, min: 0.1, max: 10, step: 0.01, unit: "fr" },
   { kind: "numeric", group: "Weapon / Armor", label: "Right value column width weight", property: "--xcc-weapon-right-value-column-weight", defaultValue: 2.06, min: 0.1, max: 10, step: 0.01, unit: "fr" },
+
+  { kind: "numeric", group: "Dividers", label: "Shared divider width", property: "--xcc-divider-width", defaultValue: 0.1, min: 0, max: 3, step: 0.01, unit: "rem" },
+  { kind: "color", group: "Dividers", label: "Shared divider color", property: "--xcc-divider-color", defaultValue: "#d8c52b" },
+  { kind: "toggle", group: "Dividers", label: "Divider between XCrawl and Competitor Spotlight", property: "--xcc-divider-logo-name-subtitle-style", defaultValue: false, enabledValue: "solid", disabledValue: "none" },
+  { kind: "toggle", group: "Dividers", label: "Divider between logo section and bio section", property: "--xcc-divider-logo-bio-style", defaultValue: false, enabledValue: "solid", disabledValue: "none" },
+  { kind: "toggle", group: "Dividers", label: "Divider between bio section and stats section", property: "--xcc-divider-bio-stats-style", defaultValue: false, enabledValue: "solid", disabledValue: "none" },
+  { kind: "toggle", group: "Dividers", label: "Divider between base and secondary stats columns", property: "--xcc-divider-stats-columns-style", defaultValue: false, enabledValue: "solid", disabledValue: "none" },
+  { kind: "toggle", group: "Dividers", label: "Divider between stats and weapon/armor sections", property: "--xcc-divider-stats-weapon-armor-style", defaultValue: false, enabledValue: "solid", disabledValue: "none" },
 ];
 
 const liveState = new Map<string, string>();
@@ -238,7 +272,7 @@ controls.forEach((control, index) => {
     fieldResets.push(() => setValue(control.defaultValue));
     field.append(range, exact, reset);
     setValue(control.defaultValue);
-  } else {
+  } else if (control.kind === "choice") {
     const select = document.createElement("select");
     select.id = inputId;
     for (const optionDefinition of control.options) {
@@ -257,6 +291,39 @@ controls.forEach((control, index) => {
     reset.addEventListener("click", () => setValue(control.defaultValue));
     fieldResets.push(() => setValue(control.defaultValue));
     field.append(select, reset);
+    setValue(control.defaultValue);
+  } else if (control.kind === "color") {
+    const color = document.createElement("input");
+    color.id = inputId;
+    color.type = "color";
+
+    const setValue = (value: string): void => {
+      color.value = value;
+      applyProperty(control.property, value);
+    };
+
+    color.addEventListener("input", () => setValue(color.value));
+    reset.addEventListener("click", () => setValue(control.defaultValue));
+    fieldResets.push(() => setValue(control.defaultValue));
+    field.append(color, reset);
+    setValue(control.defaultValue);
+  } else {
+    const toggle = document.createElement("input");
+    toggle.id = inputId;
+    toggle.type = "checkbox";
+
+    const setValue = (value: boolean): void => {
+      toggle.checked = value;
+      applyProperty(
+        control.property,
+        value ? control.enabledValue : control.disabledValue,
+      );
+    };
+
+    toggle.addEventListener("change", () => setValue(toggle.checked));
+    reset.addEventListener("click", () => setValue(control.defaultValue));
+    fieldResets.push(() => setValue(control.defaultValue));
+    field.append(toggle, reset);
     setValue(control.defaultValue);
   }
 
