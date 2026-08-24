@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { build_super_export } from "../generators/supers/supers_impl";
-import { default_build } from "../generators/dcc/dcc_impl";
+import { default_build as buildDccStudents } from "../generators/dcc_students/dcc_students_impl";
+import {
+  abilityModifier,
+  buildBlankDccCoreCharacter,
+} from "../generators/dcc_core/dcc_core";
+import { buildBlankXccCharacter } from "../generators/xcc/xcc_impl";
 
 import { type ItemsNice, type ItemsRow, toItemsNice } from "../table_data/Items";
 import rawItems from "../table_data/Items.json";
@@ -142,6 +147,42 @@ describe("Lucky sign variants", () => {
   });
 });
 
+describe("DCC core", () => {
+  it("uses the DCC ability modifier table", () => {
+    expect([
+      3, 4, 5, 6, 7, 8, 12, 13, 15, 16, 17, 18,
+    ].map(abilityModifier)).toEqual([
+      -3, -2, -2, -1, -1, 0, 0, 1, 1, 2, 2, 3,
+    ]);
+  });
+
+  it("provides the common blank shape consumed by XCC", () => {
+    expect(buildBlankXccCharacter()).toMatchObject(
+      buildBlankDccCoreCharacter(),
+    );
+  });
+});
+
+describe("DCC student seed compatibility", () => {
+  it("preserves the established student roll sequence", () => {
+    const output = buildDccStudents("refactor-check");
+
+    expect(output.objects.map(character => ({
+      firstName: character.firstName,
+      lastName: character.lastName,
+      luckySignName: character.luckySignName,
+      studentId: character.studentId,
+      dob: character.dob_string,
+      expiry: character.expiry_string,
+    }))).toEqual([
+      { firstName: "Karen", lastName: "Obrien", luckySignName: "The Lovers", studentId: "257", dob: "06/28/1969", expiry: "02/07/1987" },
+      { firstName: "Iris", lastName: "Tanner", luckySignName: "The Hierophant", studentId: "253", dob: "03/19/1969", expiry: "03/16/1987" },
+      { firstName: "Sergio", lastName: "Strong", luckySignName: "Temperance", studentId: "102", dob: "11/03/1969", expiry: "08/04/1987" },
+      { firstName: "Lara", lastName: "Brennan", luckySignName: "Queen of Cups", studentId: "193", dob: "02/01/1969", expiry: "05/06/1987" },
+    ]);
+  });
+});
+
 describe("All UTs", () => {
 
   it("IATW Powers test", () => {
@@ -155,7 +196,7 @@ describe("All UTs", () => {
   });
 
   it("DCC Students test", () => {
-      let output = default_build("TEST");
+      let output = buildDccStudents("TEST");
       console.debug(output);
       // expect(output[0][0]).toBe("Daichi");
       // expect(output[1][0]).toBe("Hiroshi");

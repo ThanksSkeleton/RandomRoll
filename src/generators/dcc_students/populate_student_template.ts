@@ -1,4 +1,4 @@
-import type { StudentCharacter } from "./dcc_impl";
+import type { StudentCharacter } from "./dcc_students_impl";
 
 
 export function build_grid(characters: StudentCharacter[]): HTMLElement {

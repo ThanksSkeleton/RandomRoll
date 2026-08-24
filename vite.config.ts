@@ -10,7 +10,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, "index.html"),
         colors: resolve(__dirname, "colors/index.html"),
-        dcc: resolve(__dirname, "dcc/index.html"),
+        dcc_students: resolve(__dirname, "dcc_students/index.html"),
         masks: resolve(__dirname, "masks/index.html"),
         swn: resolve(__dirname, "swn/index.html"),
         supers: resolve(__dirname, "supers/index.html"),
