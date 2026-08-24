@@ -15,6 +15,7 @@ export default defineConfig({
         swn: resolve(__dirname, "swn/index.html"),
         supers: resolve(__dirname, "supers/index.html"),
         xcc: resolve(__dirname, "xcc/index.html"),
+        xcc_zoo: resolve(__dirname, "xcc_zoo/index.html"),
         xcc_debug: resolve(__dirname, "xcc_debug/index.html"),
       },
     },

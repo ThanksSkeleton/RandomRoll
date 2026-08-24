@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/randomroll/favicon.svg" />
+    <title>XCC Character Sheet Zoo</title>
+    <style>
+      .xcc-sheet {
+        --xcc-blue: #0819a0;
+        --xcc-blue-dark: #050b55;
+        --xcc-yellow: #d8c52b;
+        --xcc-white: #e4e2d4;
+        --xcc-content-font-size: 0.9rem;
+        --stripe-dwarf: #8a4b2a;
+        --stripe-elf: #276749;
+        --stripe-gnome: #654a91;
+        --stripe-half-elf: #246f78;
+        --stripe-half-orc: #87364a;
+        --stripe-halfling: #8a6b20;
+        --stripe-noble: #6f3b8f;
+        --xcc-condensed: "Arial Narrow", "Liberation Sans Narrow", "Ubuntu Sans", Arial, sans-serif;
+        --xcc-heavy: "Arial Black", "Lato Heavy", "Arial Narrow", "Liberation Sans Narrow", Arial, sans-serif;
+
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 1rem;
+        width: min(60rem, 100%);
+        min-width: 44rem;
+        aspect-ratio: 4 / 3;
+        margin-inline: auto;
+        padding: 1.75rem 2rem 1.5rem;
+        box-sizing: border-box;
+        overflow: hidden;
+        color: var(--xcc-yellow);
+        background: var(--xcc-blue);
+        font-family: var(--xcc-condensed);
+        font-size: var(--xcc-content-font-size);
+        font-weight: 700;
+        line-height: 1.05;
+        letter-spacing: 0.015em;
+        text-align: left;
+        text-transform: uppercase;
+      }
+
+      .xcc-sheet *,
+      .xcc-sheet *::before,
+      .xcc-sheet *::after {
+        box-sizing: border-box;
+      }
+
+      .everything-else-column {
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr) auto;
+        gap: 1.25rem;
+        min-width: 0;
+        min-height: 0;
+      }
+
+      .logo-bio {
+        display: grid;
+        grid-template-rows: auto auto;
+        gap: 2rem;
+      }
+
+      .xcc-logo {
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        align-items: center;
+        gap: 0.9rem;
+        min-width: 0;
+      }
+
+      .xcc-logo-name,
+      .xcc-logo-subtitle {
+        font-family: var(--xcc-heavy);
+        font-weight: 900;
+        line-height: 0.9;
+        text-shadow: 0.22rem 0.22rem 0 var(--xcc-blue-dark);
+      }
+
+      .xcc-logo-name {
+        color: var(--xcc-white);
+        font-size: 2.45rem;
+      }
+
+      .xcc-logo-subtitle {
+        min-width: 0;
+        color: var(--xcc-yellow);
+        font-size: 1.55rem;
+      }
+
+      .bio {
+        display: grid;
+        gap: 0.65rem;
+      }
+
+      .bio-row {
+        display: grid;
+        grid-template-columns: 7rem minmax(0, 1fr);
+        gap: 0.5rem;
+        align-items: baseline;
+      }
+
+      .bio-label,
+      .weapon-label,
+      .stat-line > span:first-child {
+        color: var(--xcc-white);
+        text-shadow: 0.14rem 0.14rem 0 var(--xcc-blue-dark);
+      }
+
+      .bio-label {
+        white-space: nowrap;
+      }
+
+      .bio-value {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .bio-value,
+      .weapon-armor-value,
+      .stat-line > span:not(:first-child) {
+        font-family: var(--xcc-heavy);
+        font-weight: 900;
+        text-shadow: 0.2rem 0.2rem 0 var(--xcc-blue-dark);
+      }
+
+      .portrait-column {
+        position: relative;
+        width: auto;
+        height: 100%;
+        min-width: 0;
+        min-height: 0;
+        aspect-ratio: 2 / 3;
+        justify-self: end;
+        align-self: stretch;
+      }
+
+      .portrait-frame {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        border: 0.2rem solid var(--xcc-yellow);
+        background-color: var(--xcc-blue-dark);
+        box-shadow: 0.35rem 0.35rem 0 var(--xcc-blue-dark);
+      }
+
+      .portrait-image {
+        width: 100%;
+        height: 100%;
+        filter: grayscale(1);
+      }
+
+      .stats-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 1rem;
+        min-height: 0;
+      }
+
+      .base-stats .stat-line {
+        display: grid;
+        grid-template-columns: minmax(3rem, 1fr) minmax(2rem, 0.5fr) minmax(2rem, 0.5fr);
+        gap: 0.5rem;
+      }
+
+      .secondary-stats .stat-line {
+        display: grid;
+        grid-template-columns: max-content minmax(0, 1fr);
+        gap: 0.5rem;
+      }
+
+      .base-stats,
+      .secondary-stats {
+        display: grid;
+        grid-template-rows: repeat(7, minmax(1.5rem, auto));
+      }
+
+      .base-stats {
+        grid-column: 1;
+      }
+
+      .secondary-stats {
+        grid-column: 2;
+      }
+
+      .base-stats .stat-line.wide-value {
+        grid-template-columns: minmax(3rem, 1fr) minmax(0, 1.5fr);
+      }
+
+      .stat-line {
+        align-items: baseline;
+      }
+
+      .stat-line.blank {
+        visibility: hidden;
+      }
+
+      .weapon-armor-section {
+        display: grid;
+        grid-template-columns: max-content minmax(0, 1fr) max-content minmax(0, 1fr);
+        column-gap: 0.75rem;
+        row-gap: 0.65rem;
+        align-items: center;
+      }
+
+      .weapon-armor-value {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .armor-value {
+        grid-column: 2 / -1;
+      }
+
+      .identity-stripe {
+        position: absolute;
+        z-index: 2;
+        bottom: -2.25rem;
+        left: 0;
+        display: grid;
+        place-items: center;
+        width: 175%;
+        height: 3rem;
+        padding-inline: 4rem;
+        color: var(--xcc-white);
+        background: var(--stripe-noble);
+        font-family: var(--xcc-heavy);
+        font-weight: 900;
+        letter-spacing: 0.06em;
+        text-align: center;
+        text-shadow: 0.18rem 0.18rem 0 var(--xcc-blue-dark);
+        transform: rotate(-45deg);
+        transform-origin: left bottom;
+        pointer-events: none;
+      }
+
+      .identity-stripe[hidden] {
+        display: none;
+      }
+
+      .identity-stripe[data-stripe-kind="Dwarf"] { background: var(--stripe-dwarf); }
+      .identity-stripe[data-stripe-kind="Elf"] { background: var(--stripe-elf); }
+      .identity-stripe[data-stripe-kind="Gnome"] { background: var(--stripe-gnome); }
+      .identity-stripe[data-stripe-kind="Half-Elf"] { background: var(--stripe-half-elf); }
+      .identity-stripe[data-stripe-kind="Half-Orc"] { background: var(--stripe-half-orc); }
+      .identity-stripe[data-stripe-kind="Halfling"] { background: var(--stripe-halfling); }
+      .identity-stripe[data-stripe-kind="Noble"] { background: var(--stripe-noble); }
+
+      @media (max-width: 1024px) {
+        .xcc-sheet {
+          padding: 1.4rem 1.5rem 1.25rem;
+        }
+
+        .xcc-logo-name {
+          font-size: 2rem;
+        }
+
+        .xcc-logo-subtitle {
+          font-size: 1.3rem;
+        }
+
+        .everything-else-column {
+          gap: 0.75rem;
+        }
+
+        .logo-bio {
+          gap: 1rem;
+        }
+      }
+      .zoo-page {
+        min-width: 46rem;
+        margin: 0;
+        padding: 1.5rem;
+        background: #111;
+        color: #e4e2d4;
+        font-family: system-ui, sans-serif;
+      }
+
+      .zoo-header,
+      .zoo-specimens {
+        width: min(64rem, 100%);
+        margin-inline: auto;
+      }
+
+      .zoo-header {
+        margin-bottom: 2rem;
+      }
+
+      .zoo-header h1 {
+        margin: 0 0 0.5rem;
+      }
+
+      .zoo-header p,
+      .zoo-specimen h2 {
+        margin: 0;
+      }
+
+      .zoo-specimens {
+        display: grid;
+        gap: 3rem;
+      }
+
+      .zoo-specimen {
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      .zoo-specimen h2 {
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+      }
+    </style>
+  </head>
+  <body class="zoo-page">
+    <header class="zoo-header">
+      <h1>XCC Character Sheet Zoo</h1>
+      <p>Three fixed specimens for Cedalion tuning: no banner, race banner, and Noble banner.</p>
+    </header>
+
+    <template id="xcc-character-sheet-template">
+      <article class="xcc-sheet">
+        <div class="everything-else-column">
+          <section class="logo-bio" aria-label="Competitor biography">
+            <header class="xcc-logo">
+              <span class="xcc-logo-name">XCrawl</span>
+              <span class="xcc-logo-subtitle">Competitor<br />Spotlight</span>
+            </header>
+
+            <div class="bio">
+              <div class="bio-row">
+                <span class="bio-label">Name</span>
+                <span class="bio-value">
+                  <span data-field="firstName">Alice</span>
+                  <span data-field="lastName">Cooper</span>
+                </span>
+              </div>
+              <div class="bio-row">
+                <span class="bio-label">Occupation</span>
+                <span class="bio-value" data-field="professionTitle">Bootblack</span>
+              </div>
+              <div class="bio-row">
+                <span class="bio-label">Olympian Boon</span>
+                <span class="bio-value" data-field="luckySignName">Guided by Hera</span>
+              </div>
+            </div>
+          </section>
+
+          <div class="xcc-sheet-row stats-row">
+            <section class="base-stats" aria-label="Base statistics">
+              <div class="stat-line"><span>STR</span><span data-field="strengthScore">13</span><span data-field="strengthMod">+1</span></div>
+              <div class="stat-line"><span>AGI</span><span data-field="agilityScore">14</span><span data-field="agilityMod">+1</span></div>
+              <div class="stat-line"><span>STA</span><span data-field="staminaScore">13</span><span data-field="staminaMod">+1</span></div>
+              <div class="stat-line"><span>PER</span><span data-field="personalityScore">8</span><span data-field="personalityMod">0</span></div>
+              <div class="stat-line"><span>INT</span><span data-field="intelligenceScore">7</span><span data-field="intelligenceMod">-1</span></div>
+              <div class="stat-line"><span>LCK</span><span data-field="luckScore">14</span><span data-field="luckMod">+1</span></div>
+              <div class="stat-line wide-value"><span>ALIGN</span><span data-field="alignment">Chaotic</span></div>
+            </section>
+
+            <section class="secondary-stats" aria-label="Secondary statistics">
+              <div class="stat-line"><span>FORT</span><span data-field="fortitudeSave">+1</span></div>
+              <div class="stat-line"><span>REF</span><span data-field="reflexSave">+1</span></div>
+              <div class="stat-line"><span>WILL</span><span data-field="willSave">0</span></div>
+              <div class="stat-line"><span>HP</span><span data-field="hitPoints">1</span></div>
+              <div class="stat-line"><span>AC</span><span data-field="armorClass">11</span></div>
+              <div class="stat-line"><span>INIT</span><span data-field="initiative">+1</span></div>
+              <div class="stat-line"><span>SPEED</span><span data-field="speed">30</span></div>
+            </section>
+          </div>
+
+          <section class="weapon-armor-section" aria-label="Weapon and armor statistics">
+            <span class="weapon-label">Weapon</span>
+            <span class="weapon-armor-value" data-field="weaponDisplay">Dagger</span>
+            <span class="weapon-label">ATK</span>
+            <span class="weapon-armor-value" data-field="attackBonus">+1</span>
+            <span class="weapon-label">DMG</span>
+            <span class="weapon-armor-value" data-field="weaponDamage">1d4+1</span>
+            <span class="weapon-label">Range</span>
+            <span class="weapon-armor-value" data-field="weaponRange">10/20/30</span>
+            <span class="weapon-label">Armor</span>
+            <span class="weapon-armor-value armor-value" data-field="armorName">Armored Jacket</span>
+          </section>
+        </div>
+
+        <div class="portrait-column" aria-label="Competitor portrait">
+          <div class="portrait-frame">
+            <div class="portrait-image" data-field="portrait" role="img"></div>
+          </div>
+          <div class="identity-stripe" data-field="identityStripe" hidden>
+            <span data-field="identityStripeLabel">Elf</span>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <main id="app" class="zoo-specimens"></main>
+    <script type="module" src="/src/generators/xcc/xcc_zoo.ts"></script>
+  </body>
+</html>
+
