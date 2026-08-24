@@ -1,0 +1,26 @@
+{
+  "Dwarf": {
+    "racialTraits": "20' Speed, 60' Infravision",
+    "racialLanguage": "Dwarfish"
+  },
+  "Elf": {
+    "racialTraits": "Iron Sensitivity, Heightened Senses, 60' Infravision",
+    "racialLanguage": "Elvish"
+  },
+  "Gnome": {
+    "racialTraits": "25' Speed, 'Draw Aggro'",
+    "racialLanguage": "Gnomish"
+  },
+  "Half-Elf": {
+    "racialTraits": "+1 Personality Skill Checks, +1d Sleep and Paralysis",
+    "racialLanguage": "Elvish"
+  },
+  "Half-Orc": {
+    "racialTraits": "30' Infravision, Robust",
+    "racialLanguage": "Orcish"
+  },
+  "Halfling": {
+    "racialTraits": "20' Speed, 30' Infravision",
+    "racialLanguage": "Halfling"
+  }
+}
