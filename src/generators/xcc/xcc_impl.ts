@@ -9,6 +9,12 @@ import rawRaceNotes from "../../table_data/RaceNotes.json";
 import rawArmor from "../../table_data/XCC_Armor.json";
 import rawPacks from "../../table_data/Starting_Adventurer_Packs.json";
 import {
+  toProfession,
+  type Profession,
+  type ProfessionsRow,
+} from "../../table_data/Professions";
+import rawProfessions from "../../table_data/Professions.json";
+import {
   toWeaponsNice,
   type WeaponsNice,
   type WeaponsRow,
@@ -16,12 +22,6 @@ import {
 import rawWeapons from "../../table_data/Weapons.json";
 import type { XccCelebrityHeadshotsRow } from "../../table_data/xcc_celebrity_headshots";
 import rawHeadshots from "../../table_data/xcc_celebrity_headshots.json";
-import {
-  toXccOccupation,
-  type XccOccupation,
-  type XccOccupationsRow,
-} from "../../table_data/xcc_occupations";
-import rawOccupations from "../../table_data/xcc_occupations.json";
 import {
   buildBlankDccCoreCharacter,
   buildDccCoreCharacter,
@@ -56,7 +56,9 @@ const raceNotes = rawRaceNotes as Record<string, RaceNote>;
 const armorByName = rawArmor as Record<string, Armor>;
 const packsByName = rawPacks as Record<string, AdventurerPack>;
 
-const occupations = (rawOccupations as XccOccupationsRow[]).map(toXccOccupation);
+const occupations = (rawProfessions as ProfessionsRow[])
+  .map(toProfession)
+  .filter(profession => profession.Source === "XCC");
 const headshots = rawHeadshots as XccCelebrityHeadshotsRow[];
 const xccItems: ItemsNice[] = (rawItems as ItemsRow[])
   .map(toItemsNice)
@@ -159,7 +161,7 @@ export function buildXccCharacter(rng: seedrandom.PRNG): XccCharacter {
     : pack?.armor ?? "Unarmored";
 
   const core = buildDccCoreCharacter(rng, {
-    professionTitle: occupation.Title,
+    professionTitle: occupation.ProfessionTitle,
     gender,
     race: occupation.Race,
     racialTraits: race.racialTraits,
@@ -241,7 +243,7 @@ function rollXccLuckySign(rng: seedrandom.PRNG): DccCoreLuckySign {
 
 function resolveTradeGood(
   rng: seedrandom.PRNG,
-  occupation: XccOccupation,
+  occupation: Profession,
 ): string {
   if (occupation.TradeGood.toLowerCase() !== EXTRA_GEAR) {
     return occupation.TradeGood;

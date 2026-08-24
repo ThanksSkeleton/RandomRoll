@@ -9,6 +9,9 @@ export const PROFESSIONS_COLUMNS = [
   "TradeGood",
   "Weapon",
   "Source",
+  "Race",
+  "AdventurePack",
+  "StartingFunds",
 ] as const;
 
 export type ProfessionsColumn = typeof PROFESSIONS_COLUMNS[number];
@@ -19,4 +22,18 @@ export type ProfessionsRow = {
   TradeGood: string;
   Weapon: string;
   Source: string;
+  Race: string;
+  AdventurePack: string;
+  StartingFunds: string;
 };
+
+export type Profession = Omit<ProfessionsRow, "StartingFunds"> & {
+  StartingFunds: number;
+};
+
+export function toProfession(row: ProfessionsRow): Profession {
+  return {
+    ...row,
+    StartingFunds: Number(row.StartingFunds),
+  };
+}

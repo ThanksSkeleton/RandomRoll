@@ -22,6 +22,9 @@ const itemsNice = items.map(toItemsNice);
 import { type ProfessionsRow } from "../../table_data/Professions";
 import rawProfessions from "../../table_data/Professions.json";
 const professions: ProfessionsRow[] = rawProfessions;
+const studentProfessions = professions.filter(
+  profession => profession.Source === "USSTUDENTS",
+);
 
 import { toWeaponsNice, type WeaponsNice, type WeaponsRow } from "../../table_data/Weapons";
 import rawWeapons from "../../table_data/Weapons.json";
@@ -206,7 +209,7 @@ type ProfessionInfo = {
 };
 
 function professionInfo(rng: seedrandom.PRNG, gender: string): ProfessionInfo {
-  const genderProfessions = professions.filter(
+  const genderProfessions = studentProfessions.filter(
     profession => profession.Genderlock === "" || profession.Genderlock === gender,
   );
   const profession = random_multi(rng, genderProfessions);

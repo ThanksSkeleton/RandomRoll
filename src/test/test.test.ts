@@ -15,7 +15,11 @@ import {
 import { type ItemsNice, type ItemsRow, toItemsNice } from "../table_data/Items";
 import rawItems from "../table_data/Items.json";
 
-import { type ProfessionsRow } from "../table_data/Professions";
+import {
+  toProfession,
+  type Profession,
+  type ProfessionsRow,
+} from "../table_data/Professions";
 import rawProfessions from "../table_data/Professions.json";
 
 import { toWeaponsNice, type WeaponsNice, type WeaponsRow } from "../table_data/Weapons";
@@ -26,8 +30,6 @@ import rawLucky from "../table_data/Lucky.json";
 
 import type { XccCelebrityHeadshotsRow } from "../table_data/xcc_celebrity_headshots";
 import rawXccHeadshots from "../table_data/xcc_celebrity_headshots.json";
-import type { XccOccupationsRow } from "../table_data/xcc_occupations";
-import rawXccOccupations from "../table_data/xcc_occupations.json";
 import rawXccArmor from "../table_data/XCC_Armor.json";
 import rawXccPacks from "../table_data/Starting_Adventurer_Packs.json";
 import rawRaceNotes from "../table_data/RaceNotes.json";
@@ -36,13 +38,18 @@ const items: ItemsRow[] = rawItems;
 const itemsNice: ItemsNice[] = items.map(toItemsNice);
 
 const professions: ProfessionsRow[] = rawProfessions;
+const studentProfessions = professions.filter(
+  profession => profession.Source === "USSTUDENTS",
+);
+const xccOccupations: Profession[] = professions
+  .map(toProfession)
+  .filter(profession => profession.Source === "XCC");
 
 const weapons: WeaponsRow[] = rawWeapons;
 const weaponsNice: WeaponsNice[] = weapons.map(toWeaponsNice);
 
 const lucky: LuckyRow[] = rawLucky;
 const xccHeadshots: XccCelebrityHeadshotsRow[] = rawXccHeadshots;
-const xccOccupations: XccOccupationsRow[] = rawXccOccupations;
 
 function nonEmpty(value: string): boolean {
   return value.trim() !== "";
@@ -52,7 +59,7 @@ describe("DCC profession data integrity", () => {
   it("all weapons referenced by professions exist in weapons", () => {
     const weaponNames = new Set(weaponsNice.map((w) => w.Weapon));
 
-    const missingWeapons = professions
+    const missingWeapons = studentProfessions
       .map((p) => p.Weapon)
       .filter(nonEmpty)
       .filter((weapon) => !weaponNames.has(weapon));
@@ -63,7 +70,7 @@ describe("DCC profession data integrity", () => {
   it("all profession trade goods exist in items", () => {
     const itemNames = new Set(itemsNice.map((i) => i.Item));
 
-    const missingTradeGoods = professions
+    const missingTradeGoods = studentProfessions
       .map((p) => p.TradeGood)
       .filter(nonEmpty)
       .filter((tradeGood) => !itemNames.has(tradeGood));
@@ -73,7 +80,7 @@ describe("DCC profession data integrity", () => {
 
   it("all weapons not assigned to a specific profession are random", () => {
     const professionWeapons = new Set(
-      professions
+      studentProfessions
         .map((p) => p.Weapon)
         .filter(nonEmpty),
     );
@@ -89,7 +96,7 @@ describe("DCC profession data integrity", () => {
 
   it("all items not assigned to a specific profession are random", () => {
     const professionTradeGoods = new Set(
-      professions
+      studentProfessions
         .map((p) => p.TradeGood)
         .filter(nonEmpty),
     );
@@ -192,7 +199,7 @@ describe("XCC character data integrity", () => {
         occupation.AdventurePack === ""
         || packNames.has(occupation.AdventurePack),
       ).toBe(true);
-      expect(Number.isFinite(Number(occupation.StartingFunds))).toBe(true);
+      expect(Number.isFinite(occupation.StartingFunds)).toBe(true);
     }
 
     for (const pack of Object.values(rawXccPacks)) {
@@ -209,7 +216,7 @@ describe("XCC character data integrity", () => {
 
     const character = first.objects[0];
     const occupation = xccOccupations.find(
-      candidate => candidate.Title === character.professionTitle,
+      candidate => candidate.ProfessionTitle === character.professionTitle,
     );
     const portrait = xccHeadshots.find(
       candidate => candidate.NAME === character.portraitActorName,
@@ -219,7 +226,7 @@ describe("XCC character data integrity", () => {
     expect(character).toMatchObject({
       race: occupation?.Race,
       gender: portrait?.GENDER,
-      startingFunds: Number(occupation?.StartingFunds),
+      startingFunds: occupation?.StartingFunds,
       mojo: 0,
       fame: 0,
       wealth: 11,
@@ -261,7 +268,9 @@ describe("XCC character data integrity", () => {
 
   it("generates valid relationships across a broad seed sample", () => {
     const portraitNames = new Set(xccHeadshots.map(row => row.NAME));
-    const occupationNames = new Set(xccOccupations.map(row => row.Title));
+    const occupationNames = new Set(
+      xccOccupations.map(row => row.ProfessionTitle),
+    );
 
     for (let seed = 0; seed < 250; seed++) {
       const character = buildXcc(`xcc-sample-${seed}`).objects[0];
@@ -474,7 +483,7 @@ describe("DCC student seed compatibility", () => {
         ),
       ).toBe(true);
 
-      const profession = professions.find(candidate =>
+      const profession = studentProfessions.find(candidate =>
         candidate.ProfessionTitle === character.professionTitle
       );
       expect(profession).toBeDefined();
