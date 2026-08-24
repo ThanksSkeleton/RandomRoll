@@ -5,274 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/randomroll/favicon.svg" />
     <title>XCC Character Sheet Zoo</title>
+    <link rel="stylesheet" href="/src/generators/xcc/xcc_sheet.css" />
     <style>
-      .xcc-sheet {
-        --xcc-blue: #0819a0;
-        --xcc-blue-dark: #050b55;
-        --xcc-yellow: #d8c52b;
-        --xcc-white: #e4e2d4;
-        --xcc-content-font-size: 0.9rem;
-        --stripe-dwarf: #8a4b2a;
-        --stripe-elf: #276749;
-        --stripe-gnome: #654a91;
-        --stripe-half-elf: #246f78;
-        --stripe-half-orc: #87364a;
-        --stripe-halfling: #8a6b20;
-        --stripe-noble: #6f3b8f;
-        --xcc-condensed: "Arial Narrow", "Liberation Sans Narrow", "Ubuntu Sans", Arial, sans-serif;
-        --xcc-heavy: "Arial Black", "Lato Heavy", "Arial Narrow", "Liberation Sans Narrow", Arial, sans-serif;
-
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
-        gap: 1rem;
-        width: min(60rem, 100%);
-        min-width: 44rem;
-        aspect-ratio: 4 / 3;
-        margin-inline: auto;
-        padding: 1.75rem 2rem 1.5rem;
-        box-sizing: border-box;
-        overflow: hidden;
-        color: var(--xcc-yellow);
-        background: var(--xcc-blue);
-        font-family: var(--xcc-condensed);
-        font-size: var(--xcc-content-font-size);
-        font-weight: 700;
-        line-height: 1.05;
-        letter-spacing: 0.015em;
-        text-align: left;
-        text-transform: uppercase;
-      }
-
-      .xcc-sheet *,
-      .xcc-sheet *::before,
-      .xcc-sheet *::after {
-        box-sizing: border-box;
-      }
-
-      .everything-else-column {
-        display: grid;
-        grid-template-rows: auto minmax(0, 1fr) auto;
-        gap: 1.25rem;
-        min-width: 0;
-        min-height: 0;
-      }
-
-      .logo-bio {
-        display: grid;
-        grid-template-rows: auto auto;
-        gap: 2rem;
-      }
-
-      .xcc-logo {
-        display: grid;
-        grid-template-columns: max-content 1fr;
-        align-items: center;
-        gap: 0.9rem;
-        min-width: 0;
-      }
-
-      .xcc-logo-name,
-      .xcc-logo-subtitle {
-        font-family: var(--xcc-heavy);
-        font-weight: 900;
-        line-height: 0.9;
-        text-shadow: 0.22rem 0.22rem 0 var(--xcc-blue-dark);
-      }
-
-      .xcc-logo-name {
-        color: var(--xcc-white);
-        font-size: 2.45rem;
-      }
-
-      .xcc-logo-subtitle {
-        min-width: 0;
-        color: var(--xcc-yellow);
-        font-size: 1.55rem;
-      }
-
-      .bio {
-        display: grid;
-        gap: 0.65rem;
-      }
-
-      .bio-row {
-        display: grid;
-        grid-template-columns: 7rem minmax(0, 1fr);
-        gap: 0.5rem;
-        align-items: baseline;
-      }
-
-      .bio-label,
-      .weapon-label,
-      .stat-line > span:first-child {
-        color: var(--xcc-white);
-        text-shadow: 0.14rem 0.14rem 0 var(--xcc-blue-dark);
-      }
-
-      .bio-label {
-        white-space: nowrap;
-      }
-
-      .bio-value {
-        min-width: 0;
-        overflow-wrap: anywhere;
-      }
-
-      .bio-value,
-      .weapon-armor-value,
-      .stat-line > span:not(:first-child) {
-        font-family: var(--xcc-heavy);
-        font-weight: 900;
-        text-shadow: 0.2rem 0.2rem 0 var(--xcc-blue-dark);
-      }
-
-      .portrait-column {
-        position: relative;
-        width: auto;
-        height: 100%;
-        min-width: 0;
-        min-height: 0;
-        aspect-ratio: 2 / 3;
-        justify-self: end;
-        align-self: stretch;
-      }
-
-      .portrait-frame {
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        border: 0.2rem solid var(--xcc-yellow);
-        background-color: var(--xcc-blue-dark);
-        box-shadow: 0.35rem 0.35rem 0 var(--xcc-blue-dark);
-      }
-
-      .portrait-image {
-        width: 100%;
-        height: 100%;
-        filter: grayscale(1);
-      }
-
-      .stats-row {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        column-gap: 1rem;
-        min-height: 0;
-      }
-
-      .base-stats .stat-line {
-        display: grid;
-        grid-template-columns: minmax(3rem, 1fr) minmax(2rem, 0.5fr) minmax(2rem, 0.5fr);
-        gap: 0.5rem;
-      }
-
-      .secondary-stats .stat-line {
-        display: grid;
-        grid-template-columns: max-content minmax(0, 1fr);
-        gap: 0.5rem;
-      }
-
-      .base-stats,
-      .secondary-stats {
-        display: grid;
-        grid-template-rows: repeat(7, minmax(1.5rem, auto));
-      }
-
-      .base-stats {
-        grid-column: 1;
-      }
-
-      .secondary-stats {
-        grid-column: 2;
-      }
-
-      .base-stats .stat-line.wide-value {
-        grid-template-columns: minmax(3rem, 1fr) minmax(0, 1.5fr);
-      }
-
-      .stat-line {
-        align-items: baseline;
-      }
-
-      .stat-line.blank {
-        visibility: hidden;
-      }
-
-      .weapon-armor-section {
-        display: grid;
-        grid-template-columns: max-content minmax(0, 1fr) max-content minmax(0, 1fr);
-        column-gap: 0.75rem;
-        row-gap: 0.65rem;
-        align-items: center;
-      }
-
-      .weapon-armor-value {
-        min-width: 0;
-        overflow-wrap: anywhere;
-      }
-
-      .armor-value {
-        grid-column: 2 / -1;
-      }
-
-      .identity-stripe {
-        position: absolute;
-        z-index: 2;
-        bottom: -2.25rem;
-        left: 0;
-        display: grid;
-        place-items: center;
-        width: 175%;
-        height: 3rem;
-        padding-inline: 4rem;
-        color: var(--xcc-white);
-        background: var(--stripe-noble);
-        font-family: var(--xcc-heavy);
-        font-weight: 900;
-        letter-spacing: 0.06em;
-        text-align: center;
-        text-shadow: 0.18rem 0.18rem 0 var(--xcc-blue-dark);
-        transform: rotate(-45deg);
-        transform-origin: left bottom;
-        pointer-events: none;
-      }
-
-      .identity-stripe[hidden] {
-        display: none;
-      }
-
-      .identity-stripe[data-stripe-kind="Dwarf"] { background: var(--stripe-dwarf); }
-      .identity-stripe[data-stripe-kind="Elf"] { background: var(--stripe-elf); }
-      .identity-stripe[data-stripe-kind="Gnome"] { background: var(--stripe-gnome); }
-      .identity-stripe[data-stripe-kind="Half-Elf"] { background: var(--stripe-half-elf); }
-      .identity-stripe[data-stripe-kind="Half-Orc"] { background: var(--stripe-half-orc); }
-      .identity-stripe[data-stripe-kind="Halfling"] { background: var(--stripe-halfling); }
-      .identity-stripe[data-stripe-kind="Noble"] { background: var(--stripe-noble); }
-
-      @media (max-width: 1024px) {
-        .xcc-sheet {
-          padding: 1.4rem 1.5rem 1.25rem;
-        }
-
-        .xcc-logo-name {
-          font-size: 2rem;
-        }
-
-        .xcc-logo-subtitle {
-          font-size: 1.3rem;
-        }
-
-        .everything-else-column {
-          gap: 0.75rem;
-        }
-
-        .logo-bio {
-          gap: 1rem;
-        }
-      }
       .zoo-page {
-        min-width: 46rem;
+        min-width: 72rem;
         margin: 0;
-        padding: 1.5rem;
+        padding: 1.5rem 26rem 1.5rem 1.5rem;
         background: #111;
         color: #e4e2d4;
         font-family: system-ui, sans-serif;
@@ -311,6 +49,89 @@
         font-size: 1rem;
         font-weight: 600;
         letter-spacing: 0.04em;
+      }
+
+      .cedalion-panel {
+        position: fixed;
+        z-index: 100;
+        inset: 0 0 0 auto;
+        display: flex;
+        width: 24rem;
+        flex-direction: column;
+        border-left: 2px solid #5f6dff;
+        padding: 1rem;
+        background: #f7f7fb;
+        color: #181824;
+        font: 0.85rem/1.35 system-ui, sans-serif;
+        text-align: left;
+        text-transform: none;
+        box-shadow: -0.4rem 0 1rem rgb(0 0 0 / 0.35);
+      }
+
+      .cedalion-panel h2,
+      .cedalion-panel p {
+        margin: 0;
+      }
+
+      .cedalion-panel-header {
+        display: grid;
+        gap: 0.5rem;
+        flex: none;
+      }
+
+      .cedalion-state {
+        width: 100%;
+        min-height: 10rem;
+        resize: vertical;
+        box-sizing: border-box;
+        font: 0.72rem/1.25 ui-monospace, monospace;
+      }
+
+      .cedalion-controls {
+        display: grid;
+        gap: 1rem;
+        overflow-y: auto;
+        margin-top: 1rem;
+        padding-right: 0.35rem;
+      }
+
+      .cedalion-group {
+        display: grid;
+        gap: 0.6rem;
+        border: 1px solid #c8c8d2;
+        padding: 0.75rem;
+      }
+
+      .cedalion-group legend {
+        padding-inline: 0.25rem;
+        font-weight: 700;
+      }
+
+      .cedalion-field {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 5rem auto;
+        gap: 0.35rem;
+        align-items: center;
+      }
+
+      .cedalion-field label {
+        grid-column: 1 / -1;
+        font-weight: 600;
+      }
+
+      .cedalion-field input[type="range"] {
+        width: 100%;
+      }
+
+      .cedalion-field input[type="number"],
+      .cedalion-field select,
+      .cedalion-field button,
+      .cedalion-reset-all {
+        min-height: 2rem;
+      }
+
+      .cedalion-field select {
+        grid-column: 1 / 3;
       }
     </style>
   </head>
@@ -399,4 +220,3 @@
     <script type="module" src="/src/generators/xcc/xcc_zoo.ts"></script>
   </body>
 </html>
-
