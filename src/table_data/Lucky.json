@@ -16,7 +16,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "true",
-    "XCCName": "Early January - Champion of Juno"
+    "XCCName": "Champion of Juno",
+    "XCCWhen": "Early January",
+    "XCCGod": "Juno"
   },
   {
     "Original_Name": "The bull",
@@ -35,7 +37,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "true",
-    "XCCName": "Late January - Armed by Vulcan"
+    "XCCName": "Armed by Vulcan",
+    "XCCWhen": "Late January",
+    "XCCGod": "Vulcan"
   },
   {
     "Original_Name": "Fortunate date",
@@ -54,7 +58,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "true",
-    "XCCName": "Early April - Taught by Diana"
+    "XCCName": "Taught by Diana",
+    "XCCWhen": "Early April",
+    "XCCGod": "Diana"
   },
   {
     "Original_Name": "Raised by wolves",
@@ -73,7 +79,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "false",
-    "XCCName": ""
+    "XCCName": "",
+    "XCCWhen": "",
+    "XCCGod": ""
   },
   {
     "Original_Name": "Conceived on horseback",
@@ -92,7 +100,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "false",
-    "XCCName": ""
+    "XCCName": "",
+    "XCCWhen": "",
+    "XCCGod": ""
   },
   {
     "Original_Name": "Born on the battlefield",
@@ -111,7 +121,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "true",
-    "XCCName": "Early November - Wraith of Neptune"
+    "XCCName": "Wraith of Neptune",
+    "XCCWhen": "Early November",
+    "XCCGod": "Neptune"
   },
   {
     "Original_Name": "Path of the bear",
@@ -130,7 +142,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "true",
-    "XCCName": "Late September - Revenged of the Furaie"
+    "XCCName": "Revenged of the Furaie",
+    "XCCWhen": "Late September",
+    "XCCGod": "The Furaie"
   },
   {
     "Original_Name": "Hawkeye",
@@ -149,7 +163,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "true",
-    "XCCName": "Late February - Guided by Minerva"
+    "XCCName": "Guided by Minerva",
+    "XCCWhen": "Late February",
+    "XCCGod": "Minerva"
   },
   {
     "Original_Name": "Pack hunter",
@@ -168,7 +184,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "true",
-    "XCCName": "Early September - Forged of Vulcan"
+    "XCCName": "Forged of Vulcan",
+    "XCCWhen": "Early September",
+    "XCCGod": "Vulcan"
   },
   {
     "Original_Name": "Born under the loom",
@@ -187,7 +205,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "false",
-    "XCCName": ""
+    "XCCName": "",
+    "XCCWhen": "",
+    "XCCGod": ""
   },
   {
     "Original_Name": "Fox’s cunning",
@@ -206,7 +226,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "false",
-    "XCCName": ""
+    "XCCName": "",
+    "XCCWhen": "",
+    "XCCGod": ""
   },
   {
     "Original_Name": "Four-leafed clover",
@@ -225,7 +247,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "false",
-    "XCCName": ""
+    "XCCName": "",
+    "XCCWhen": "",
+    "XCCGod": ""
   },
   {
     "Original_Name": "Seventh son",
@@ -244,7 +268,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "true",
-    "XCCName": "Late July - Invoked of the Kharites"
+    "XCCName": "Invoked of the Kharites",
+    "XCCWhen": "Late July",
+    "XCCGod": "The Kharites"
   },
   {
     "Original_Name": "The raging storm",
@@ -263,7 +289,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "false",
-    "XCCName": ""
+    "XCCName": "",
+    "XCCWhen": "",
+    "XCCGod": ""
   },
   {
     "Original_Name": "Righteous heart",
@@ -282,7 +310,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "false",
-    "XCCName": ""
+    "XCCName": "",
+    "XCCWhen": "",
+    "XCCGod": ""
   },
   {
     "Original_Name": "Survived the plague",
@@ -301,7 +331,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "false",
-    "XCCName": ""
+    "XCCName": "",
+    "XCCWhen": "",
+    "XCCGod": ""
   },
   {
     "Original_Name": "Lucky sign",
@@ -320,7 +352,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "true",
-    "XCCName": "Late June - Chosen of Fortuna"
+    "XCCName": "Chosen of Fortuna",
+    "XCCWhen": "Late June",
+    "XCCGod": "Fortuna"
   },
   {
     "Original_Name": "Guardian angel",
@@ -339,7 +373,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "false",
-    "XCCName": ""
+    "XCCName": "",
+    "XCCWhen": "",
+    "XCCGod": ""
   },
   {
     "Original_Name": "Survived a spider bite",
@@ -358,7 +394,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "false",
-    "XCCName": ""
+    "XCCName": "",
+    "XCCWhen": "",
+    "XCCGod": ""
   },
   {
     "Original_Name": "Struck by lightning",
@@ -377,7 +415,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "true",
-    "XCCName": "Early May - Quickened of Mercury"
+    "XCCName": "Quickened of Mercury",
+    "XCCWhen": "Early May",
+    "XCCGod": "Mercury"
   },
   {
     "Original_Name": "Lived through famine",
@@ -396,7 +436,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "true",
-    "XCCName": "Late December - Guarded of Pluto"
+    "XCCName": "Guarded of Pluto",
+    "XCCWhen": "Late December",
+    "XCCGod": "Pluto"
   },
   {
     "Original_Name": "Resisted temptation",
@@ -415,7 +457,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "true",
-    "XCCName": "Late October - Determined by Discordia"
+    "XCCName": "Determined by Discordia",
+    "XCCWhen": "Late October",
+    "XCCGod": "Discordia"
   },
   {
     "Original_Name": "Charmed house",
@@ -434,7 +478,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "true",
-    "XCCName": "Late August - Favored of Ceres"
+    "XCCName": "Favored of Ceres",
+    "XCCWhen": "Late August",
+    "XCCGod": "Ceres"
   },
   {
     "Original_Name": "Speed of the cobra",
@@ -453,7 +499,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "true",
-    "XCCName": "Late April - Imperative of Jupiter"
+    "XCCName": "Imperative of Jupiter",
+    "XCCWhen": "Late April",
+    "XCCGod": "Jupiter"
   },
   {
     "Original_Name": "Bountiful harvest",
@@ -472,7 +520,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "true",
-    "XCCName": "Late November - Promised of Hesta"
+    "XCCName": "Promised of Hesta",
+    "XCCWhen": "Late November",
+    "XCCGod": "Hesta"
   },
   {
     "Original_Name": "Warrior’s arm",
@@ -491,7 +541,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "true",
-    "XCCName": "Late May - Commanded of Mars"
+    "XCCName": "Commanded of Mars",
+    "XCCWhen": "Late May",
+    "XCCGod": "Mars"
   },
   {
     "Original_Name": "Unholy house",
@@ -510,7 +562,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "false",
-    "XCCName": ""
+    "XCCName": "",
+    "XCCWhen": "",
+    "XCCGod": ""
   },
   {
     "Original_Name": "The Broken Star",
@@ -529,7 +583,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "true",
-    "XCCName": "Early October - Stricken of Cupid"
+    "XCCName": "Stricken of Cupid",
+    "XCCWhen": "Early October",
+    "XCCGod": "Cupid"
   },
   {
     "Original_Name": "Birdsong",
@@ -548,7 +604,9 @@
     "Speed": "0",
     "inDCC": "true",
     "inXCC": "true",
-    "XCCName": "Early August - Whispers of Trivia"
+    "XCCName": "Whispers of Trivia",
+    "XCCWhen": "Early August",
+    "XCCGod": "Trivia"
   },
   {
     "Original_Name": "Wild child",
@@ -567,7 +625,9 @@
     "Speed": "1",
     "inDCC": "true",
     "inXCC": "true",
-    "XCCName": "Early December - Chased by Faunus"
+    "XCCName": "Chased by Faunus",
+    "XCCWhen": "Early December",
+    "XCCGod": "Faunus"
   },
   {
     "Original_Name": "",
@@ -586,7 +646,9 @@
     "Speed": "0",
     "inDCC": "false",
     "inXCC": "true",
-    "XCCName": "Early February - Radiance of Apollo"
+    "XCCName": "Radiance of Apollo",
+    "XCCWhen": "Early February",
+    "XCCGod": "Apollo"
   },
   {
     "Original_Name": "",
@@ -605,7 +667,9 @@
     "Speed": "0",
     "inDCC": "false",
     "inXCC": "true",
-    "XCCName": "Early July - Informed by the Mora"
+    "XCCName": "Informed by the Mora",
+    "XCCWhen": "Early July",
+    "XCCGod": "The Mora"
   },
   {
     "Original_Name": "",
@@ -624,7 +688,9 @@
     "Speed": "0",
     "inDCC": "false",
     "inXCC": "true",
-    "XCCName": "Early June - Led by Sol"
+    "XCCName": "Led by Sol",
+    "XCCWhen": "Early June",
+    "XCCGod": "Sol"
   },
   {
     "Original_Name": "",
@@ -643,7 +709,9 @@
     "Speed": "0",
     "inDCC": "false",
     "inXCC": "true",
-    "XCCName": "Early March - Fortified by Hercules"
+    "XCCName": "Fortified by Hercules",
+    "XCCWhen": "Early March",
+    "XCCGod": "Hercules"
   },
   {
     "Original_Name": "",
@@ -662,6 +730,8 @@
     "Speed": "0",
     "inDCC": "false",
     "inXCC": "true",
-    "XCCName": "Late March - Toasted by Bacchus"
+    "XCCName": "Toasted by Bacchus",
+    "XCCWhen": "Late March",
+    "XCCGod": "Bacchus"
   }
 ]

@@ -146,6 +146,15 @@ describe("Lucky sign variants", () => {
 
     expect(xccSigns).toHaveLength(24);
     expect(xccSigns.every((sign) => nonEmpty(sign.XCCName))).toBe(true);
+    expect(xccSigns.every((sign) => nonEmpty(sign.XCCWhen))).toBe(true);
+    expect(xccSigns.every((sign) => nonEmpty(sign.XCCGod))).toBe(true);
+    expect(xccSigns.every((sign) => !sign.XCCGod.startsWith("the "))).toBe(true);
+    expect(xccSigns.every((sign) => !sign.XCCName.includes(" - "))).toBe(true);
+    expect(xccSigns).toContainEqual(expect.objectContaining({
+      XCCName: "Taught by Diana",
+      XCCWhen: "Early April",
+      XCCGod: "Diana",
+    }));
   });
 });
 

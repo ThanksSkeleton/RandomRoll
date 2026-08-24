@@ -21,6 +21,8 @@ export const LUCKY_COLUMNS = [
   "inDCC",
   "inXCC",
   "XCCName",
+  "XCCWhen",
+  "XCCGod",
 ] as const;
 
 export type LuckyColumn = typeof LUCKY_COLUMNS[number];
@@ -43,6 +45,8 @@ export type LuckyRow = {
   inDCC: string;
   inXCC: string;
   XCCName: string;
+  XCCWhen: string;
+  XCCGod: string;
 };
 
 export type LuckyNice = {
@@ -67,6 +71,8 @@ export type LuckyNice = {
   inDCC: boolean;
   inXCC: boolean;
   XCCName: string;
+  XCCWhen: string;
+  XCCGod: string;
 };
 
 export function luckyRowToNice(row: LuckyRow): LuckyNice {
