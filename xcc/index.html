@@ -7,17 +7,43 @@
     <title>XCC Competitor Spotlight</title>
     <style>
       .xcc-sheet {
+        --xcc-blue: #0819a0;
+        --xcc-blue-dark: #050b55;
+        --xcc-yellow: #d8c52b;
+        --xcc-white: #e4e2d4;
+        --xcc-condensed: "Arial Narrow", "Liberation Sans Narrow", "Ubuntu Sans", Arial, sans-serif;
+        --xcc-heavy: "Arial Black", "Lato Heavy", "Arial Narrow", "Liberation Sans Narrow", Arial, sans-serif;
+
         display: grid;
         grid-template-rows: minmax(14rem, auto) auto auto;
         gap: 1rem;
         width: min(60rem, 100%);
         min-width: 44rem;
+        aspect-ratio: 4 / 3;
         margin-inline: auto;
+        padding: 1.75rem 2rem 1.5rem;
+        box-sizing: border-box;
+        overflow: hidden;
+        color: var(--xcc-yellow);
+        background: var(--xcc-blue);
+        font-family: var(--xcc-condensed);
+        font-size: 1.2rem;
+        font-weight: 700;
+        line-height: 1.05;
+        letter-spacing: 0.015em;
+        text-align: left;
+        text-transform: uppercase;
+      }
+
+      .xcc-sheet *,
+      .xcc-sheet *::before,
+      .xcc-sheet *::after {
+        box-sizing: border-box;
       }
 
       .identity-row {
         display: grid;
-        grid-template-columns: minmax(0, 3fr) minmax(14rem, 2fr);
+        grid-template-columns: minmax(0, 1fr) auto;
         gap: 1rem;
       }
 
@@ -30,29 +56,79 @@
       .xcc-logo {
         display: grid;
         grid-template-columns: max-content 1fr;
-        align-items: stretch;
+        align-items: center;
+        gap: 0.9rem;
+        min-width: 0;
+      }
+
+      .xcc-logo-name,
+      .xcc-logo-subtitle {
+        font-family: var(--xcc-heavy);
+        font-weight: 900;
+        line-height: 0.9;
+        text-shadow: 0.22rem 0.22rem 0 var(--xcc-blue-dark);
+      }
+
+      .xcc-logo-name {
+        color: var(--xcc-white);
+        font-size: 2.45rem;
+      }
+
+      .xcc-logo-subtitle {
+        min-width: 0;
+        color: var(--xcc-yellow);
+        font-size: 1.55rem;
       }
 
       .bio {
         display: grid;
         align-content: end;
-        gap: 0.5rem;
+        gap: 0.65rem;
       }
 
       .bio-row {
         display: grid;
         grid-template-columns: 8rem minmax(0, 1fr);
         gap: 0.5rem;
+        align-items: baseline;
+      }
+
+      .bio-label,
+      .weapon-label,
+      .stat-line > span:first-child {
+        color: var(--xcc-white);
+        text-shadow: 0.14rem 0.14rem 0 var(--xcc-blue-dark);
+      }
+
+      .bio-label {
+        font-size: 1.05rem;
+        white-space: nowrap;
+      }
+
+      .bio-value,
+      .weapon-value,
+      .stat-line > span:not(:first-child) {
+        font-family: var(--xcc-heavy);
+        font-weight: 900;
+        text-shadow: 0.2rem 0.2rem 0 var(--xcc-blue-dark);
       }
 
       .portrait {
+        width: auto;
+        height: 100%;
         min-width: 0;
-        min-height: 14rem;
+        min-height: 0;
+        aspect-ratio: 2 / 3;
+        justify-self: end;
       }
 
       .portrait-frame {
         width: 100%;
         height: 100%;
+        border: 0.2rem solid var(--xcc-white);
+        background-color: var(--xcc-blue-dark);
+        box-shadow: 0.35rem 0.35rem 0 var(--xcc-blue-dark);
+        filter: grayscale(1);
       }
 
       .stats-row {
@@ -74,11 +150,28 @@
         gap: 0.5rem;
       }
 
+      .combat-stats .stat-line {
+        grid-template-columns: minmax(4rem, 0.75fr) minmax(0, 1.25fr);
+      }
+
       .base-stats,
       .secondary-stats,
       .combat-stats {
         display: grid;
         grid-template-rows: repeat(6, minmax(1.5rem, auto));
+      }
+
+      .secondary-stats,
+      .combat-stats {
+        padding-left: 1rem;
+      }
+
+      .stat-line {
+        align-items: baseline;
+      }
+
+      .combat-stats .stat-line > span:last-child {
+        font-size: 1.05rem;
       }
 
       .stat-line.blank {
@@ -91,6 +184,21 @@
         gap: 0.75rem;
         align-items: center;
       }
+
+      @media (max-width: 1024px) {
+        .xcc-sheet {
+          padding: 1.4rem 1.5rem 1.25rem;
+          font-size: 1.05rem;
+        }
+
+        .xcc-logo-name {
+          font-size: 2rem;
+        }
+
+        .xcc-logo-subtitle {
+          font-size: 1.3rem;
+        }
+      }
     </style>
   </head>
   <body>
@@ -99,7 +207,7 @@
         <div class="xcc-sheet-row identity-row">
           <section class="logo-bio" aria-label="Competitor biography">
             <header class="xcc-logo">
-              <span class="xcc-logo-name">XCrawl:</span>
+              <span class="xcc-logo-name">XCrawl</span>
               <span class="xcc-logo-subtitle">Competitor<br />Spotlight</span>
             </header>
 
