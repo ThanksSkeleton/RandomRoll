@@ -15,7 +15,7 @@
         --xcc-heavy: "Arial Black", "Lato Heavy", "Arial Narrow", "Liberation Sans Narrow", Arial, sans-serif;
 
         display: grid;
-        grid-template-rows: minmax(14rem, auto) auto auto;
+        grid-template-columns: minmax(0, 1fr) auto;
         gap: 1rem;
         width: min(60rem, 100%);
         min-width: 44rem;
@@ -41,16 +41,18 @@
         box-sizing: border-box;
       }
 
-      .identity-row {
+      .everything-else-column {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
-        gap: 1rem;
+        grid-template-rows: auto minmax(0, 1fr) auto;
+        gap: 1.25rem;
+        min-width: 0;
+        min-height: 0;
       }
 
       .logo-bio {
         display: grid;
-        grid-template-rows: auto 1fr;
-        gap: 1rem;
+        grid-template-rows: auto auto;
+        gap: 2rem;
       }
 
       .xcc-logo {
@@ -82,13 +84,12 @@
 
       .bio {
         display: grid;
-        align-content: end;
         gap: 0.65rem;
       }
 
       .bio-row {
         display: grid;
-        grid-template-columns: 8rem minmax(0, 1fr);
+        grid-template-columns: 7rem minmax(0, 1fr);
         gap: 0.5rem;
         align-items: baseline;
       }
@@ -101,8 +102,14 @@
       }
 
       .bio-label {
-        font-size: 1.05rem;
+        font-size: 0.8rem;
         white-space: nowrap;
+      }
+
+      .bio-value {
+        min-width: 0;
+        overflow-wrap: anywhere;
+        font-size: 0.9rem;
       }
 
       .bio-value,
@@ -113,28 +120,37 @@
         text-shadow: 0.2rem 0.2rem 0 var(--xcc-blue-dark);
       }
 
-      .portrait {
+      .portrait-column {
         width: auto;
         height: 100%;
         min-width: 0;
         min-height: 0;
         aspect-ratio: 2 / 3;
         justify-self: end;
+        align-self: stretch;
       }
 
       .portrait-frame {
         width: 100%;
         height: 100%;
-        border: 0.2rem solid var(--xcc-white);
+        border: 0.2rem solid var(--xcc-yellow);
         background-color: var(--xcc-blue-dark);
         box-shadow: 0.35rem 0.35rem 0 var(--xcc-blue-dark);
+      }
+
+      .portrait-image {
+        width: 100%;
+        height: 100%;
         filter: grayscale(1);
       }
 
       .stats-row {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1rem;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        grid-template-rows: repeat(2, minmax(0, 1fr));
+        column-gap: 1rem;
+        row-gap: 0.75rem;
+        min-height: 0;
       }
 
       .base-stats .stat-line {
@@ -146,12 +162,8 @@
       .secondary-stats .stat-line,
       .combat-stats .stat-line {
         display: grid;
-        grid-template-columns: minmax(4rem, 1fr) minmax(0, 1fr);
+        grid-template-columns: max-content minmax(0, 1fr);
         gap: 0.5rem;
-      }
-
-      .combat-stats .stat-line {
-        grid-template-columns: minmax(4rem, 0.75fr) minmax(0, 1.25fr);
       }
 
       .base-stats,
@@ -161,9 +173,19 @@
         grid-template-rows: repeat(6, minmax(1.5rem, auto));
       }
 
-      .secondary-stats,
+      .base-stats {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+      }
+
+      .secondary-stats {
+        grid-column: 2;
+        grid-row: 1;
+      }
+
       .combat-stats {
-        padding-left: 1rem;
+        grid-column: 2;
+        grid-row: 2;
       }
 
       .stat-line {
@@ -171,7 +193,7 @@
       }
 
       .combat-stats .stat-line > span:last-child {
-        font-size: 1.05rem;
+        font-size: 0.75rem;
       }
 
       .stat-line.blank {
@@ -180,9 +202,14 @@
 
       .weapon-row {
         display: grid;
-        grid-template-columns: max-content minmax(0, 1fr) max-content minmax(0, 0.5fr) max-content minmax(0, 1fr) max-content minmax(0, 1fr);
+        grid-template-columns: max-content minmax(0, 1fr) max-content minmax(0, 1fr);
         gap: 0.75rem;
         align-items: center;
+      }
+
+      .weapon-value {
+        min-width: 0;
+        overflow-wrap: anywhere;
       }
 
       @media (max-width: 1024px) {
@@ -198,13 +225,25 @@
         .xcc-logo-subtitle {
           font-size: 1.3rem;
         }
+
+        .secondary-stats .stat-line {
+          font-size: 0.8rem;
+        }
+
+        .everything-else-column {
+          gap: 0.75rem;
+        }
+
+        .logo-bio {
+          gap: 1rem;
+        }
       }
     </style>
   </head>
   <body>
     <template id="xcc-character-sheet-template">
       <article class="xcc-sheet">
-        <div class="xcc-sheet-row identity-row">
+        <div class="everything-else-column">
           <section class="logo-bio" aria-label="Competitor biography">
             <header class="xcc-logo">
               <span class="xcc-logo-name">XCrawl</span>
@@ -230,50 +269,52 @@
             </div>
           </section>
 
-          <section class="portrait" aria-label="Competitor portrait">
-            <div class="portrait-frame" data-field="portrait" role="img"></div>
+          <div class="xcc-sheet-row stats-row">
+            <section class="base-stats" aria-label="Base statistics">
+              <div class="stat-line"><span>STR</span><span data-field="strengthScore">13</span><span data-field="strengthMod">+1</span></div>
+              <div class="stat-line"><span>AGI</span><span data-field="agilityScore">14</span><span data-field="agilityMod">+1</span></div>
+              <div class="stat-line"><span>STA</span><span data-field="staminaScore">13</span><span data-field="staminaMod">+1</span></div>
+              <div class="stat-line"><span>PER</span><span data-field="personalityScore">8</span><span data-field="personalityMod">0</span></div>
+              <div class="stat-line"><span>INT</span><span data-field="intelligenceScore">7</span><span data-field="intelligenceMod">-1</span></div>
+              <div class="stat-line"><span>LCK</span><span data-field="luckScore">14</span><span data-field="luckMod">+1</span></div>
+            </section>
+
+            <section class="secondary-stats" aria-label="Secondary statistics">
+              <div class="stat-line"><span>FORT</span><span data-field="fortitudeSave">+1</span></div>
+              <div class="stat-line"><span>REF</span><span data-field="reflexSave">+1</span></div>
+              <div class="stat-line"><span>WILL</span><span data-field="willSave">0</span></div>
+              <div class="stat-line blank" aria-hidden="true"><span>&nbsp;</span><span>&nbsp;</span></div>
+              <div class="stat-line"><span>ALIGN</span><span data-field="alignment">Chaotic</span></div>
+              <div class="stat-line" data-field="raceRow"><span>RACE</span><span data-field="race">Elf</span></div>
+            </section>
+
+            <section class="combat-stats" aria-label="Combat statistics">
+              <div class="stat-line"><span>HP</span><span data-field="hitPoints">1</span></div>
+              <div class="stat-line"><span>AC</span><span data-field="armorClass">11</span></div>
+              <div class="stat-line"><span>INIT</span><span data-field="initiative">+1</span></div>
+              <div class="stat-line"><span>SPEED</span><span data-field="speed">30</span></div>
+              <div class="stat-line blank" aria-hidden="true"><span>&nbsp;</span><span>&nbsp;</span></div>
+              <div class="stat-line"><span>ARMOR</span><span data-field="armorName">Leather</span></div>
+            </section>
+          </div>
+
+          <section class="xcc-sheet-row weapon-row" aria-label="Weapon statistics">
+            <span class="weapon-label">Weapon</span>
+            <span class="weapon-value" data-field="weaponDisplay">Dagger</span>
+            <span class="weapon-label">ATK</span>
+            <span class="weapon-value" data-field="attackBonus">+1</span>
+            <span class="weapon-label">DMG</span>
+            <span class="weapon-value" data-field="weaponDamage">1d4+1</span>
+            <span class="weapon-label">Range</span>
+            <span class="weapon-value" data-field="weaponRange">10/20/30</span>
           </section>
         </div>
 
-        <div class="xcc-sheet-row stats-row">
-          <section class="base-stats" aria-label="Base statistics">
-            <div class="stat-line"><span>STR</span><span data-field="strengthScore">13</span><span data-field="strengthMod">+1</span></div>
-            <div class="stat-line"><span>AGI</span><span data-field="agilityScore">14</span><span data-field="agilityMod">+1</span></div>
-            <div class="stat-line"><span>STA</span><span data-field="staminaScore">13</span><span data-field="staminaMod">+1</span></div>
-            <div class="stat-line"><span>PER</span><span data-field="personalityScore">8</span><span data-field="personalityMod">0</span></div>
-            <div class="stat-line"><span>INT</span><span data-field="intelligenceScore">7</span><span data-field="intelligenceMod">-1</span></div>
-            <div class="stat-line"><span>LCK</span><span data-field="luckScore">14</span><span data-field="luckMod">+1</span></div>
-          </section>
-
-          <section class="secondary-stats" aria-label="Secondary statistics">
-            <div class="stat-line"><span>FORT</span><span data-field="fortitudeSave">+1</span></div>
-            <div class="stat-line"><span>REF</span><span data-field="reflexSave">+1</span></div>
-            <div class="stat-line"><span>WILL</span><span data-field="willSave">0</span></div>
-            <div class="stat-line blank" aria-hidden="true"><span>&nbsp;</span><span>&nbsp;</span></div>
-            <div class="stat-line"><span>ALIGN</span><span data-field="alignment">Chaotic</span></div>
-            <div class="stat-line" data-field="raceRow"><span>RACE</span><span data-field="race">Elf</span></div>
-          </section>
-
-          <section class="combat-stats" aria-label="Combat statistics">
-            <div class="stat-line"><span>HP</span><span data-field="hitPoints">1</span></div>
-            <div class="stat-line"><span>AC</span><span data-field="armorClass">11</span></div>
-            <div class="stat-line"><span>INIT</span><span data-field="initiative">+1</span></div>
-            <div class="stat-line"><span>SPEED</span><span data-field="speed">30</span></div>
-            <div class="stat-line blank" aria-hidden="true"><span>&nbsp;</span><span>&nbsp;</span></div>
-            <div class="stat-line"><span>ARMOR</span><span data-field="armorName">Leather</span></div>
-          </section>
+        <div class="portrait-column" aria-label="Competitor portrait">
+          <div class="portrait-frame">
+            <div class="portrait-image" data-field="portrait" role="img"></div>
+          </div>
         </div>
-
-        <section class="xcc-sheet-row weapon-row" aria-label="Weapon statistics">
-          <span class="weapon-label">Weapon</span>
-          <span class="weapon-value" data-field="weaponDisplay">Dagger</span>
-          <span class="weapon-label">ATK</span>
-          <span class="weapon-value" data-field="attackBonus">+1</span>
-          <span class="weapon-label">DMG</span>
-          <span class="weapon-value" data-field="weaponDamage">1d4+1</span>
-          <span class="weapon-label">Range</span>
-          <span class="weapon-value" data-field="weaponRange">10/20/30</span>
-        </section>
       </article>
     </template>
 
