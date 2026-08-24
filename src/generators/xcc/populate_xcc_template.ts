@@ -50,7 +50,7 @@ export function populateXccTemplate(
   setText(root, "reflexSave", formatModifier(character.saveReflex));
   setText(root, "willSave", formatModifier(character.saveWill));
   setText(root, "alignment", character.alignment);
-  setRace(root, character.race);
+  setIdentityStripe(root, character);
 
   setText(root, "hitPoints", character.hitPoints);
   setText(root, "armorClass", character.AC);
@@ -74,14 +74,18 @@ function setText(root: ParentNode, field: string, value: string | number): void 
   getField(root, field).textContent = String(value);
 }
 
-function setRace(root: ParentNode, race: string): void {
-  setText(root, "race", race);
+function setIdentityStripe(root: ParentNode, character: XccCharacter): void {
+  const stripe = getField(root, "identityStripe");
+  const isNoble = character.professionTitle === "Nobility";
 
-  if (race === "Human") {
-    const row = getField(root, "raceRow");
-    row.classList.add("blank");
-    row.setAttribute("aria-hidden", "true");
+  if (character.race === "Human" && !isNoble) {
+    return;
   }
+
+  const stripeKind = character.race === "Human" ? "Noble" : character.race;
+  stripe.hidden = false;
+  stripe.dataset.stripeKind = stripeKind;
+  setText(root, "identityStripeLabel", stripeKind);
 }
 
 function setPortrait(root: ParentNode, character: XccCharacter): void {

@@ -11,6 +11,14 @@
         --xcc-blue-dark: #050b55;
         --xcc-yellow: #d8c52b;
         --xcc-white: #e4e2d4;
+        --xcc-content-font-size: 0.9rem;
+        --stripe-dwarf: #8a4b2a;
+        --stripe-elf: #276749;
+        --stripe-gnome: #654a91;
+        --stripe-half-elf: #246f78;
+        --stripe-half-orc: #87364a;
+        --stripe-halfling: #8a6b20;
+        --stripe-noble: #6f3b8f;
         --xcc-condensed: "Arial Narrow", "Liberation Sans Narrow", "Ubuntu Sans", Arial, sans-serif;
         --xcc-heavy: "Arial Black", "Lato Heavy", "Arial Narrow", "Liberation Sans Narrow", Arial, sans-serif;
 
@@ -27,7 +35,7 @@
         color: var(--xcc-yellow);
         background: var(--xcc-blue);
         font-family: var(--xcc-condensed);
-        font-size: 1.2rem;
+        font-size: var(--xcc-content-font-size);
         font-weight: 700;
         line-height: 1.05;
         letter-spacing: 0.015em;
@@ -102,18 +110,16 @@
       }
 
       .bio-label {
-        font-size: 0.8rem;
         white-space: nowrap;
       }
 
       .bio-value {
         min-width: 0;
         overflow-wrap: anywhere;
-        font-size: 0.9rem;
       }
 
       .bio-value,
-      .weapon-value,
+      .weapon-armor-value,
       .stat-line > span:not(:first-child) {
         font-family: var(--xcc-heavy);
         font-weight: 900;
@@ -121,6 +127,7 @@
       }
 
       .portrait-column {
+        position: relative;
         width: auto;
         height: 100%;
         min-width: 0;
@@ -133,6 +140,7 @@
       .portrait-frame {
         width: 100%;
         height: 100%;
+        overflow: hidden;
         border: 0.2rem solid var(--xcc-yellow);
         background-color: var(--xcc-blue-dark);
         box-shadow: 0.35rem 0.35rem 0 var(--xcc-blue-dark);
@@ -146,10 +154,8 @@
 
       .stats-row {
         display: grid;
-        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-        grid-template-rows: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         column-gap: 1rem;
-        row-gap: 0.75rem;
         min-height: 0;
       }
 
@@ -159,63 +165,92 @@
         gap: 0.5rem;
       }
 
-      .secondary-stats .stat-line,
-      .combat-stats .stat-line {
+      .secondary-stats .stat-line {
         display: grid;
         grid-template-columns: max-content minmax(0, 1fr);
         gap: 0.5rem;
       }
 
       .base-stats,
-      .secondary-stats,
-      .combat-stats {
+      .secondary-stats {
         display: grid;
-        grid-template-rows: repeat(6, minmax(1.5rem, auto));
+        grid-template-rows: repeat(7, minmax(1.5rem, auto));
       }
 
       .base-stats {
         grid-column: 1;
-        grid-row: 1 / span 2;
       }
 
       .secondary-stats {
         grid-column: 2;
-        grid-row: 1;
       }
 
-      .combat-stats {
-        grid-column: 2;
-        grid-row: 2;
+      .base-stats .stat-line.wide-value {
+        grid-template-columns: minmax(3rem, 1fr) minmax(0, 1.5fr);
       }
 
       .stat-line {
         align-items: baseline;
       }
 
-      .combat-stats .stat-line > span:last-child {
-        font-size: 0.75rem;
-      }
-
       .stat-line.blank {
         visibility: hidden;
       }
 
-      .weapon-row {
+      .weapon-armor-section {
         display: grid;
         grid-template-columns: max-content minmax(0, 1fr) max-content minmax(0, 1fr);
-        gap: 0.75rem;
+        column-gap: 0.75rem;
+        row-gap: 0.65rem;
         align-items: center;
       }
 
-      .weapon-value {
+      .weapon-armor-value {
         min-width: 0;
         overflow-wrap: anywhere;
       }
 
+      .armor-value {
+        grid-column: 2 / -1;
+      }
+
+      .identity-stripe {
+        position: absolute;
+        z-index: 2;
+        bottom: -2.25rem;
+        left: 0;
+        display: grid;
+        place-items: center;
+        width: 175%;
+        height: 3rem;
+        padding-inline: 4rem;
+        color: var(--xcc-white);
+        background: var(--stripe-noble);
+        font-family: var(--xcc-heavy);
+        font-weight: 900;
+        letter-spacing: 0.06em;
+        text-align: center;
+        text-shadow: 0.18rem 0.18rem 0 var(--xcc-blue-dark);
+        transform: rotate(-45deg);
+        transform-origin: left bottom;
+        pointer-events: none;
+      }
+
+      .identity-stripe[hidden] {
+        display: none;
+      }
+
+      .identity-stripe[data-stripe-kind="Dwarf"] { background: var(--stripe-dwarf); }
+      .identity-stripe[data-stripe-kind="Elf"] { background: var(--stripe-elf); }
+      .identity-stripe[data-stripe-kind="Gnome"] { background: var(--stripe-gnome); }
+      .identity-stripe[data-stripe-kind="Half-Elf"] { background: var(--stripe-half-elf); }
+      .identity-stripe[data-stripe-kind="Half-Orc"] { background: var(--stripe-half-orc); }
+      .identity-stripe[data-stripe-kind="Halfling"] { background: var(--stripe-halfling); }
+      .identity-stripe[data-stripe-kind="Noble"] { background: var(--stripe-noble); }
+
       @media (max-width: 1024px) {
         .xcc-sheet {
           padding: 1.4rem 1.5rem 1.25rem;
-          font-size: 1.05rem;
         }
 
         .xcc-logo-name {
@@ -224,10 +259,6 @@
 
         .xcc-logo-subtitle {
           font-size: 1.3rem;
-        }
-
-        .secondary-stats .stat-line {
-          font-size: 0.8rem;
         }
 
         .everything-else-column {
@@ -277,42 +308,40 @@
               <div class="stat-line"><span>PER</span><span data-field="personalityScore">8</span><span data-field="personalityMod">0</span></div>
               <div class="stat-line"><span>INT</span><span data-field="intelligenceScore">7</span><span data-field="intelligenceMod">-1</span></div>
               <div class="stat-line"><span>LCK</span><span data-field="luckScore">14</span><span data-field="luckMod">+1</span></div>
+              <div class="stat-line wide-value"><span>ALIGN</span><span data-field="alignment">Chaotic</span></div>
             </section>
 
             <section class="secondary-stats" aria-label="Secondary statistics">
               <div class="stat-line"><span>FORT</span><span data-field="fortitudeSave">+1</span></div>
               <div class="stat-line"><span>REF</span><span data-field="reflexSave">+1</span></div>
               <div class="stat-line"><span>WILL</span><span data-field="willSave">0</span></div>
-              <div class="stat-line blank" aria-hidden="true"><span>&nbsp;</span><span>&nbsp;</span></div>
-              <div class="stat-line"><span>ALIGN</span><span data-field="alignment">Chaotic</span></div>
-              <div class="stat-line" data-field="raceRow"><span>RACE</span><span data-field="race">Elf</span></div>
-            </section>
-
-            <section class="combat-stats" aria-label="Combat statistics">
               <div class="stat-line"><span>HP</span><span data-field="hitPoints">1</span></div>
               <div class="stat-line"><span>AC</span><span data-field="armorClass">11</span></div>
               <div class="stat-line"><span>INIT</span><span data-field="initiative">+1</span></div>
               <div class="stat-line"><span>SPEED</span><span data-field="speed">30</span></div>
-              <div class="stat-line blank" aria-hidden="true"><span>&nbsp;</span><span>&nbsp;</span></div>
-              <div class="stat-line"><span>ARMOR</span><span data-field="armorName">Leather</span></div>
             </section>
           </div>
 
-          <section class="xcc-sheet-row weapon-row" aria-label="Weapon statistics">
+          <section class="weapon-armor-section" aria-label="Weapon and armor statistics">
             <span class="weapon-label">Weapon</span>
-            <span class="weapon-value" data-field="weaponDisplay">Dagger</span>
+            <span class="weapon-armor-value" data-field="weaponDisplay">Dagger</span>
             <span class="weapon-label">ATK</span>
-            <span class="weapon-value" data-field="attackBonus">+1</span>
+            <span class="weapon-armor-value" data-field="attackBonus">+1</span>
             <span class="weapon-label">DMG</span>
-            <span class="weapon-value" data-field="weaponDamage">1d4+1</span>
+            <span class="weapon-armor-value" data-field="weaponDamage">1d4+1</span>
             <span class="weapon-label">Range</span>
-            <span class="weapon-value" data-field="weaponRange">10/20/30</span>
+            <span class="weapon-armor-value" data-field="weaponRange">10/20/30</span>
+            <span class="weapon-label">Armor</span>
+            <span class="weapon-armor-value armor-value" data-field="armorName">Armored Jacket</span>
           </section>
         </div>
 
         <div class="portrait-column" aria-label="Competitor portrait">
           <div class="portrait-frame">
             <div class="portrait-image" data-field="portrait" role="img"></div>
+          </div>
+          <div class="identity-stripe" data-field="identityStripe" hidden>
+            <span data-field="identityStripeLabel">Elf</span>
           </div>
         </div>
       </article>
