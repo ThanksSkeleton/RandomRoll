@@ -111,7 +111,8 @@ const portraitShapeOptions = [
 const controls: CedalionControl[] = [
   { kind: "numeric", group: "Font sizes", label: "XCrawl logo font size", property: "--xcc-logo-name-font-size", defaultValue: 3.56, min: 0.5, max: 8, step: 0.01, unit: "rem" },
   { kind: "numeric", group: "Font sizes", label: "Spotlight subtitle font size", property: "--xcc-logo-subtitle-font-size", defaultValue: 1.24, min: 0.35, max: 6, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Font sizes", label: "Banner font size", property: "--identity-stripe-font-size", defaultValue: 3.23, min: 0.25, max: 5, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Font sizes", label: "Other banner text size", property: "--identity-stripe-font-size", defaultValue: 3.23, min: 0.25, max: 5, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Font sizes", label: "Halfling / Half-Orc banner text size", property: "--identity-stripe-long-label-font-size", defaultValue: 2.82, min: 0.25, max: 5, step: 0.01, unit: "rem" },
   { kind: "choice", group: "Alignment", label: "All sheet text alignment", property: "--xcc-text-align", defaultValue: "left", options: textAlignmentOptions },
   { kind: "choice", group: "Alignment", label: "Logo horizontal alignment", property: "--xcc-logo-horizontal-alignment", defaultValue: "start", options: elementAlignmentOptions },
   { kind: "choice", group: "Alignment", label: "Portrait horizontal alignment", property: "--xcc-portrait-horizontal-alignment", defaultValue: "end", options: elementAlignmentOptions },
@@ -123,7 +124,7 @@ const controls: CedalionControl[] = [
   { kind: "numeric", group: "Banner geometry", label: "Banner width", property: "--identity-stripe-width", defaultValue: 188, min: 10, max: 500, step: 1, unit: "%" },
   { kind: "numeric", group: "Banner geometry", label: "Banner height", property: "--identity-stripe-height", defaultValue: 5.56, min: 0.25, max: 15, step: 0.01, unit: "rem" },
 
-  { kind: "numeric", group: "Bio", label: "Bio font size", property: "--xcc-bio-font-size", defaultValue: 1.03, min: 0.25, max: 5, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Bio", label: "Bio font size", property: "--xcc-bio-font-size", defaultValue: 1.02, min: 0.25, max: 5, step: 0.01, unit: "rem" },
   { kind: "choice", group: "Bio", label: "Whole bio horizontal alignment", property: "--xcc-bio-horizontal-alignment", defaultValue: "center", options: blockAlignmentOptions },
   { kind: "choice", group: "Bio", label: "Label column text alignment", property: "--xcc-bio-label-text-align", defaultValue: "left", options: textAlignmentOptions },
   { kind: "choice", group: "Bio", label: "Value column text alignment", property: "--xcc-bio-value-text-align", defaultValue: "right", options: textAlignmentOptions },
@@ -198,7 +199,7 @@ const controls: CedalionControl[] = [
 
   { kind: "color", group: "Banner colors — Nonhuman", label: "Dwarf banner", property: "--stripe-dwarf", defaultValue: "#8a4b2a" },
   { kind: "color", group: "Banner colors — Nonhuman", label: "Elf banner", property: "--stripe-elf", defaultValue: "#276749" },
-  { kind: "color", group: "Banner colors — Nonhuman", label: "Gnome banner", property: "--stripe-gnome", defaultValue: "#654a91" },
+  { kind: "color", group: "Banner colors — Nonhuman", label: "Gnome banner", property: "--stripe-gnome", defaultValue: "#a384b3" },
   { kind: "color", group: "Banner colors — Nonhuman", label: "Half-Elf banner", property: "--stripe-half-elf", defaultValue: "#246f78" },
   { kind: "color", group: "Banner colors — Nonhuman", label: "Half-Orc banner", property: "--stripe-half-orc", defaultValue: "#87364a" },
   { kind: "color", group: "Banner colors — Nonhuman", label: "Halfling banner", property: "--stripe-halfling", defaultValue: "#8a6b20" },

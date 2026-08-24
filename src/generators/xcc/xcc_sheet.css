@@ -41,8 +41,9 @@
   --identity-stripe-width: 188%;
   --identity-stripe-height: 5.56rem;
   --identity-stripe-font-size: 3.23rem;
+  --identity-stripe-long-label-font-size: 2.82rem;
   --identity-stripe-label-horizontal-alignment: center;
-  --xcc-bio-font-size: 1.03rem;
+  --xcc-bio-font-size: 1.02rem;
   --xcc-bio-horizontal-alignment: center;
   --xcc-bio-label-text-align: left;
   --xcc-bio-value-text-align: right;
@@ -82,7 +83,7 @@
   --xcc-weapon-right-value-text-align: right;
   --stripe-dwarf: #8a4b2a;
   --stripe-elf: #276749;
-  --stripe-gnome: #654a91;
+  --stripe-gnome: #a384b3;
   --stripe-half-elf: #246f78;
   --stripe-half-orc: #87364a;
   --stripe-halfling: #8a6b20;
@@ -529,6 +530,10 @@
 .identity-stripe[data-stripe-kind="Half-Orc"] { background: var(--stripe-half-orc); }
 .identity-stripe[data-stripe-kind="Halfling"] { background: var(--stripe-halfling); }
 .identity-stripe[data-stripe-kind="Noble"] { background: var(--stripe-noble); }
+.identity-stripe[data-stripe-kind="Half-Orc"],
+.identity-stripe[data-stripe-kind="Halfling"] {
+  font-size: var(--identity-stripe-long-label-font-size);
+}
 .identity-stripe[data-stripe-kind="Noble"] {
   color: var(--xcc-noble-stripe-face-color);
   text-shadow: var(--xcc-noble-stripe-text-shadow);
