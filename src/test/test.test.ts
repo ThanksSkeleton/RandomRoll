@@ -90,6 +90,37 @@ describe("DCC profession data integrity", () => {
   });
 });
 
+describe("XCC generic item data integrity", () => {
+  const xccItems = itemsNice.filter(item => item.Source === "XCC");
+
+  it("includes all XCC generic items as random Tools", () => {
+    expect(xccItems).toHaveLength(18);
+    expect(xccItems.every(item => item.Category === "Tool")).toBe(true);
+    expect(xccItems.every(item => item.Random)).toBe(true);
+    expect(xccItems.every(item => item.Genderlock === "")).toBe(true);
+    expect(xccItems.map(item => item.Item).sort()).toEqual([
+      "Chalk - 5 pieces",
+      "Chest - empty",
+      "Crowbar",
+      "Flashlight - combat",
+      "Flashlight - headset",
+      "Flask - empty",
+      "Grappling hook",
+      "Hammer - small",
+      "Iron spikes (5)",
+      "Lighter - masterwork",
+      "Mirror - hand-sized",
+      "Notebook",
+      "Oil - 3 flasks",
+      "Pole - 10-foot",
+      "Quiver",
+      "Rope - 50'",
+      "Sack (large)",
+      "Sack (small)",
+    ].sort());
+  });
+});
+
 describe("XCC weapon data integrity", () => {
   const xccWeapons = weaponsNice.filter((weapon) => weapon.Source === "XCC");
 

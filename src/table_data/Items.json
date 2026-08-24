@@ -1083,5 +1083,131 @@
     "Genderlock": "",
     "Random": "TRUE",
     "Source": "USSTUDENTS"
+  },
+  {
+    "Item": "Chalk - 5 pieces",
+    "Category": "Tool",
+    "Genderlock": "",
+    "Random": "TRUE",
+    "Source": "XCC"
+  },
+  {
+    "Item": "Chest - empty",
+    "Category": "Tool",
+    "Genderlock": "",
+    "Random": "TRUE",
+    "Source": "XCC"
+  },
+  {
+    "Item": "Crowbar",
+    "Category": "Tool",
+    "Genderlock": "",
+    "Random": "TRUE",
+    "Source": "XCC"
+  },
+  {
+    "Item": "Flashlight - combat",
+    "Category": "Tool",
+    "Genderlock": "",
+    "Random": "TRUE",
+    "Source": "XCC"
+  },
+  {
+    "Item": "Flashlight - headset",
+    "Category": "Tool",
+    "Genderlock": "",
+    "Random": "TRUE",
+    "Source": "XCC"
+  },
+  {
+    "Item": "Flask - empty",
+    "Category": "Tool",
+    "Genderlock": "",
+    "Random": "TRUE",
+    "Source": "XCC"
+  },
+  {
+    "Item": "Grappling hook",
+    "Category": "Tool",
+    "Genderlock": "",
+    "Random": "TRUE",
+    "Source": "XCC"
+  },
+  {
+    "Item": "Hammer - small",
+    "Category": "Tool",
+    "Genderlock": "",
+    "Random": "TRUE",
+    "Source": "XCC"
+  },
+  {
+    "Item": "Iron spikes (5)",
+    "Category": "Tool",
+    "Genderlock": "",
+    "Random": "TRUE",
+    "Source": "XCC"
+  },
+  {
+    "Item": "Lighter - masterwork",
+    "Category": "Tool",
+    "Genderlock": "",
+    "Random": "TRUE",
+    "Source": "XCC"
+  },
+  {
+    "Item": "Mirror - hand-sized",
+    "Category": "Tool",
+    "Genderlock": "",
+    "Random": "TRUE",
+    "Source": "XCC"
+  },
+  {
+    "Item": "Notebook",
+    "Category": "Tool",
+    "Genderlock": "",
+    "Random": "TRUE",
+    "Source": "XCC"
+  },
+  {
+    "Item": "Oil - 3 flasks",
+    "Category": "Tool",
+    "Genderlock": "",
+    "Random": "TRUE",
+    "Source": "XCC"
+  },
+  {
+    "Item": "Pole - 10-foot",
+    "Category": "Tool",
+    "Genderlock": "",
+    "Random": "TRUE",
+    "Source": "XCC"
+  },
+  {
+    "Item": "Quiver",
+    "Category": "Tool",
+    "Genderlock": "",
+    "Random": "TRUE",
+    "Source": "XCC"
+  },
+  {
+    "Item": "Rope - 50'",
+    "Category": "Tool",
+    "Genderlock": "",
+    "Random": "TRUE",
+    "Source": "XCC"
+  },
+  {
+    "Item": "Sack (large)",
+    "Category": "Tool",
+    "Genderlock": "",
+    "Random": "TRUE",
+    "Source": "XCC"
+  },
+  {
+    "Item": "Sack (small)",
+    "Category": "Tool",
+    "Genderlock": "",
+    "Random": "TRUE",
+    "Source": "XCC"
   }
 ]
