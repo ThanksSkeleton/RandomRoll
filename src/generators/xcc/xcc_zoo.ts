@@ -35,7 +35,7 @@ type NumericControl = {
   min: number;
   max: number;
   step: number;
-  unit: "rem" | "%" | "fr";
+  unit: "" | "px" | "rem" | "%" | "fr";
 };
 
 type ChoiceControl = {
@@ -193,9 +193,202 @@ const controls: CedalionControl[] = [
   { kind: "numeric", group: "Divider — Stats / Weapon-Armor", label: "Bottom margin", property: "--xcc-divider-stats-weapon-armor-margin-bottom", defaultValue: 0, min: -15, max: 15, step: 0.01, unit: "rem" },
 ];
 
+type D1TextCategory = {
+  id: "logo" | "yellow" | "white" | "stripe";
+  group: string;
+  defaults: {
+    face: string;
+    edgeColor: string;
+    edgeThickness: number;
+    iterations: number;
+    xStep: number;
+    yStep: number;
+    nearColor: string;
+    farColor: string;
+    transition: number;
+    nearHold: number;
+  };
+};
+
+const d1TextCategories: readonly D1TextCategory[] = [
+  {
+    id: "logo",
+    group: "Artistic Text — Logo",
+    defaults: {
+      face: "#ffffff",
+      edgeColor: "#000000",
+      edgeThickness: 1.75,
+      iterations: 13,
+      xStep: 0.25,
+      yStep: 0.7,
+      nearColor: "#9e9e9e",
+      farColor: "#050b55",
+      transition: 0.5,
+      nearHold: 0,
+    },
+  },
+  {
+    id: "yellow",
+    group: "Artistic Text — Yellow",
+    defaults: {
+      face: "#ffe72e",
+      edgeColor: "#000000",
+      edgeThickness: 1,
+      iterations: 8,
+      xStep: 0.35,
+      yStep: 0.45,
+      nearColor: "#b83700",
+      farColor: "#000000",
+      transition: 0.67,
+      nearHold: 1,
+    },
+  },
+  {
+    id: "white",
+    group: "Artistic Text — White",
+    defaults: {
+      face: "#ffffff",
+      edgeColor: "#000000",
+      edgeThickness: 1,
+      iterations: 9,
+      xStep: 0.7,
+      yStep: 0.5,
+      nearColor: "#686b86",
+      farColor: "#050b55",
+      transition: 0.45,
+      nearHold: 1,
+    },
+  },
+  {
+    id: "stripe",
+    group: "Artistic Text — Stripe",
+    defaults: {
+      face: "#ffffff",
+      edgeColor: "#000000",
+      edgeThickness: 1,
+      iterations: 0,
+      xStep: 0.6,
+      yStep: -0.45,
+      nearColor: "#000000",
+      farColor: "#050b55",
+      transition: 0.25,
+      nearHold: 1,
+    },
+  },
+] as const;
+
+function d1Property(category: D1TextCategory, suffix: string): string {
+  return `--xcc-${category.id}-d1-${suffix}`;
+}
+
+for (const category of d1TextCategories) {
+  controls.push(
+    { kind: "color", group: category.group, label: "Face color", property: d1Property(category, "face"), defaultValue: category.defaults.face },
+    { kind: "color", group: category.group, label: "Surround edge color", property: d1Property(category, "edge-color"), defaultValue: category.defaults.edgeColor },
+    { kind: "numeric", group: category.group, label: "Surround edge thickness", property: d1Property(category, "edge-thickness"), defaultValue: category.defaults.edgeThickness, min: 0, max: 8, step: 0.25, unit: "px" },
+    { kind: "numeric", group: category.group, label: "Shadow iterations", property: d1Property(category, "iterations"), defaultValue: category.defaults.iterations, min: 0, max: 32, step: 1, unit: "" },
+    { kind: "numeric", group: category.group, label: "Horizontal step per iteration", property: d1Property(category, "x-step"), defaultValue: category.defaults.xStep, min: -8, max: 12, step: 0.05, unit: "px" },
+    { kind: "numeric", group: category.group, label: "Vertical step per iteration", property: d1Property(category, "y-step"), defaultValue: category.defaults.yStep, min: -8, max: 12, step: 0.05, unit: "px" },
+    { kind: "color", group: category.group, label: "Near shadow color", property: d1Property(category, "near-color"), defaultValue: category.defaults.nearColor },
+    { kind: "color", group: category.group, label: "Far shadow color", property: d1Property(category, "far-color"), defaultValue: category.defaults.farColor },
+    { kind: "numeric", group: category.group, label: "Color transition", property: d1Property(category, "transition"), defaultValue: category.defaults.transition, min: 0, max: 1, step: 0.01, unit: "" },
+    { kind: "numeric", group: category.group, label: "Near-color hold", property: d1Property(category, "near-hold"), defaultValue: category.defaults.nearHold, min: 0, max: 32, step: 1, unit: "" },
+  );
+}
+
 const liveState = new Map<string, string>();
 const fieldResets: Array<() => void> = [];
 const sheets = [...document.querySelectorAll<HTMLElement>(".xcc-sheet")];
+
+function parseHexColor(value: string): { r: number; g: number; b: number } {
+  const hex = value.replace("#", "");
+  return {
+    r: Number.parseInt(hex.slice(0, 2), 16),
+    g: Number.parseInt(hex.slice(2, 4), 16),
+    b: Number.parseInt(hex.slice(4, 6), 16),
+  };
+}
+
+function mixHexColors(from: string, to: string, amount: number): string {
+  const start = parseHexColor(from);
+  const end = parseHexColor(to);
+  const mix = (a: number, b: number): number => Math.round(a + (b - a) * amount);
+  return `rgb(${mix(start.r, end.r)}, ${mix(start.g, end.g)}, ${mix(start.b, end.b)})`;
+}
+
+function formatPixelValue(value: number): string {
+  return String(Number(value.toFixed(4)));
+}
+
+function refreshD1Style(category: D1TextCategory): void {
+  const properties = {
+    face: d1Property(category, "face"),
+    edgeColor: d1Property(category, "edge-color"),
+    edgeThickness: d1Property(category, "edge-thickness"),
+    iterations: d1Property(category, "iterations"),
+    xStep: d1Property(category, "x-step"),
+    yStep: d1Property(category, "y-step"),
+    nearColor: d1Property(category, "near-color"),
+    farColor: d1Property(category, "far-color"),
+    transition: d1Property(category, "transition"),
+    nearHold: d1Property(category, "near-hold"),
+  };
+
+  if (Object.values(properties).some((property) => !liveState.has(property))) {
+    return;
+  }
+
+  const numericValue = (property: string): number =>
+    Number.parseFloat(liveState.get(property) ?? "0");
+  const face = liveState.get(properties.face) ?? category.defaults.face;
+  const edgeColor = liveState.get(properties.edgeColor) ?? category.defaults.edgeColor;
+  const edgeThickness = numericValue(properties.edgeThickness);
+  const iterations = Math.max(0, Math.round(numericValue(properties.iterations)));
+  const xStep = numericValue(properties.xStep);
+  const yStep = numericValue(properties.yStep);
+  const nearColor = liveState.get(properties.nearColor) ?? category.defaults.nearColor;
+  const farColor = liveState.get(properties.farColor) ?? category.defaults.farColor;
+  const transition = numericValue(properties.transition);
+  const nearHold = Math.max(0, Math.round(numericValue(properties.nearHold)));
+  const shadows: string[] = [];
+
+  if (edgeThickness > 0) {
+    for (const [x, y] of [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [1, -1], [-1, 1], [1, 1]]) {
+      shadows.push(`${formatPixelValue(x * edgeThickness)}px ${formatPixelValue(y * edgeThickness)}px 0 ${edgeColor}`);
+    }
+  }
+
+  for (let iteration = 1; iteration <= iterations; iteration += 1) {
+    let colorAmount = 0;
+    if (iteration > nearHold) {
+      const rawAmount = (iteration - nearHold) / Math.max(1, iterations - nearHold);
+      if (transition <= 0) {
+        colorAmount = 1;
+      } else if (transition >= 1) {
+        colorAmount = rawAmount >= 1 ? 1 : 0;
+      } else {
+        const gamma = Math.log(0.5) / Math.log(Math.max(0.001, transition));
+        colorAmount = Math.pow(rawAmount, gamma);
+      }
+    }
+
+    const color = mixHexColors(
+      nearColor,
+      farColor,
+      Math.min(1, Math.max(0, colorAmount)),
+    );
+    shadows.push(`${formatPixelValue(xStep * iteration)}px ${formatPixelValue(yStep * iteration)}px 0 ${color}`);
+  }
+
+  for (const sheet of sheets) {
+    sheet.style.setProperty(`--xcc-${category.id}-face-color`, face);
+    sheet.style.setProperty(`--xcc-${category.id}-text-shadow`, shadows.join(", "));
+  }
+}
+
+function refreshD1Styles(): void {
+  for (const category of d1TextCategories) refreshD1Style(category);
+}
 
 const panel = document.createElement("aside");
 panel.className = "cedalion-panel";
@@ -257,6 +450,7 @@ function applyProperty(property: string, value: string): void {
     sheet.style.setProperty(property, value);
   }
   liveState.set(property, value);
+  refreshD1Styles();
   updateStateBox();
 }
 
