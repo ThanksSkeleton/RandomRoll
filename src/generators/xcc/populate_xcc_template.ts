@@ -65,7 +65,7 @@ export function populateXccTemplate(
     "weaponDamage",
     formatDamage(character.weaponDamageBase, character.attackDamageMod),
   );
-  setText(root, "weaponRange", character.weaponRange || "—");
+  setWeaponRange(root, character.weaponRange);
 
   return root;
 }
@@ -103,6 +103,18 @@ function setPortrait(root: ParentNode, character: XccCharacter): void {
   portrait.style.backgroundRepeat = "no-repeat";
 }
 
+function setWeaponRange(root: ParentNode, range: string): void {
+  const label = getField(root, "weaponRangeLabel");
+  const value = getField(root, "weaponRange");
+  const hasRange = range.trim() !== "0";
+
+  value.textContent = hasRange ? (range || "—") : "";
+  label.style.visibility = hasRange ? "" : "hidden";
+  value.style.visibility = hasRange ? "" : "hidden";
+  label.setAttribute("aria-hidden", String(!hasRange));
+  value.setAttribute("aria-hidden", String(!hasRange));
+}
+
 function getField(root: ParentNode, field: string): HTMLElement {
   const element = root.querySelector<HTMLElement>(`[data-field="${field}"]`);
 
@@ -114,7 +126,7 @@ function getField(root: ParentNode, field: string): HTMLElement {
 }
 
 function formatModifier(value: number): string {
-  return value > 0 ? `+${value}` : String(value);
+  return value >= 0 ? `+${value}` : String(value);
 }
 
 function formatDamage(baseDamage: string, damageMod: number): string {

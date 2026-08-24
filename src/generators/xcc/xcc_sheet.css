@@ -15,6 +15,43 @@
   --identity-stripe-height: 5.56rem;
   --identity-stripe-font-size: 3.23rem;
   --identity-stripe-label-horizontal-alignment: center;
+  --xcc-bio-font-size: 1.08rem;
+  --xcc-bio-horizontal-alignment: center;
+  --xcc-bio-label-text-align: left;
+  --xcc-bio-value-text-align: right;
+  --xcc-bio-row-vertical-alignment: center;
+  --xcc-bio-label-column-width: 11.46rem;
+  --xcc-bio-column-gap: 0.5rem;
+  --xcc-bio-row-gap: 0.65rem;
+  --xcc-stats-font-size: 1.6rem;
+  --xcc-stats-horizontal-alignment: stretch;
+  --xcc-stats-row-vertical-alignment: center;
+  --xcc-stats-column-gap: 3.97rem;
+  --xcc-stats-base-column-weight: 1.64fr;
+  --xcc-stats-secondary-column-weight: 1.64fr;
+  --xcc-base-stats-vertical-alignment: stretch;
+  --xcc-secondary-stats-vertical-alignment: stretch;
+  --xcc-base-stat-column-gap: 2.34rem;
+  --xcc-secondary-stat-column-gap: 1.24rem;
+  --xcc-base-stat-label-column-weight: 2.84fr;
+  --xcc-base-stat-score-column-weight: 1.87fr;
+  --xcc-base-stat-modifier-column-weight: 1.95fr;
+  --xcc-base-stat-label-text-align: left;
+  --xcc-base-stat-score-text-align: right;
+  --xcc-base-stat-modifier-text-align: right;
+  --xcc-secondary-stat-label-text-align: right;
+  --xcc-secondary-stat-value-text-align: right;
+  --xcc-weapon-armor-font-size: 1.14rem;
+  --xcc-weapon-armor-horizontal-alignment: center;
+  --xcc-weapon-armor-row-vertical-alignment: end;
+  --xcc-weapon-armor-column-gap: 1.32rem;
+  --xcc-weapon-armor-row-gap: 1.21rem;
+  --xcc-weapon-left-value-column-weight: 2.34fr;
+  --xcc-weapon-right-value-column-weight: 2.06fr;
+  --xcc-weapon-left-label-text-align: right;
+  --xcc-weapon-left-value-text-align: left;
+  --xcc-weapon-right-label-text-align: right;
+  --xcc-weapon-right-value-text-align: right;
   --stripe-dwarf: #8a4b2a;
   --stripe-elf: #276749;
   --stripe-gnome: #654a91;
@@ -96,14 +133,16 @@
 
 .bio {
   display: grid;
-  gap: 0.65rem;
+  justify-self: var(--xcc-bio-horizontal-alignment);
+  gap: var(--xcc-bio-row-gap);
+  font-size: var(--xcc-bio-font-size);
 }
 
 .bio-row {
   display: grid;
-  grid-template-columns: 7rem minmax(0, 1fr);
-  gap: 0.5rem;
-  align-items: baseline;
+  grid-template-columns: var(--xcc-bio-label-column-width) minmax(0, 1fr);
+  gap: var(--xcc-bio-column-gap);
+  align-items: var(--xcc-bio-row-vertical-alignment);
 }
 
 .bio-label,
@@ -115,11 +154,13 @@
 
 .bio-label {
   white-space: nowrap;
+  text-align: var(--xcc-bio-label-text-align);
 }
 
 .bio-value {
   min-width: 0;
   overflow-wrap: anywhere;
+  text-align: var(--xcc-bio-value-text-align);
 }
 
 .bio-value,
@@ -158,21 +199,23 @@
 
 .stats-row {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 1rem;
+  grid-template-columns: minmax(0, var(--xcc-stats-base-column-weight)) minmax(0, var(--xcc-stats-secondary-column-weight));
+  justify-self: var(--xcc-stats-horizontal-alignment);
+  column-gap: var(--xcc-stats-column-gap);
   min-height: 0;
+  font-size: var(--xcc-stats-font-size);
 }
 
 .base-stats .stat-line {
   display: grid;
-  grid-template-columns: minmax(3rem, 1fr) minmax(2rem, 0.5fr) minmax(2rem, 0.5fr);
-  gap: 0.5rem;
+  grid-template-columns: minmax(3rem, var(--xcc-base-stat-label-column-weight)) minmax(2rem, var(--xcc-base-stat-score-column-weight)) minmax(2rem, var(--xcc-base-stat-modifier-column-weight));
+  gap: var(--xcc-base-stat-column-gap);
 }
 
 .secondary-stats .stat-line {
   display: grid;
   grid-template-columns: max-content minmax(0, 1fr);
-  gap: 0.5rem;
+  gap: var(--xcc-secondary-stat-column-gap);
 }
 
 .base-stats,
@@ -183,10 +226,12 @@
 
 .base-stats {
   grid-column: 1;
+  align-self: var(--xcc-base-stats-vertical-alignment);
 }
 
 .secondary-stats {
   grid-column: 2;
+  align-self: var(--xcc-secondary-stats-vertical-alignment);
 }
 
 .base-stats .stat-line.wide-value {
@@ -194,8 +239,14 @@
 }
 
 .stat-line {
-  align-items: baseline;
+  align-items: var(--xcc-stats-row-vertical-alignment);
 }
+
+.base-stats .stat-line > span:nth-child(1) { text-align: var(--xcc-base-stat-label-text-align); }
+.base-stats .stat-line > span:nth-child(2) { text-align: var(--xcc-base-stat-score-text-align); }
+.base-stats .stat-line > span:nth-child(3) { text-align: var(--xcc-base-stat-modifier-text-align); }
+.secondary-stats .stat-line > span:nth-child(1) { text-align: var(--xcc-secondary-stat-label-text-align); }
+.secondary-stats .stat-line > span:nth-child(2) { text-align: var(--xcc-secondary-stat-value-text-align); }
 
 .stat-line.blank {
   visibility: hidden;
@@ -203,11 +254,18 @@
 
 .weapon-armor-section {
   display: grid;
-  grid-template-columns: max-content minmax(0, 1fr) max-content minmax(0, 1fr);
-  column-gap: 0.75rem;
-  row-gap: 0.65rem;
-  align-items: center;
+  grid-template-columns: max-content minmax(0, var(--xcc-weapon-left-value-column-weight)) max-content minmax(0, var(--xcc-weapon-right-value-column-weight));
+  justify-self: var(--xcc-weapon-armor-horizontal-alignment);
+  column-gap: var(--xcc-weapon-armor-column-gap);
+  row-gap: var(--xcc-weapon-armor-row-gap);
+  align-items: var(--xcc-weapon-armor-row-vertical-alignment);
+  font-size: var(--xcc-weapon-armor-font-size);
 }
+
+.weapon-armor-section > :nth-child(4n + 1) { text-align: var(--xcc-weapon-left-label-text-align); }
+.weapon-armor-section > :nth-child(4n + 2) { text-align: var(--xcc-weapon-left-value-text-align); }
+.weapon-armor-section > :nth-child(4n + 3) { text-align: var(--xcc-weapon-right-label-text-align); }
+.weapon-armor-section > :nth-child(4n) { text-align: var(--xcc-weapon-right-value-text-align); }
 
 .weapon-armor-value {
   min-width: 0;

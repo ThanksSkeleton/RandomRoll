@@ -35,7 +35,7 @@ type NumericControl = {
   min: number;
   max: number;
   step: number;
-  unit: "rem" | "%";
+  unit: "rem" | "%" | "fr";
 };
 
 type ChoiceControl = {
@@ -61,6 +61,25 @@ const elementAlignmentOptions = [
   { label: "Right", value: "end" },
 ] as const;
 
+const blockAlignmentOptions = [
+  { label: "Stretch (current)", value: "stretch" },
+  ...elementAlignmentOptions,
+] as const;
+
+const rowAlignmentOptions = [
+  { label: "Baseline", value: "baseline" },
+  { label: "Top", value: "start" },
+  { label: "Center", value: "center" },
+  { label: "Bottom", value: "end" },
+] as const;
+
+const verticalColumnAlignmentOptions = [
+  { label: "Stretch (current)", value: "stretch" },
+  { label: "Top", value: "start" },
+  { label: "Center", value: "center" },
+  { label: "Bottom", value: "end" },
+] as const;
+
 const controls: CedalionControl[] = [
   { kind: "numeric", group: "Font sizes", label: "Content font size", property: "--xcc-content-font-size", defaultValue: 1.25, min: 0.35, max: 4, step: 0.01, unit: "rem" },
   { kind: "numeric", group: "Font sizes", label: "XCrawl logo font size", property: "--xcc-logo-name-font-size", defaultValue: 3.29, min: 0.5, max: 8, step: 0.01, unit: "rem" },
@@ -74,6 +93,46 @@ const controls: CedalionControl[] = [
   { kind: "numeric", group: "Banner geometry", label: "Banner left offset", property: "--identity-stripe-left", defaultValue: 6.31, min: -15, max: 15, step: 0.01, unit: "rem" },
   { kind: "numeric", group: "Banner geometry", label: "Banner width", property: "--identity-stripe-width", defaultValue: 188, min: 10, max: 500, step: 1, unit: "%" },
   { kind: "numeric", group: "Banner geometry", label: "Banner height", property: "--identity-stripe-height", defaultValue: 5.56, min: 0.25, max: 15, step: 0.01, unit: "rem" },
+
+  { kind: "numeric", group: "Bio", label: "Bio font size", property: "--xcc-bio-font-size", defaultValue: 1.08, min: 0.25, max: 5, step: 0.01, unit: "rem" },
+  { kind: "choice", group: "Bio", label: "Whole bio horizontal alignment", property: "--xcc-bio-horizontal-alignment", defaultValue: "center", options: blockAlignmentOptions },
+  { kind: "choice", group: "Bio", label: "Label column text alignment", property: "--xcc-bio-label-text-align", defaultValue: "left", options: textAlignmentOptions },
+  { kind: "choice", group: "Bio", label: "Value column text alignment", property: "--xcc-bio-value-text-align", defaultValue: "right", options: textAlignmentOptions },
+  { kind: "choice", group: "Bio", label: "Label/value vertical alignment", property: "--xcc-bio-row-vertical-alignment", defaultValue: "center", options: rowAlignmentOptions },
+  { kind: "numeric", group: "Bio", label: "Label column width", property: "--xcc-bio-label-column-width", defaultValue: 11.46, min: 0.5, max: 30, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Bio", label: "Gap between label/value columns", property: "--xcc-bio-column-gap", defaultValue: 0.5, min: 0, max: 15, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Bio", label: "Gap between bio rows", property: "--xcc-bio-row-gap", defaultValue: 0.65, min: 0, max: 15, step: 0.01, unit: "rem" },
+
+  { kind: "numeric", group: "Stats", label: "Stats font size", property: "--xcc-stats-font-size", defaultValue: 1.6, min: 0.25, max: 5, step: 0.01, unit: "rem" },
+  { kind: "choice", group: "Stats", label: "Whole stats block horizontal alignment", property: "--xcc-stats-horizontal-alignment", defaultValue: "stretch", options: blockAlignmentOptions },
+  { kind: "choice", group: "Stats", label: "Base stats column vertical alignment", property: "--xcc-base-stats-vertical-alignment", defaultValue: "stretch", options: verticalColumnAlignmentOptions },
+  { kind: "choice", group: "Stats", label: "Secondary stats column vertical alignment", property: "--xcc-secondary-stats-vertical-alignment", defaultValue: "stretch", options: verticalColumnAlignmentOptions },
+  { kind: "choice", group: "Stats", label: "Cells within each stats row", property: "--xcc-stats-row-vertical-alignment", defaultValue: "center", options: rowAlignmentOptions },
+  { kind: "choice", group: "Stats", label: "Base label column text alignment", property: "--xcc-base-stat-label-text-align", defaultValue: "left", options: textAlignmentOptions },
+  { kind: "choice", group: "Stats", label: "Base score column text alignment", property: "--xcc-base-stat-score-text-align", defaultValue: "right", options: textAlignmentOptions },
+  { kind: "choice", group: "Stats", label: "Base modifier column text alignment", property: "--xcc-base-stat-modifier-text-align", defaultValue: "right", options: textAlignmentOptions },
+  { kind: "choice", group: "Stats", label: "Secondary label column text alignment", property: "--xcc-secondary-stat-label-text-align", defaultValue: "right", options: textAlignmentOptions },
+  { kind: "choice", group: "Stats", label: "Secondary value column text alignment", property: "--xcc-secondary-stat-value-text-align", defaultValue: "right", options: textAlignmentOptions },
+  { kind: "numeric", group: "Stats", label: "Gap between base/secondary columns", property: "--xcc-stats-column-gap", defaultValue: 3.97, min: 0, max: 20, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Stats", label: "Base stats column width weight", property: "--xcc-stats-base-column-weight", defaultValue: 1.64, min: 0.1, max: 10, step: 0.01, unit: "fr" },
+  { kind: "numeric", group: "Stats", label: "Secondary stats column width weight", property: "--xcc-stats-secondary-column-weight", defaultValue: 1.64, min: 0.1, max: 10, step: 0.01, unit: "fr" },
+  { kind: "numeric", group: "Stats", label: "Gap inside base-stat columns", property: "--xcc-base-stat-column-gap", defaultValue: 2.34, min: 0, max: 10, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Stats", label: "Gap inside secondary-stat columns", property: "--xcc-secondary-stat-column-gap", defaultValue: 1.24, min: 0, max: 10, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Stats", label: "Base label column width weight", property: "--xcc-base-stat-label-column-weight", defaultValue: 2.84, min: 0.1, max: 10, step: 0.01, unit: "fr" },
+  { kind: "numeric", group: "Stats", label: "Base score column width weight", property: "--xcc-base-stat-score-column-weight", defaultValue: 1.87, min: 0.1, max: 10, step: 0.01, unit: "fr" },
+  { kind: "numeric", group: "Stats", label: "Base modifier column width weight", property: "--xcc-base-stat-modifier-column-weight", defaultValue: 1.95, min: 0.1, max: 10, step: 0.01, unit: "fr" },
+
+  { kind: "numeric", group: "Weapon / Armor", label: "Weapon/armor font size", property: "--xcc-weapon-armor-font-size", defaultValue: 1.14, min: 0.25, max: 5, step: 0.01, unit: "rem" },
+  { kind: "choice", group: "Weapon / Armor", label: "Whole weapon/armor block horizontal alignment", property: "--xcc-weapon-armor-horizontal-alignment", defaultValue: "center", options: blockAlignmentOptions },
+  { kind: "choice", group: "Weapon / Armor", label: "Cells within each weapon/armor row", property: "--xcc-weapon-armor-row-vertical-alignment", defaultValue: "end", options: rowAlignmentOptions },
+  { kind: "choice", group: "Weapon / Armor", label: "Left label column text alignment", property: "--xcc-weapon-left-label-text-align", defaultValue: "right", options: textAlignmentOptions },
+  { kind: "choice", group: "Weapon / Armor", label: "Left value column text alignment", property: "--xcc-weapon-left-value-text-align", defaultValue: "left", options: textAlignmentOptions },
+  { kind: "choice", group: "Weapon / Armor", label: "Right label column text alignment", property: "--xcc-weapon-right-label-text-align", defaultValue: "right", options: textAlignmentOptions },
+  { kind: "choice", group: "Weapon / Armor", label: "Right value column text alignment", property: "--xcc-weapon-right-value-text-align", defaultValue: "right", options: textAlignmentOptions },
+  { kind: "numeric", group: "Weapon / Armor", label: "Gap between weapon/armor columns", property: "--xcc-weapon-armor-column-gap", defaultValue: 1.32, min: 0, max: 15, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Weapon / Armor", label: "Gap between weapon/armor rows", property: "--xcc-weapon-armor-row-gap", defaultValue: 1.21, min: 0, max: 15, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Weapon / Armor", label: "Left value column width weight", property: "--xcc-weapon-left-value-column-weight", defaultValue: 2.34, min: 0.1, max: 10, step: 0.01, unit: "fr" },
+  { kind: "numeric", group: "Weapon / Armor", label: "Right value column width weight", property: "--xcc-weapon-right-value-column-weight", defaultValue: 2.06, min: 0.1, max: 10, step: 0.01, unit: "fr" },
 ];
 
 const liveState = new Map<string, string>();
