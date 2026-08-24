@@ -5,6 +5,8 @@ export type DccCoreWeapon = {
   underlyingName: string;
   damageBase: string;
   weaponType: string;
+  range: string;
+  specialProperties: string;
 };
 
 export type DccCoreLuckySign = {
@@ -24,6 +26,14 @@ export type DccCoreLuckySign = {
 };
 
 export type DccCoreCharacter = {
+  professionTitle: string;
+  gender: string;
+
+  race: string;
+  racialTraits: string;
+  languages: string;
+  alignment: string;
+
   strengthScore: number;
   strengthMod: number;
   agilityScore: number;
@@ -37,6 +47,8 @@ export type DccCoreCharacter = {
   luckScore: number;
   luckMod: number;
 
+  armor: string;
+  armorAC: number;
   armorClass: number;
   hitPoints: number;
   speed: number;
@@ -49,11 +61,22 @@ export type DccCoreCharacter = {
   weaponUnderlying: string;
   weaponDamageBase: string;
   weaponType: string;
+  weaponRange: string;
+  weaponSpecialProperties: string;
   attackMod: number;
   attackDamageMod: number;
 
   luckySignName: string;
   luckySignDescription: string;
+
+  // Compatibility inventory slots. Their meanings vary by consumer:
+  // XCC: adventurer pack. DCC Students: tool.
+  equipment: string;
+  // XCC: intentionally blank. DCC Students: cultural item.
+  equipment2: string;
+  // XCC and DCC Students: occupation trade good.
+  equipment3: string;
+  startingFunds: number;
 };
 
 export type BlankDccCoreCharacter = {
@@ -63,6 +86,18 @@ export type BlankDccCoreCharacter = {
 };
 
 export type BuildDccCoreCharacterOptions = {
+  professionTitle: string;
+  gender: string;
+  race: string;
+  racialTraits: string;
+  languages: string;
+  alignment: string;
+  armor: string;
+  armorAC: number;
+  equipment: string;
+  equipment2: string;
+  equipment3: string;
+  startingFunds: number;
   weapon: DccCoreWeapon;
   rollLuckySign: (rng: seedrandom.PRNG) => DccCoreLuckySign;
   baseSpeed?: number;
@@ -95,6 +130,14 @@ export function buildDccCoreCharacter(
   const isMelee = options.weapon.weaponType === MELEE;
 
   return {
+    professionTitle: options.professionTitle,
+    gender: options.gender,
+
+    race: options.race,
+    racialTraits: options.racialTraits,
+    languages: options.languages,
+    alignment: options.alignment,
+
     strengthScore,
     strengthMod,
     agilityScore,
@@ -108,7 +151,9 @@ export function buildDccCoreCharacter(
     luckScore,
     luckMod,
 
-    armorClass: 10 + agilityMod + luckySign.armorClass * luckMod,
+    armor: options.armor,
+    armorAC: options.armorAC,
+    armorClass: options.armorAC + agilityMod + luckySign.armorClass * luckMod,
     hitPoints: Math.max(
       baseHitPoints + staminaMod + luckySign.hitPoints * luckMod,
       1,
@@ -123,6 +168,8 @@ export function buildDccCoreCharacter(
     weaponUnderlying: options.weapon.underlyingName,
     weaponDamageBase: options.weapon.damageBase,
     weaponType: options.weapon.weaponType,
+    weaponRange: options.weapon.range,
+    weaponSpecialProperties: options.weapon.specialProperties,
     attackMod:
       (isMelee ? strengthMod : agilityMod)
       + (isMelee ? luckySign.meleeAttack : luckySign.rangedAttack) * luckMod,
@@ -132,11 +179,24 @@ export function buildDccCoreCharacter(
 
     luckySignName: luckySign.name,
     luckySignDescription: luckySign.description,
+
+    equipment: options.equipment,
+    equipment2: options.equipment2,
+    equipment3: options.equipment3,
+    startingFunds: options.startingFunds,
   };
 }
 
 export function buildBlankDccCoreCharacter(): BlankDccCoreCharacter {
   return {
+    professionTitle: "",
+    gender: "",
+
+    race: "",
+    racialTraits: "",
+    languages: "",
+    alignment: "",
+
     strengthScore: null,
     strengthMod: null,
     agilityScore: null,
@@ -150,6 +210,8 @@ export function buildBlankDccCoreCharacter(): BlankDccCoreCharacter {
     luckScore: null,
     luckMod: null,
 
+    armor: "",
+    armorAC: null,
     armorClass: null,
     hitPoints: null,
     speed: null,
@@ -162,11 +224,18 @@ export function buildBlankDccCoreCharacter(): BlankDccCoreCharacter {
     weaponUnderlying: "",
     weaponDamageBase: "",
     weaponType: "",
+    weaponRange: "",
+    weaponSpecialProperties: "",
     attackMod: null,
     attackDamageMod: null,
 
     luckySignName: "",
     luckySignDescription: "",
+
+    equipment: "",
+    equipment2: "",
+    equipment3: "",
+    startingFunds: null,
   };
 }
 

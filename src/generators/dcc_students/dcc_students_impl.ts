@@ -31,19 +31,8 @@ const weaponsNice = weapons.map(toWeaponsNice);
 export type StudentCharacter = DccCoreCharacter & {
   firstName: string;
   lastName: string;
-  professionTitle: string;
-
-  equipment: string;
-  equipment2: string;
-  equipment3: string;
-  startingFunds: number;
-
-  languages: string;
-  fantasyTraits: string;
-  fantasyRace: string;
 
   studentStyle: string;
-  gender: string;
   gpa: string;
   age: number;
   bag: string;
@@ -69,6 +58,12 @@ const DEFAULT_SCHOOL = "St. Cuthbert's Prepatory Academy";
 const DEFAULT_PORTRAIT = "Default Portrait";
 const DEFAULT_LUCKYSIGN_IMAGE = "DEFAULT";
 const DEFAULT_AGE = 18;
+const STUDENT_RACE = "Human";
+const STUDENT_RACIAL_TRAITS = "";
+const STUDENT_LANGUAGES = "English";
+const STUDENT_ARMOR = "None";
+const STUDENT_ARMOR_AC = 10;
+const STUDENT_ALIGNMENT = "Neutral";
 
 export function default_build(seed: string): ExportFormat<StudentCharacter> {
   const rng: seedrandom.PRNG = seedrandom(seed);
@@ -89,11 +84,26 @@ function buildDccStudent(
   const name = full_name(rng, gender, nationality);
   const profession = professionInfo(rng, gender);
   const core = buildDccCoreCharacter(rng, {
+    professionTitle: profession.professionTitle.ProfessionTitle,
+    gender,
+    race: STUDENT_RACE,
+    racialTraits: STUDENT_RACIAL_TRAITS,
+    languages: STUDENT_LANGUAGES,
+    alignment: STUDENT_ALIGNMENT,
+    armor: STUDENT_ARMOR,
+    armorAC: STUDENT_ARMOR_AC,
+    // Compatibility slots: tool, cultural item, then occupation trade good.
+    equipment: profession.tool.Item,
+    equipment2: profession.cultural_item.Item,
+    equipment3: profession.tradeGood.Item,
+    startingFunds: 0,
     weapon: {
       displayName: profession.weapon.Weapon,
       underlyingName: profession.weapon.WeaponUnderlying,
       damageBase: profession.weapon.WeaponDamageBase,
       weaponType: profession.weapon.WeaponType,
+      range: profession.weapon.Range,
+      specialProperties: profession.weapon.CommaSeparatedSpecialProperties,
     },
     rollLuckySign: rollStudentLuckySign,
   });
@@ -107,7 +117,12 @@ function buildDccStudent(
   return {
     firstName: name[0],
     lastName: name[1],
-    professionTitle: profession.professionTitle.ProfessionTitle,
+    professionTitle: core.professionTitle,
+
+    race: core.race,
+    racialTraits: core.racialTraits,
+    languages: core.languages,
+    alignment: core.alignment,
 
     strengthScore: core.strengthScore,
     strengthMod: core.strengthMod,
@@ -122,6 +137,8 @@ function buildDccStudent(
     luckScore: core.luckScore,
     luckMod: core.luckMod,
 
+    armor: core.armor,
+    armorAC: core.armorAC,
     armorClass: core.armorClass,
     hitPoints: core.hitPoints,
     speed: core.speed,
@@ -134,20 +151,18 @@ function buildDccStudent(
     weaponUnderlying: core.weaponUnderlying,
     weaponDamageBase: core.weaponDamageBase,
     weaponType: core.weaponType,
+    weaponRange: core.weaponRange,
+    weaponSpecialProperties: core.weaponSpecialProperties,
     attackMod: core.attackMod,
     attackDamageMod: core.attackDamageMod,
 
-    equipment: profession.tool.Item,
-    equipment2: profession.cultural_item.Item,
-    equipment3: profession.tradeGood.Item,
-    startingFunds: 0,
+    equipment: core.equipment,
+    equipment2: core.equipment2,
+    equipment3: core.equipment3,
+    startingFunds: core.startingFunds,
 
     luckySignName: core.luckySignName,
     luckySignDescription: core.luckySignDescription,
-
-    languages: "English",
-    fantasyTraits: "",
-    fantasyRace: "Human",
 
     studentStyle: US_STYLE,
     portraitImagePath: DEFAULT_PORTRAIT,
@@ -156,7 +171,7 @@ function buildDccStudent(
 
     gpa: Math.min(0.25 * core.intelligenceScore, 4.0).toFixed(1),
     age,
-    gender,
+    gender: core.gender,
 
     bag: profession.bag.Item,
     lunchContainer: profession.lunchContainer,

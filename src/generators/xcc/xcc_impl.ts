@@ -14,23 +14,10 @@ export type XccCharacter = BlankDccCoreCharacter & {
   // Identity and background
   firstName: string;
   lastName: string;
-  gender: string;
-  professionTitle: string;
-  alignment: string;
 
-  // Ancestry
-  race: string;
-  racialTraits: string;
-  languages: string;
-
-  // XCC weapon details beyond the shared DCC core
-  weaponRange: string;
-  weaponSpecialProperties: string;
-
-  // Armor and equipment
-  adventurerPack: string;
-  armor: string;
-  equipment: string;
+  // Inherited compatibility slots will map as follows when XCC generation is
+  // implemented: equipment = adventurer pack, equipment2 = blank, and
+  // equipment3 = occupation trade good.
 
   // Xcrawl
   mojo: number;
@@ -45,22 +32,8 @@ export type XccCharacter = BlankDccCoreCharacter & {
 const BLANK_XCC_CHARACTER: XccCharacter = {
   firstName: "",
   lastName: "",
-  gender: "",
-  professionTitle: "",
-  alignment: "",
-
-  race: "",
-  racialTraits: "",
-  languages: "",
 
   ...buildBlankDccCoreCharacter(),
-
-  weaponRange: "",
-  weaponSpecialProperties: "",
-
-  adventurerPack: "",
-  armor: "",
-  equipment: "",
 
   mojo: 0,
   fame: 0,

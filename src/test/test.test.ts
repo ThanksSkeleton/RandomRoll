@@ -1,9 +1,11 @@
 import { describe, expect, it } from "vitest";
+import seedrandom from "seedrandom";
 import { build_super_export } from "../generators/supers/supers_impl";
 import { default_build as buildDccStudents } from "../generators/dcc_students/dcc_students_impl";
 import {
   abilityModifier,
   buildBlankDccCoreCharacter,
+  buildDccCoreCharacter,
 } from "../generators/dcc_core/dcc_core";
 import { buildBlankXccCharacter } from "../generators/xcc/xcc_impl";
 
@@ -157,9 +159,71 @@ describe("DCC core", () => {
   });
 
   it("provides the common blank shape consumed by XCC", () => {
-    expect(buildBlankXccCharacter()).toMatchObject(
-      buildBlankDccCoreCharacter(),
-    );
+    const xccCharacter = buildBlankXccCharacter();
+
+    expect(xccCharacter).toMatchObject(buildBlankDccCoreCharacter());
+    expect(xccCharacter).toMatchObject({
+      professionTitle: "",
+      equipment: "",
+      equipment2: "",
+      equipment3: "",
+      startingFunds: null,
+    });
+    expect(xccCharacter).not.toHaveProperty("adventurerPack");
+  });
+
+  it("calculates AC from armor, Agility, and the lucky sign", () => {
+    const character = buildDccCoreCharacter(seedrandom("armor-check"), {
+      professionTitle: "Test Profession",
+      gender: "Test Gender",
+      race: "Test Race",
+      racialTraits: "Test Trait",
+      languages: "Test Language",
+      alignment: "Neutral",
+      armor: "Test Armor",
+      armorAC: 14,
+      equipment: "Test Pack",
+      equipment2: "",
+      equipment3: "Test Trade Good",
+      startingFunds: 0,
+      weapon: {
+        displayName: "Test Weapon",
+        underlyingName: "Test Weapon",
+        damageBase: "1d4",
+        weaponType: "Melee",
+        range: "10/20/30",
+        specialProperties: "Test Property",
+      },
+      rollLuckySign: () => ({
+        name: "Test Sign",
+        description: "Test Effect",
+        meleeAttack: 0,
+        rangedAttack: 0,
+        meleeDamage: 0,
+        rangedDamage: 0,
+        fortitudeSave: 0,
+        reflexSave: 0,
+        willSave: 0,
+        armorClass: 0,
+        initiative: 0,
+        hitPoints: 0,
+        speed: 0,
+      }),
+    });
+
+    expect(character.armorClass).toBe(14 + character.agilityMod);
+    expect(character).toMatchObject({
+      armor: "Test Armor",
+      armorAC: 14,
+      weaponRange: "10/20/30",
+      weaponSpecialProperties: "Test Property",
+      professionTitle: "Test Profession",
+      gender: "Test Gender",
+      equipment: "Test Pack",
+      equipment2: "",
+      equipment3: "Test Trade Good",
+      startingFunds: 0,
+    });
   });
 });
 
@@ -180,6 +244,46 @@ describe("DCC student seed compatibility", () => {
       { firstName: "Sergio", lastName: "Strong", luckySignName: "Temperance", studentId: "102", dob: "11/03/1969", expiry: "08/04/1987" },
       { firstName: "Lara", lastName: "Brennan", luckySignName: "Queen of Cups", studentId: "193", dob: "02/01/1969", expiry: "05/06/1987" },
     ]);
+
+    for (const character of output.objects) {
+      expect(character).toMatchObject({
+        race: "Human",
+        racialTraits: "",
+        languages: "English",
+        armor: "None",
+        armorAC: 10,
+        alignment: "Neutral",
+      });
+
+      const weapon = weaponsNice.find(candidate =>
+        candidate.Source === "USSTUDENTS"
+        && candidate.Weapon === character.weaponDisplay
+      );
+      expect(weapon).toBeDefined();
+      expect(character.weaponRange).toBe(weapon?.Range);
+      expect(character.weaponSpecialProperties).toBe(
+        weapon?.CommaSeparatedSpecialProperties,
+      );
+
+      expect(
+        itemsNice.some(item =>
+          item.Category === "Tool" && item.Item === character.equipment
+        ),
+      ).toBe(true);
+      expect(
+        itemsNice.some(item =>
+          item.Category === "Cultural Goods"
+          && item.Item === character.equipment2
+        ),
+      ).toBe(true);
+
+      const profession = professions.find(candidate =>
+        candidate.ProfessionTitle === character.professionTitle
+      );
+      expect(profession).toBeDefined();
+      expect(character.equipment3).toBe(profession?.TradeGood);
+      expect(character.startingFunds).toBe(0);
+    }
   });
 });
 
