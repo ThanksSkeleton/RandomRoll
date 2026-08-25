@@ -1,32 +1,18 @@
 import type { XccCharacter } from "./xcc_impl";
+import { createXccSheetElement } from "./xcc_sheet_template";
 
 export function buildXccSheet(characters: XccCharacter[]): HTMLElement {
   if (characters.length !== 1) {
     throw new Error(`XCC sheet renderer requires one character; received ${characters.length}.`);
   }
 
-  const template = document.querySelector<HTMLTemplateElement>(
-    "#xcc-character-sheet-template",
-  );
-
-  if (!template) {
-    throw new Error('Missing template: "#xcc-character-sheet-template"');
-  }
-
-  return populateXccTemplate(template, characters[0]);
+  return populateXccTemplate(createXccSheetElement(), characters[0]);
 }
 
 export function populateXccTemplate(
-  template: HTMLTemplateElement,
+  root: HTMLElement,
   character: XccCharacter,
 ): HTMLElement {
-  const fragment = template.content.cloneNode(true) as DocumentFragment;
-  const root = fragment.querySelector<HTMLElement>(".xcc-sheet");
-
-  if (!root) {
-    throw new Error('Template must contain an element with class ".xcc-sheet".');
-  }
-
   setText(root, "firstName", character.firstName);
   setText(root, "lastName", character.lastName);
   setText(root, "professionTitle", character.professionPresentation);

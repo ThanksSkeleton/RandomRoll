@@ -36,7 +36,6 @@ type NumericControl = {
   group: string;
   label: string;
   property: string;
-  defaultValue: number;
   min: number;
   max: number;
   step: number;
@@ -48,7 +47,6 @@ type ChoiceControl = {
   group: string;
   label: string;
   property: string;
-  defaultValue: string;
   options: ReadonlyArray<{ label: string; value: string }>;
 };
 
@@ -57,7 +55,6 @@ type ColorControl = {
   group: string;
   label: string;
   property: string;
-  defaultValue: string;
 };
 
 type ToggleControl = {
@@ -65,7 +62,6 @@ type ToggleControl = {
   group: string;
   label: string;
   property: string;
-  defaultValue: boolean;
   enabledValue: string;
   disabledValue: string;
 };
@@ -109,199 +105,127 @@ const portraitShapeOptions = [
 ] as const;
 
 const controls: CedalionControl[] = [
-  { kind: "numeric", group: "Font sizes", label: "XCrawl logo font size", property: "--xcc-logo-name-font-size", defaultValue: 3.56, min: 0.5, max: 8, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Font sizes", label: "Spotlight subtitle font size", property: "--xcc-logo-subtitle-font-size", defaultValue: 1.24, min: 0.35, max: 6, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Font sizes", label: "Other banner text size", property: "--identity-stripe-font-size", defaultValue: 3.23, min: 0.25, max: 5, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Font sizes", label: "Halfling / Half-Orc banner text size", property: "--identity-stripe-long-label-font-size", defaultValue: 2.82, min: 0.25, max: 5, step: 0.01, unit: "rem" },
-  { kind: "choice", group: "Alignment", label: "All sheet text alignment", property: "--xcc-text-align", defaultValue: "left", options: textAlignmentOptions },
-  { kind: "choice", group: "Alignment", label: "Logo horizontal alignment", property: "--xcc-logo-horizontal-alignment", defaultValue: "start", options: elementAlignmentOptions },
-  { kind: "choice", group: "Alignment", label: "Portrait horizontal alignment", property: "--xcc-portrait-horizontal-alignment", defaultValue: "end", options: elementAlignmentOptions },
-  { kind: "choice", group: "Alignment", label: "Banner label horizontal alignment", property: "--identity-stripe-label-horizontal-alignment", defaultValue: "center", options: elementAlignmentOptions },
-  { kind: "numeric", group: "Portrait", label: "Portrait border width", property: "--xcc-portrait-border-width", defaultValue: 0.7, min: 0, max: 5, step: 0.01, unit: "rem" },
-  { kind: "choice", group: "Portrait", label: "Portrait border shape", property: "--xcc-portrait-border-radius", defaultValue: "0rem", options: portraitShapeOptions },
-  { kind: "numeric", group: "Banner geometry", label: "Banner bottom offset", property: "--identity-stripe-bottom", defaultValue: -14.24, min: -15, max: 15, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Banner geometry", label: "Banner left offset", property: "--identity-stripe-left", defaultValue: 6.31, min: -15, max: 15, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Banner geometry", label: "Banner width", property: "--identity-stripe-width", defaultValue: 188, min: 10, max: 500, step: 1, unit: "%" },
-  { kind: "numeric", group: "Banner geometry", label: "Banner height", property: "--identity-stripe-height", defaultValue: 5.56, min: 0.25, max: 15, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Font sizes", label: "XCrawl logo font size", property: "--xcc-logo-name-font-size", min: 0.5, max: 8, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Font sizes", label: "Spotlight subtitle font size", property: "--xcc-logo-subtitle-font-size", min: 0.35, max: 6, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Font sizes", label: "Other banner text size", property: "--identity-stripe-font-size", min: 0.25, max: 5, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Font sizes", label: "Halfling / Half-Orc banner text size", property: "--identity-stripe-long-label-font-size", min: 0.25, max: 5, step: 0.01, unit: "rem" },
+  { kind: "choice", group: "Alignment", label: "All sheet text alignment", property: "--xcc-text-align", options: textAlignmentOptions },
+  { kind: "choice", group: "Alignment", label: "Logo horizontal alignment", property: "--xcc-logo-horizontal-alignment", options: elementAlignmentOptions },
+  { kind: "choice", group: "Alignment", label: "Portrait horizontal alignment", property: "--xcc-portrait-horizontal-alignment", options: elementAlignmentOptions },
+  { kind: "choice", group: "Alignment", label: "Banner label horizontal alignment", property: "--identity-stripe-label-horizontal-alignment", options: elementAlignmentOptions },
+  { kind: "numeric", group: "Portrait", label: "Portrait border width", property: "--xcc-portrait-border-width", min: 0, max: 5, step: 0.01, unit: "rem" },
+  { kind: "choice", group: "Portrait", label: "Portrait border shape", property: "--xcc-portrait-border-radius", options: portraitShapeOptions },
+  { kind: "numeric", group: "Banner geometry", label: "Banner bottom offset", property: "--identity-stripe-bottom", min: -15, max: 15, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Banner geometry", label: "Banner left offset", property: "--identity-stripe-left", min: -15, max: 15, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Banner geometry", label: "Banner width", property: "--identity-stripe-width", min: 10, max: 500, step: 1, unit: "%" },
+  { kind: "numeric", group: "Banner geometry", label: "Banner height", property: "--identity-stripe-height", min: 0.25, max: 15, step: 0.01, unit: "rem" },
 
-  { kind: "numeric", group: "Bio", label: "Bio font size", property: "--xcc-bio-font-size", defaultValue: 1.02, min: 0.25, max: 5, step: 0.01, unit: "rem" },
-  { kind: "choice", group: "Bio", label: "Whole bio horizontal alignment", property: "--xcc-bio-horizontal-alignment", defaultValue: "center", options: blockAlignmentOptions },
-  { kind: "choice", group: "Bio", label: "Label column text alignment", property: "--xcc-bio-label-text-align", defaultValue: "left", options: textAlignmentOptions },
-  { kind: "choice", group: "Bio", label: "Value column text alignment", property: "--xcc-bio-value-text-align", defaultValue: "right", options: textAlignmentOptions },
-  { kind: "choice", group: "Bio", label: "Label/value vertical alignment", property: "--xcc-bio-row-vertical-alignment", defaultValue: "center", options: rowAlignmentOptions },
-  { kind: "numeric", group: "Bio", label: "Label column width", property: "--xcc-bio-label-column-width", defaultValue: 10.19, min: 0.5, max: 30, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Bio", label: "Gap between label/value columns", property: "--xcc-bio-column-gap", defaultValue: 0.5, min: 0, max: 15, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Bio", label: "Gap between bio rows", property: "--xcc-bio-row-gap", defaultValue: 0.65, min: 0, max: 15, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Bio", label: "Bio font size", property: "--xcc-bio-font-size", min: 0.25, max: 5, step: 0.01, unit: "rem" },
+  { kind: "choice", group: "Bio", label: "Whole bio horizontal alignment", property: "--xcc-bio-horizontal-alignment", options: blockAlignmentOptions },
+  { kind: "choice", group: "Bio", label: "Label column text alignment", property: "--xcc-bio-label-text-align", options: textAlignmentOptions },
+  { kind: "choice", group: "Bio", label: "Value column text alignment", property: "--xcc-bio-value-text-align", options: textAlignmentOptions },
+  { kind: "choice", group: "Bio", label: "Label/value vertical alignment", property: "--xcc-bio-row-vertical-alignment", options: rowAlignmentOptions },
+  { kind: "numeric", group: "Bio", label: "Label column width", property: "--xcc-bio-label-column-width", min: 0.5, max: 30, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Bio", label: "Gap between label/value columns", property: "--xcc-bio-column-gap", min: 0, max: 15, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Bio", label: "Gap between bio rows", property: "--xcc-bio-row-gap", min: 0, max: 15, step: 0.01, unit: "rem" },
 
-  { kind: "numeric", group: "Stats", label: "Stats font size", property: "--xcc-stats-font-size", defaultValue: 1.6, min: 0.25, max: 5, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Stats", label: "Vertical gap between stat rows", property: "--xcc-stats-row-gap", defaultValue: 1.87, min: 0, max: 10, step: 0.01, unit: "rem" },
-  { kind: "choice", group: "Stats", label: "Whole stats block horizontal alignment", property: "--xcc-stats-horizontal-alignment", defaultValue: "stretch", options: blockAlignmentOptions },
-  { kind: "choice", group: "Stats", label: "Base stats column vertical alignment", property: "--xcc-base-stats-vertical-alignment", defaultValue: "start", options: verticalColumnAlignmentOptions },
-  { kind: "choice", group: "Stats", label: "Secondary stats column vertical alignment", property: "--xcc-secondary-stats-vertical-alignment", defaultValue: "start", options: verticalColumnAlignmentOptions },
-  { kind: "choice", group: "Stats", label: "Cells within each stats row", property: "--xcc-stats-row-vertical-alignment", defaultValue: "center", options: rowAlignmentOptions },
-  { kind: "choice", group: "Stats", label: "Base label column text alignment", property: "--xcc-base-stat-label-text-align", defaultValue: "left", options: textAlignmentOptions },
-  { kind: "choice", group: "Stats", label: "Base score column text alignment", property: "--xcc-base-stat-score-text-align", defaultValue: "right", options: textAlignmentOptions },
-  { kind: "choice", group: "Stats", label: "Base modifier column text alignment", property: "--xcc-base-stat-modifier-text-align", defaultValue: "right", options: textAlignmentOptions },
-  { kind: "choice", group: "Stats", label: "Secondary label column text alignment", property: "--xcc-secondary-stat-label-text-align", defaultValue: "right", options: textAlignmentOptions },
-  { kind: "choice", group: "Stats", label: "Secondary value column text alignment", property: "--xcc-secondary-stat-value-text-align", defaultValue: "right", options: textAlignmentOptions },
-  { kind: "numeric", group: "Stats", label: "Gap between base/secondary columns", property: "--xcc-stats-column-gap", defaultValue: 3.97, min: 0, max: 20, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Stats", label: "Base stats column width weight", property: "--xcc-stats-base-column-weight", defaultValue: 1.64, min: 0.1, max: 10, step: 0.01, unit: "fr" },
-  { kind: "numeric", group: "Stats", label: "Secondary stats column width weight", property: "--xcc-stats-secondary-column-weight", defaultValue: 1.64, min: 0.1, max: 10, step: 0.01, unit: "fr" },
-  { kind: "numeric", group: "Stats", label: "Gap inside base-stat columns", property: "--xcc-base-stat-column-gap", defaultValue: 2.34, min: 0, max: 10, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Stats", label: "Gap inside secondary-stat columns", property: "--xcc-secondary-stat-column-gap", defaultValue: 1.24, min: 0, max: 10, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Stats", label: "Base label column width weight", property: "--xcc-base-stat-label-column-weight", defaultValue: 2.84, min: 0.1, max: 10, step: 0.01, unit: "fr" },
-  { kind: "numeric", group: "Stats", label: "Base score column width weight", property: "--xcc-base-stat-score-column-weight", defaultValue: 1.87, min: 0.1, max: 10, step: 0.01, unit: "fr" },
-  { kind: "numeric", group: "Stats", label: "Base modifier column width weight", property: "--xcc-base-stat-modifier-column-weight", defaultValue: 1.95, min: 0.1, max: 10, step: 0.01, unit: "fr" },
+  { kind: "numeric", group: "Stats", label: "Stats font size", property: "--xcc-stats-font-size", min: 0.25, max: 5, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Stats", label: "Vertical gap between stat rows", property: "--xcc-stats-row-gap", min: 0, max: 10, step: 0.01, unit: "rem" },
+  { kind: "choice", group: "Stats", label: "Whole stats block horizontal alignment", property: "--xcc-stats-horizontal-alignment", options: blockAlignmentOptions },
+  { kind: "choice", group: "Stats", label: "Base stats column vertical alignment", property: "--xcc-base-stats-vertical-alignment", options: verticalColumnAlignmentOptions },
+  { kind: "choice", group: "Stats", label: "Secondary stats column vertical alignment", property: "--xcc-secondary-stats-vertical-alignment", options: verticalColumnAlignmentOptions },
+  { kind: "choice", group: "Stats", label: "Cells within each stats row", property: "--xcc-stats-row-vertical-alignment", options: rowAlignmentOptions },
+  { kind: "choice", group: "Stats", label: "Base label column text alignment", property: "--xcc-base-stat-label-text-align", options: textAlignmentOptions },
+  { kind: "choice", group: "Stats", label: "Base score column text alignment", property: "--xcc-base-stat-score-text-align", options: textAlignmentOptions },
+  { kind: "choice", group: "Stats", label: "Base modifier column text alignment", property: "--xcc-base-stat-modifier-text-align", options: textAlignmentOptions },
+  { kind: "choice", group: "Stats", label: "Secondary label column text alignment", property: "--xcc-secondary-stat-label-text-align", options: textAlignmentOptions },
+  { kind: "choice", group: "Stats", label: "Secondary value column text alignment", property: "--xcc-secondary-stat-value-text-align", options: textAlignmentOptions },
+  { kind: "numeric", group: "Stats", label: "Gap between base/secondary columns", property: "--xcc-stats-column-gap", min: 0, max: 20, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Stats", label: "Base stats column width weight", property: "--xcc-stats-base-column-weight", min: 0.1, max: 10, step: 0.01, unit: "fr" },
+  { kind: "numeric", group: "Stats", label: "Secondary stats column width weight", property: "--xcc-stats-secondary-column-weight", min: 0.1, max: 10, step: 0.01, unit: "fr" },
+  { kind: "numeric", group: "Stats", label: "Gap inside base-stat columns", property: "--xcc-base-stat-column-gap", min: 0, max: 10, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Stats", label: "Gap inside secondary-stat columns", property: "--xcc-secondary-stat-column-gap", min: 0, max: 10, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Stats", label: "Base label column width weight", property: "--xcc-base-stat-label-column-weight", min: 0.1, max: 10, step: 0.01, unit: "fr" },
+  { kind: "numeric", group: "Stats", label: "Base score column width weight", property: "--xcc-base-stat-score-column-weight", min: 0.1, max: 10, step: 0.01, unit: "fr" },
+  { kind: "numeric", group: "Stats", label: "Base modifier column width weight", property: "--xcc-base-stat-modifier-column-weight", min: 0.1, max: 10, step: 0.01, unit: "fr" },
 
-  { kind: "numeric", group: "Weapon / Armor", label: "Weapon/armor font size", property: "--xcc-weapon-armor-font-size", defaultValue: 1.32, min: 0.25, max: 5, step: 0.01, unit: "rem" },
-  { kind: "choice", group: "Weapon / Armor", label: "Whole weapon/armor block horizontal alignment", property: "--xcc-weapon-armor-horizontal-alignment", defaultValue: "center", options: blockAlignmentOptions },
-  { kind: "choice", group: "Weapon / Armor", label: "Cells within each weapon/armor row", property: "--xcc-weapon-armor-row-vertical-alignment", defaultValue: "end", options: rowAlignmentOptions },
-  { kind: "choice", group: "Weapon / Armor", label: "Left label column text alignment", property: "--xcc-weapon-left-label-text-align", defaultValue: "right", options: textAlignmentOptions },
-  { kind: "choice", group: "Weapon / Armor", label: "Left value column text alignment", property: "--xcc-weapon-left-value-text-align", defaultValue: "left", options: textAlignmentOptions },
-  { kind: "choice", group: "Weapon / Armor", label: "Right label column text alignment", property: "--xcc-weapon-right-label-text-align", defaultValue: "right", options: textAlignmentOptions },
-  { kind: "choice", group: "Weapon / Armor", label: "Right value column text alignment", property: "--xcc-weapon-right-value-text-align", defaultValue: "right", options: textAlignmentOptions },
-  { kind: "numeric", group: "Weapon / Armor", label: "Gap between weapon/armor columns", property: "--xcc-weapon-armor-column-gap", defaultValue: 1.32, min: 0, max: 15, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Weapon / Armor", label: "Gap between weapon/armor rows", property: "--xcc-weapon-armor-row-gap", defaultValue: 0.79, min: 0, max: 15, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Weapon / Armor", label: "Left value column width weight", property: "--xcc-weapon-left-value-column-weight", defaultValue: 2.1, min: 0.1, max: 10, step: 0.01, unit: "fr" },
-  { kind: "numeric", group: "Weapon / Armor", label: "Right value column width weight", property: "--xcc-weapon-right-value-column-weight", defaultValue: 2.06, min: 0.1, max: 10, step: 0.01, unit: "fr" },
+  { kind: "numeric", group: "Weapon / Armor", label: "Weapon/armor font size", property: "--xcc-weapon-armor-font-size", min: 0.25, max: 5, step: 0.01, unit: "rem" },
+  { kind: "choice", group: "Weapon / Armor", label: "Whole weapon/armor block horizontal alignment", property: "--xcc-weapon-armor-horizontal-alignment", options: blockAlignmentOptions },
+  { kind: "choice", group: "Weapon / Armor", label: "Cells within each weapon/armor row", property: "--xcc-weapon-armor-row-vertical-alignment", options: rowAlignmentOptions },
+  { kind: "choice", group: "Weapon / Armor", label: "Left label column text alignment", property: "--xcc-weapon-left-label-text-align", options: textAlignmentOptions },
+  { kind: "choice", group: "Weapon / Armor", label: "Left value column text alignment", property: "--xcc-weapon-left-value-text-align", options: textAlignmentOptions },
+  { kind: "choice", group: "Weapon / Armor", label: "Right label column text alignment", property: "--xcc-weapon-right-label-text-align", options: textAlignmentOptions },
+  { kind: "choice", group: "Weapon / Armor", label: "Right value column text alignment", property: "--xcc-weapon-right-value-text-align", options: textAlignmentOptions },
+  { kind: "numeric", group: "Weapon / Armor", label: "Gap between weapon/armor columns", property: "--xcc-weapon-armor-column-gap", min: 0, max: 15, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Weapon / Armor", label: "Gap between weapon/armor rows", property: "--xcc-weapon-armor-row-gap", min: 0, max: 15, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Weapon / Armor", label: "Left value column width weight", property: "--xcc-weapon-left-value-column-weight", min: 0.1, max: 10, step: 0.01, unit: "fr" },
+  { kind: "numeric", group: "Weapon / Armor", label: "Right value column width weight", property: "--xcc-weapon-right-value-column-weight", min: 0.1, max: 10, step: 0.01, unit: "fr" },
 
-  { kind: "color", group: "Divider styling", label: "Shared divider color", property: "--xcc-divider-color", defaultValue: "#d8c52b" },
+  { kind: "color", group: "Divider styling", label: "Shared divider color", property: "--xcc-divider-color" },
 
-  { kind: "toggle", group: "Divider — XCrawl / Spotlight", label: "Show divider", property: "--xcc-divider-logo-name-subtitle-display", defaultValue: false, enabledValue: "block", disabledValue: "none" },
-  { kind: "numeric", group: "Divider — XCrawl / Spotlight", label: "Width", property: "--xcc-divider-logo-name-subtitle-width", defaultValue: 0.1, min: 0, max: 5, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Divider — XCrawl / Spotlight", label: "Height", property: "--xcc-divider-logo-name-subtitle-height", defaultValue: 100, min: 0, max: 300, step: 1, unit: "%" },
-  { kind: "numeric", group: "Divider — XCrawl / Spotlight", label: "Left margin", property: "--xcc-divider-logo-name-subtitle-margin-left", defaultValue: 0, min: -15, max: 15, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Divider — XCrawl / Spotlight", label: "Right margin", property: "--xcc-divider-logo-name-subtitle-margin-right", defaultValue: 0, min: -15, max: 15, step: 0.01, unit: "rem" },
+  { kind: "toggle", group: "Divider — XCrawl / Spotlight", label: "Show divider", property: "--xcc-divider-logo-name-subtitle-display", enabledValue: "block", disabledValue: "none" },
+  { kind: "numeric", group: "Divider — XCrawl / Spotlight", label: "Width", property: "--xcc-divider-logo-name-subtitle-width", min: 0, max: 5, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Divider — XCrawl / Spotlight", label: "Height", property: "--xcc-divider-logo-name-subtitle-height", min: 0, max: 300, step: 1, unit: "%" },
+  { kind: "numeric", group: "Divider — XCrawl / Spotlight", label: "Left margin", property: "--xcc-divider-logo-name-subtitle-margin-left", min: -15, max: 15, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Divider — XCrawl / Spotlight", label: "Right margin", property: "--xcc-divider-logo-name-subtitle-margin-right", min: -15, max: 15, step: 0.01, unit: "rem" },
 
-  { kind: "toggle", group: "Divider — Logo / Bio", label: "Show divider", property: "--xcc-divider-logo-bio-display", defaultValue: false, enabledValue: "block", disabledValue: "none" },
-  { kind: "numeric", group: "Divider — Logo / Bio", label: "Width", property: "--xcc-divider-logo-bio-width", defaultValue: 100, min: 0, max: 300, step: 1, unit: "%" },
-  { kind: "numeric", group: "Divider — Logo / Bio", label: "Height", property: "--xcc-divider-logo-bio-height", defaultValue: 0.1, min: 0, max: 5, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Divider — Logo / Bio", label: "Top margin", property: "--xcc-divider-logo-bio-margin-top", defaultValue: -2.09, min: -15, max: 15, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Divider — Logo / Bio", label: "Bottom margin", property: "--xcc-divider-logo-bio-margin-bottom", defaultValue: -0.21, min: -15, max: 15, step: 0.01, unit: "rem" },
+  { kind: "toggle", group: "Divider — Logo / Bio", label: "Show divider", property: "--xcc-divider-logo-bio-display", enabledValue: "block", disabledValue: "none" },
+  { kind: "numeric", group: "Divider — Logo / Bio", label: "Width", property: "--xcc-divider-logo-bio-width", min: 0, max: 300, step: 1, unit: "%" },
+  { kind: "numeric", group: "Divider — Logo / Bio", label: "Height", property: "--xcc-divider-logo-bio-height", min: 0, max: 5, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Divider — Logo / Bio", label: "Top margin", property: "--xcc-divider-logo-bio-margin-top", min: -15, max: 15, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Divider — Logo / Bio", label: "Bottom margin", property: "--xcc-divider-logo-bio-margin-bottom", min: -15, max: 15, step: 0.01, unit: "rem" },
 
-  { kind: "toggle", group: "Divider — Bio / Stats", label: "Show divider", property: "--xcc-divider-bio-stats-display", defaultValue: true, enabledValue: "block", disabledValue: "none" },
-  { kind: "numeric", group: "Divider — Bio / Stats", label: "Width", property: "--xcc-divider-bio-stats-width", defaultValue: 100, min: 0, max: 300, step: 1, unit: "%" },
-  { kind: "numeric", group: "Divider — Bio / Stats", label: "Height", property: "--xcc-divider-bio-stats-height", defaultValue: 0.1, min: 0, max: 5, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Divider — Bio / Stats", label: "Top margin", property: "--xcc-divider-bio-stats-margin-top", defaultValue: -1.02, min: -15, max: 15, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Divider — Bio / Stats", label: "Bottom margin", property: "--xcc-divider-bio-stats-margin-bottom", defaultValue: 0, min: -15, max: 15, step: 0.01, unit: "rem" },
+  { kind: "toggle", group: "Divider — Bio / Stats", label: "Show divider", property: "--xcc-divider-bio-stats-display", enabledValue: "block", disabledValue: "none" },
+  { kind: "numeric", group: "Divider — Bio / Stats", label: "Width", property: "--xcc-divider-bio-stats-width", min: 0, max: 300, step: 1, unit: "%" },
+  { kind: "numeric", group: "Divider — Bio / Stats", label: "Height", property: "--xcc-divider-bio-stats-height", min: 0, max: 5, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Divider — Bio / Stats", label: "Top margin", property: "--xcc-divider-bio-stats-margin-top", min: -15, max: 15, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Divider — Bio / Stats", label: "Bottom margin", property: "--xcc-divider-bio-stats-margin-bottom", min: -15, max: 15, step: 0.01, unit: "rem" },
 
-  { kind: "toggle", group: "Divider — Stats Columns", label: "Show divider", property: "--xcc-divider-stats-columns-display", defaultValue: false, enabledValue: "block", disabledValue: "none" },
-  { kind: "numeric", group: "Divider — Stats Columns", label: "Width", property: "--xcc-divider-stats-columns-width", defaultValue: 0.1, min: 0, max: 5, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Divider — Stats Columns", label: "Height", property: "--xcc-divider-stats-columns-height", defaultValue: 100, min: 0, max: 300, step: 1, unit: "%" },
-  { kind: "numeric", group: "Divider — Stats Columns", label: "Left margin", property: "--xcc-divider-stats-columns-margin-left", defaultValue: 0, min: -15, max: 15, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Divider — Stats Columns", label: "Right margin", property: "--xcc-divider-stats-columns-margin-right", defaultValue: 0, min: -15, max: 15, step: 0.01, unit: "rem" },
+  { kind: "toggle", group: "Divider — Stats Columns", label: "Show divider", property: "--xcc-divider-stats-columns-display", enabledValue: "block", disabledValue: "none" },
+  { kind: "numeric", group: "Divider — Stats Columns", label: "Width", property: "--xcc-divider-stats-columns-width", min: 0, max: 5, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Divider — Stats Columns", label: "Height", property: "--xcc-divider-stats-columns-height", min: 0, max: 300, step: 1, unit: "%" },
+  { kind: "numeric", group: "Divider — Stats Columns", label: "Left margin", property: "--xcc-divider-stats-columns-margin-left", min: -15, max: 15, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Divider — Stats Columns", label: "Right margin", property: "--xcc-divider-stats-columns-margin-right", min: -15, max: 15, step: 0.01, unit: "rem" },
 
-  { kind: "toggle", group: "Divider — Stats / Weapon-Armor", label: "Show divider", property: "--xcc-divider-stats-weapon-armor-display", defaultValue: true, enabledValue: "block", disabledValue: "none" },
-  { kind: "numeric", group: "Divider — Stats / Weapon-Armor", label: "Width", property: "--xcc-divider-stats-weapon-armor-width", defaultValue: 100, min: 0, max: 300, step: 1, unit: "%" },
-  { kind: "numeric", group: "Divider — Stats / Weapon-Armor", label: "Height", property: "--xcc-divider-stats-weapon-armor-height", defaultValue: 0.1, min: 0, max: 5, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Divider — Stats / Weapon-Armor", label: "Top margin", property: "--xcc-divider-stats-weapon-armor-margin-top", defaultValue: -1.82, min: -15, max: 15, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Divider — Stats / Weapon-Armor", label: "Bottom margin", property: "--xcc-divider-stats-weapon-armor-margin-bottom", defaultValue: 0, min: -15, max: 15, step: 0.01, unit: "rem" },
+  { kind: "toggle", group: "Divider — Stats / Weapon-Armor", label: "Show divider", property: "--xcc-divider-stats-weapon-armor-display", enabledValue: "block", disabledValue: "none" },
+  { kind: "numeric", group: "Divider — Stats / Weapon-Armor", label: "Width", property: "--xcc-divider-stats-weapon-armor-width", min: 0, max: 300, step: 1, unit: "%" },
+  { kind: "numeric", group: "Divider — Stats / Weapon-Armor", label: "Height", property: "--xcc-divider-stats-weapon-armor-height", min: 0, max: 5, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Divider — Stats / Weapon-Armor", label: "Top margin", property: "--xcc-divider-stats-weapon-armor-margin-top", min: -15, max: 15, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Divider — Stats / Weapon-Armor", label: "Bottom margin", property: "--xcc-divider-stats-weapon-armor-margin-bottom", min: -15, max: 15, step: 0.01, unit: "rem" },
 
-  { kind: "color", group: "Banner colors — Nonhuman", label: "Dwarf banner", property: "--stripe-dwarf", defaultValue: "#8a4b2a" },
-  { kind: "color", group: "Banner colors — Nonhuman", label: "Elf banner", property: "--stripe-elf", defaultValue: "#276749" },
-  { kind: "color", group: "Banner colors — Nonhuman", label: "Gnome banner", property: "--stripe-gnome", defaultValue: "#a384b3" },
-  { kind: "color", group: "Banner colors — Nonhuman", label: "Half-Elf banner", property: "--stripe-half-elf", defaultValue: "#246f78" },
-  { kind: "color", group: "Banner colors — Nonhuman", label: "Half-Orc banner", property: "--stripe-half-orc", defaultValue: "#87364a" },
-  { kind: "color", group: "Banner colors — Nonhuman", label: "Halfling banner", property: "--stripe-halfling", defaultValue: "#8a6b20" },
+  { kind: "color", group: "Banner colors — Nonhuman", label: "Dwarf banner", property: "--stripe-dwarf" },
+  { kind: "color", group: "Banner colors — Nonhuman", label: "Elf banner", property: "--stripe-elf" },
+  { kind: "color", group: "Banner colors — Nonhuman", label: "Gnome banner", property: "--stripe-gnome" },
+  { kind: "color", group: "Banner colors — Nonhuman", label: "Half-Elf banner", property: "--stripe-half-elf" },
+  { kind: "color", group: "Banner colors — Nonhuman", label: "Half-Orc banner", property: "--stripe-half-orc" },
+  { kind: "color", group: "Banner colors — Nonhuman", label: "Halfling banner", property: "--stripe-halfling" },
 ];
 
 type D1TextCategory = {
   id: "logo" | "yellow" | "white" | "nonhuman-stripe" | "noble-stripe";
   group: string;
-  defaults: {
-    face: string;
-    edgeColor: string;
-    edgeThickness: number;
-    iterations: number;
-    xStep: number;
-    yStep: number;
-    nearColor: string;
-    farColor: string;
-    transition: number;
-    nearHold: number;
-  };
 };
 
 const d1TextCategories: readonly D1TextCategory[] = [
   {
     id: "logo",
     group: "Artistic Text — Logo",
-    defaults: {
-      face: "#ffffff",
-      edgeColor: "#000000",
-      edgeThickness: 1.75,
-      iterations: 13,
-      xStep: 0.25,
-      yStep: 0.7,
-      nearColor: "#9e9e9e",
-      farColor: "#050b55",
-      transition: 0.5,
-      nearHold: 0,
-    },
   },
   {
     id: "yellow",
     group: "Artistic Text — Yellow",
-    defaults: {
-      face: "#ffe72e",
-      edgeColor: "#000000",
-      edgeThickness: 1,
-      iterations: 8,
-      xStep: 0.35,
-      yStep: 0.45,
-      nearColor: "#b83700",
-      farColor: "#000000",
-      transition: 0.67,
-      nearHold: 1,
-    },
   },
   {
     id: "white",
     group: "Artistic Text — White",
-    defaults: {
-      face: "#ffffff",
-      edgeColor: "#000000",
-      edgeThickness: 1,
-      iterations: 9,
-      xStep: 0.7,
-      yStep: 0.5,
-      nearColor: "#686b86",
-      farColor: "#050b55",
-      transition: 0.45,
-      nearHold: 1,
-    },
   },
   {
     id: "nonhuman-stripe",
     group: "Artistic Text — Nonhuman Banner",
-    defaults: {
-      face: "#ffffff",
-      edgeColor: "#000000",
-      edgeThickness: 1,
-      iterations: 0,
-      xStep: 0.6,
-      yStep: -0.45,
-      nearColor: "#000000",
-      farColor: "#050b55",
-      transition: 0.25,
-      nearHold: 1,
-    },
   },
   {
     id: "noble-stripe",
     group: "Artistic Text — Noble Banner",
-    defaults: {
-      face: "#ffffff",
-      edgeColor: "#000000",
-      edgeThickness: 1,
-      iterations: 0,
-      xStep: 0.6,
-      yStep: -0.45,
-      nearColor: "#000000",
-      farColor: "#050b55",
-      transition: 0.25,
-      nearHold: 1,
-    },
   },
 ] as const;
 
@@ -311,44 +235,52 @@ function d1Property(category: D1TextCategory, suffix: string): string {
 
 for (const category of d1TextCategories) {
   controls.push(
-    { kind: "color", group: category.group, label: "Face color", property: d1Property(category, "face"), defaultValue: category.defaults.face },
-    { kind: "color", group: category.group, label: "Surround edge color", property: d1Property(category, "edge-color"), defaultValue: category.defaults.edgeColor },
-    { kind: "numeric", group: category.group, label: "Surround edge thickness", property: d1Property(category, "edge-thickness"), defaultValue: category.defaults.edgeThickness, min: 0, max: 8, step: 0.25, unit: "px" },
-    { kind: "numeric", group: category.group, label: "Shadow iterations", property: d1Property(category, "iterations"), defaultValue: category.defaults.iterations, min: 0, max: 32, step: 1, unit: "" },
-    { kind: "numeric", group: category.group, label: "Horizontal step per iteration", property: d1Property(category, "x-step"), defaultValue: category.defaults.xStep, min: -8, max: 12, step: 0.05, unit: "px" },
-    { kind: "numeric", group: category.group, label: "Vertical step per iteration", property: d1Property(category, "y-step"), defaultValue: category.defaults.yStep, min: -8, max: 12, step: 0.05, unit: "px" },
-    { kind: "color", group: category.group, label: "Near shadow color", property: d1Property(category, "near-color"), defaultValue: category.defaults.nearColor },
-    { kind: "color", group: category.group, label: "Far shadow color", property: d1Property(category, "far-color"), defaultValue: category.defaults.farColor },
-    { kind: "numeric", group: category.group, label: "Color transition", property: d1Property(category, "transition"), defaultValue: category.defaults.transition, min: 0, max: 1, step: 0.01, unit: "" },
-    { kind: "numeric", group: category.group, label: "Near-color hold", property: d1Property(category, "near-hold"), defaultValue: category.defaults.nearHold, min: 0, max: 32, step: 1, unit: "" },
+    { kind: "color", group: category.group, label: "Face color", property: d1Property(category, "face")},
+    { kind: "color", group: category.group, label: "Surround edge color", property: d1Property(category, "edge-color")},
+    { kind: "numeric", group: category.group, label: "Surround edge thickness", property: d1Property(category, "edge-thickness"), min: 0, max: 8, step: 0.25, unit: "px" },
+    { kind: "numeric", group: category.group, label: "Shadow iterations", property: d1Property(category, "iterations"), min: 0, max: 32, step: 1, unit: "" },
+    { kind: "numeric", group: category.group, label: "Horizontal step per iteration", property: d1Property(category, "x-step"), min: -8, max: 12, step: 0.05, unit: "px" },
+    { kind: "numeric", group: category.group, label: "Vertical step per iteration", property: d1Property(category, "y-step"), min: -8, max: 12, step: 0.05, unit: "px" },
+    { kind: "color", group: category.group, label: "Near shadow color", property: d1Property(category, "near-color")},
+    { kind: "color", group: category.group, label: "Far shadow color", property: d1Property(category, "far-color")},
+    { kind: "numeric", group: category.group, label: "Color transition", property: d1Property(category, "transition"), min: 0, max: 1, step: 0.01, unit: "" },
+    { kind: "numeric", group: category.group, label: "Near-color hold", property: d1Property(category, "near-hold"), min: 0, max: 32, step: 1, unit: "" },
   );
 }
 
-const portraitFrameD1Defaults = {
-  borderColor: "#d8c52b",
-  iterations: 8,
-  xStep: 0.5,
-  yStep: 1.25,
-  nearColor: "#bd9f32",
-  farColor: "#0b17c1",
-  transition: 0.66,
-  nearHold: 4,
-} as const;
-
 controls.push(
-  { kind: "color", group: "Artistic Portrait Frame", label: "Frame color", property: "--xcc-portrait-frame-d1-border-color", defaultValue: portraitFrameD1Defaults.borderColor },
-  { kind: "numeric", group: "Artistic Portrait Frame", label: "Shadow iterations", property: "--xcc-portrait-frame-d1-iterations", defaultValue: portraitFrameD1Defaults.iterations, min: 0, max: 32, step: 1, unit: "" },
-  { kind: "numeric", group: "Artistic Portrait Frame", label: "Horizontal step per iteration", property: "--xcc-portrait-frame-d1-x-step", defaultValue: portraitFrameD1Defaults.xStep, min: -8, max: 12, step: 0.05, unit: "px" },
-  { kind: "numeric", group: "Artistic Portrait Frame", label: "Vertical step per iteration", property: "--xcc-portrait-frame-d1-y-step", defaultValue: portraitFrameD1Defaults.yStep, min: -8, max: 12, step: 0.05, unit: "px" },
-  { kind: "color", group: "Artistic Portrait Frame", label: "Near shadow color", property: "--xcc-portrait-frame-d1-near-color", defaultValue: portraitFrameD1Defaults.nearColor },
-  { kind: "color", group: "Artistic Portrait Frame", label: "Far shadow color", property: "--xcc-portrait-frame-d1-far-color", defaultValue: portraitFrameD1Defaults.farColor },
-  { kind: "numeric", group: "Artistic Portrait Frame", label: "Color transition", property: "--xcc-portrait-frame-d1-transition", defaultValue: portraitFrameD1Defaults.transition, min: 0, max: 1, step: 0.01, unit: "" },
-  { kind: "numeric", group: "Artistic Portrait Frame", label: "Near-color hold", property: "--xcc-portrait-frame-d1-near-hold", defaultValue: portraitFrameD1Defaults.nearHold, min: 0, max: 32, step: 1, unit: "" },
+  { kind: "color", group: "Artistic Portrait Frame", label: "Frame color", property: "--xcc-portrait-frame-d1-border-color" },
+  { kind: "numeric", group: "Artistic Portrait Frame", label: "Shadow iterations", property: "--xcc-portrait-frame-d1-iterations", min: 0, max: 32, step: 1, unit: "" },
+  { kind: "numeric", group: "Artistic Portrait Frame", label: "Horizontal step per iteration", property: "--xcc-portrait-frame-d1-x-step", min: -8, max: 12, step: 0.05, unit: "px" },
+  { kind: "numeric", group: "Artistic Portrait Frame", label: "Vertical step per iteration", property: "--xcc-portrait-frame-d1-y-step", min: -8, max: 12, step: 0.05, unit: "px" },
+  { kind: "color", group: "Artistic Portrait Frame", label: "Near shadow color", property: "--xcc-portrait-frame-d1-near-color" },
+  { kind: "color", group: "Artistic Portrait Frame", label: "Far shadow color", property: "--xcc-portrait-frame-d1-far-color" },
+  { kind: "numeric", group: "Artistic Portrait Frame", label: "Color transition", property: "--xcc-portrait-frame-d1-transition", min: 0, max: 1, step: 0.01, unit: "" },
+  { kind: "numeric", group: "Artistic Portrait Frame", label: "Near-color hold", property: "--xcc-portrait-frame-d1-near-hold", min: 0, max: 32, step: 1, unit: "" },
 );
 
 const liveState = new Map<string, string>();
 const fieldResets: Array<() => void> = [];
 const sheets = [...document.querySelectorAll<HTMLElement>(".xcc-sheet")];
+
+if (sheets.length === 0) {
+  throw new Error("Cedalion requires at least one rendered XCC sheet.");
+}
+
+const initialStyles = getComputedStyle(sheets[0]);
+const initialState = new Map(
+  controls.map((control): [string, string] => {
+    const value = initialStyles.getPropertyValue(control.property).trim();
+    if (!value) {
+      throw new Error(`Missing stylesheet default for ${control.property}.`);
+    }
+    return [control.property, value];
+  }),
+);
+
+function initialValue(control: CedalionControl): string {
+  return initialState.get(control.property)!;
+}
 
 function parseHexColor(value: string): { r: number; g: number; b: number } {
   const hex = value.replace("#", "");
@@ -390,14 +322,14 @@ function refreshD1Style(category: D1TextCategory): void {
 
   const numericValue = (property: string): number =>
     Number.parseFloat(liveState.get(property) ?? "0");
-  const face = liveState.get(properties.face) ?? category.defaults.face;
-  const edgeColor = liveState.get(properties.edgeColor) ?? category.defaults.edgeColor;
+  const face = liveState.get(properties.face)!;
+  const edgeColor = liveState.get(properties.edgeColor)!;
   const edgeThickness = numericValue(properties.edgeThickness);
   const iterations = Math.max(0, Math.round(numericValue(properties.iterations)));
   const xStep = numericValue(properties.xStep);
   const yStep = numericValue(properties.yStep);
-  const nearColor = liveState.get(properties.nearColor) ?? category.defaults.nearColor;
-  const farColor = liveState.get(properties.farColor) ?? category.defaults.farColor;
+  const nearColor = liveState.get(properties.nearColor)!;
+  const farColor = liveState.get(properties.farColor)!;
   const transition = numericValue(properties.transition);
   const nearHold = Math.max(0, Math.round(numericValue(properties.nearHold)));
   const shadows: string[] = [];
@@ -454,12 +386,12 @@ function refreshPortraitFrameD1Style(): void {
 
   const numericValue = (property: string): number =>
     Number.parseFloat(liveState.get(property) ?? "0");
-  const borderColor = liveState.get(properties.borderColor) ?? portraitFrameD1Defaults.borderColor;
+  const borderColor = liveState.get(properties.borderColor)!;
   const iterations = Math.max(0, Math.round(numericValue(properties.iterations)));
   const xStep = numericValue(properties.xStep);
   const yStep = numericValue(properties.yStep);
-  const nearColor = liveState.get(properties.nearColor) ?? portraitFrameD1Defaults.nearColor;
-  const farColor = liveState.get(properties.farColor) ?? portraitFrameD1Defaults.farColor;
+  const nearColor = liveState.get(properties.nearColor)!;
+  const farColor = liveState.get(properties.farColor)!;
   const transition = numericValue(properties.transition);
   const nearHold = Math.max(0, Math.round(numericValue(properties.nearHold)));
   const shadows: string[] = [];
@@ -613,6 +545,7 @@ controls.forEach((control, index) => {
   field.append(label);
 
   if (control.kind === "numeric") {
+    const defaultValue = Number.parseFloat(initialValue(control));
     const range = document.createElement("input");
     range.id = inputId;
     range.type = "range";
@@ -636,11 +569,12 @@ controls.forEach((control, index) => {
 
     range.addEventListener("input", () => setValue(range.valueAsNumber));
     exact.addEventListener("input", () => setValue(exact.valueAsNumber));
-    reset.addEventListener("click", () => setValue(control.defaultValue));
-    fieldResets.push(() => setValue(control.defaultValue));
+    reset.addEventListener("click", () => setValue(defaultValue));
+    fieldResets.push(() => setValue(defaultValue));
     field.append(range, exact, reset);
-    setValue(control.defaultValue);
+    setValue(defaultValue);
   } else if (control.kind === "choice") {
+    const defaultValue = initialValue(control);
     const select = document.createElement("select");
     select.id = inputId;
     for (const optionDefinition of control.options) {
@@ -656,11 +590,12 @@ controls.forEach((control, index) => {
     };
 
     select.addEventListener("change", () => setValue(select.value));
-    reset.addEventListener("click", () => setValue(control.defaultValue));
-    fieldResets.push(() => setValue(control.defaultValue));
+    reset.addEventListener("click", () => setValue(defaultValue));
+    fieldResets.push(() => setValue(defaultValue));
     field.append(select, reset);
-    setValue(control.defaultValue);
+    setValue(defaultValue);
   } else if (control.kind === "color") {
+    const defaultValue = initialValue(control);
     const color = document.createElement("input");
     color.id = inputId;
     color.type = "color";
@@ -671,11 +606,12 @@ controls.forEach((control, index) => {
     };
 
     color.addEventListener("input", () => setValue(color.value));
-    reset.addEventListener("click", () => setValue(control.defaultValue));
-    fieldResets.push(() => setValue(control.defaultValue));
+    reset.addEventListener("click", () => setValue(defaultValue));
+    fieldResets.push(() => setValue(defaultValue));
     field.append(color, reset);
-    setValue(control.defaultValue);
+    setValue(defaultValue);
   } else {
+    const defaultValue = initialValue(control) === control.enabledValue;
     const toggle = document.createElement("input");
     toggle.id = inputId;
     toggle.type = "checkbox";
@@ -689,10 +625,10 @@ controls.forEach((control, index) => {
     };
 
     toggle.addEventListener("change", () => setValue(toggle.checked));
-    reset.addEventListener("click", () => setValue(control.defaultValue));
-    fieldResets.push(() => setValue(control.defaultValue));
+    reset.addEventListener("click", () => setValue(defaultValue));
+    fieldResets.push(() => setValue(defaultValue));
     field.append(toggle, reset);
-    setValue(control.defaultValue);
+    setValue(defaultValue);
   }
 
   getControlContainer(control.group).append(field);
