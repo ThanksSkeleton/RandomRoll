@@ -225,11 +225,8 @@ export class WebGlSheetRenderer {
     this.startTime = performance.now();
     this.lastDrawTime = 0;
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      this.canvas.dataset.motion = "reduced";
-      return;
-    }
-
+    // Animation is the core output of this page. Do not suppress it based on
+    // the operating system's reduced-motion preference.
     this.canvas.dataset.motion = "animated";
     this.animationFrame = requestAnimationFrame(this.frame);
   }
