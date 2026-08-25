@@ -1,0 +1,116 @@
+:root {
+  color: #fff;
+  background: #000;
+  color-scheme: dark;
+  font-family: system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-width: 20rem;
+  min-height: 100%;
+  margin: 0;
+  background: #000;
+}
+
+.xcc-page {
+  display: grid;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 1rem;
+  place-items: center;
+}
+
+.xcc-experience {
+  display: grid;
+  width: min(60rem, calc(100vw - 2rem), calc(133.333dvh - 9.333rem));
+  min-width: 0;
+  gap: 1rem;
+  justify-items: center;
+}
+
+.xcc-viewport {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #000;
+}
+
+.xcc-output-host,
+#shader-output,
+.fallback-capture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.did-you-know-overlay {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+}
+
+.next-character {
+  min-width: min(22rem, 100%);
+  min-height: 4rem;
+  padding: 0.7rem 2rem;
+  border: 3px solid #77afd2;
+  border-radius: 1.1rem;
+  color: #123247;
+  background: #cceeff;
+  box-shadow: 0 0.3rem 0.8rem rgb(0 0 0 / 0.3);
+  font: 850 1.4rem/1 system-ui, sans-serif;
+  cursor: pointer;
+}
+
+.next-character:hover {
+  background: #e1f6ff;
+}
+
+.next-character:focus-visible {
+  outline: 0.2rem solid #fff;
+  outline-offset: 0.2rem;
+}
+
+.next-character:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.capture-source {
+  position: fixed;
+  top: 0;
+  left: -10000px;
+  width: 960px;
+  height: 720px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-height: 28rem) {
+  .xcc-page {
+    place-items: start center;
+  }
+
+  .xcc-experience {
+    width: min(60rem, calc(100vw - 2rem));
+  }
+}

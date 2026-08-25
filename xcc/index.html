@@ -6,9 +6,33 @@
     <link rel="icon" type="image/svg+xml" href="/randomroll/favicon.svg" />
     <title>XCC Competitor Spotlight</title>
     <link rel="stylesheet" href="/src/generators/xcc/xcc_sheet.css" />
+    <link rel="stylesheet" href="/src/generators/xcc/xcc.css" />
   </head>
   <body>
-    <div id="app"></div>
+    <main class="xcc-page">
+      <div class="xcc-experience">
+        <div class="xcc-viewport">
+          <div id="output-host" class="xcc-output-host">
+            <canvas
+              id="shader-output"
+              width="960"
+              height="720"
+              aria-label="Animated rendering of a randomly generated XCC character sheet"
+            ></canvas>
+          </div>
+          <div id="did-you-know-overlay" class="did-you-know-overlay"></div>
+        </div>
+
+        <button id="next-character" class="next-character" type="button">
+          Next
+        </button>
+      </div>
+
+      <div id="source-host" class="capture-source" aria-hidden="true"></div>
+      <p id="render-status" class="visually-hidden" role="status" aria-live="polite">
+        Starting…
+      </p>
+    </main>
     <script type="module" src="/src/generators/xcc/xcc.ts"></script>
   </body>
 </html>
