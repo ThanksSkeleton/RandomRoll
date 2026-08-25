@@ -1,7 +1,9 @@
 import { buildXccSheet } from "./populate_xcc_template";
 import { default_build } from "./xcc_impl";
+import { buildSyntheticLongestXccCharacter } from "./xcc_visual_fixtures";
 
-const specimens = [
+const specimens: ReadonlyArray<{ seed: string | null; label: string }> = [
+  { seed: null, label: "Synthetic longest — combined layout stress" },
   { seed: "race-0", label: "No banner — Human non-Noble" },
   { seed: "stripe-139", label: "Noble banner — Human Nobility" },
   { seed: "race-1", label: "Nonhuman banner — Dwarf" },
@@ -10,7 +12,7 @@ const specimens = [
   { seed: "race-57", label: "Nonhuman banner — Half-Elf" },
   { seed: "race-55", label: "Nonhuman banner — Half-Orc" },
   { seed: "race-18", label: "Nonhuman banner — Halfling" },
-] as const;
+];
 
 const app = document.querySelector<HTMLElement>("#app");
 
@@ -21,13 +23,16 @@ if (!app) {
 for (const specimen of specimens) {
   const section = document.createElement("section");
   section.className = "zoo-specimen";
-  section.dataset.seed = specimen.seed;
+  const specimenId = specimen.seed ?? "synthetic-longest";
+  section.dataset.seed = specimenId;
 
   const heading = document.createElement("h2");
-  heading.textContent = `${specimen.label} · ${specimen.seed}`;
+  heading.textContent = `${specimen.label} · ${specimenId}`;
 
-  const generated = default_build(specimen.seed);
-  section.append(heading, buildXccSheet(generated.objects));
+  const characters = specimen.seed === null
+    ? [buildSyntheticLongestXccCharacter()]
+    : default_build(specimen.seed).objects;
+  section.append(heading, buildXccSheet(characters));
   app.append(section);
 }
 
@@ -80,11 +85,6 @@ const elementAlignmentOptions = [
   { label: "Right", value: "end" },
 ] as const;
 
-const blockAlignmentOptions = [
-  { label: "Stretch (current)", value: "stretch" },
-  ...elementAlignmentOptions,
-] as const;
-
 const rowAlignmentOptions = [
   { label: "Baseline", value: "baseline" },
   { label: "Top", value: "start" },
@@ -105,6 +105,10 @@ const portraitShapeOptions = [
 ] as const;
 
 const controls: CedalionControl[] = [
+  { kind: "numeric", group: "Sheet", label: "Interior padding — top", property: "--xcc-sheet-padding-top", min: 0, max: 8, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Sheet", label: "Interior padding — right", property: "--xcc-sheet-padding-right", min: 0, max: 8, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Sheet", label: "Interior padding — bottom", property: "--xcc-sheet-padding-bottom", min: 0, max: 8, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Sheet", label: "Interior padding — left", property: "--xcc-sheet-padding-left", min: 0, max: 8, step: 0.01, unit: "rem" },
   { kind: "numeric", group: "Font sizes", label: "XCrawl logo font size", property: "--xcc-logo-name-font-size", min: 0.5, max: 8, step: 0.01, unit: "rem" },
   { kind: "numeric", group: "Font sizes", label: "Spotlight subtitle font size", property: "--xcc-logo-subtitle-font-size", min: 0.35, max: 6, step: 0.01, unit: "rem" },
   { kind: "numeric", group: "Font sizes", label: "Other banner text size", property: "--identity-stripe-font-size", min: 0.25, max: 5, step: 0.01, unit: "rem" },
@@ -121,45 +125,23 @@ const controls: CedalionControl[] = [
   { kind: "numeric", group: "Banner geometry", label: "Banner height", property: "--identity-stripe-height", min: 0.25, max: 15, step: 0.01, unit: "rem" },
 
   { kind: "numeric", group: "Bio", label: "Bio font size", property: "--xcc-bio-font-size", min: 0.25, max: 5, step: 0.01, unit: "rem" },
-  { kind: "choice", group: "Bio", label: "Whole bio horizontal alignment", property: "--xcc-bio-horizontal-alignment", options: blockAlignmentOptions },
-  { kind: "choice", group: "Bio", label: "Label column text alignment", property: "--xcc-bio-label-text-align", options: textAlignmentOptions },
-  { kind: "choice", group: "Bio", label: "Value column text alignment", property: "--xcc-bio-value-text-align", options: textAlignmentOptions },
   { kind: "choice", group: "Bio", label: "Label/value vertical alignment", property: "--xcc-bio-row-vertical-alignment", options: rowAlignmentOptions },
-  { kind: "numeric", group: "Bio", label: "Label column width", property: "--xcc-bio-label-column-width", min: 0.5, max: 30, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Bio", label: "Gap between label/value columns", property: "--xcc-bio-column-gap", min: 0, max: 15, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Bio", label: "Gap within label/value pairs", property: "--xcc-bio-column-gap", min: 0, max: 15, step: 0.01, unit: "rem" },
   { kind: "numeric", group: "Bio", label: "Gap between bio rows", property: "--xcc-bio-row-gap", min: 0, max: 15, step: 0.01, unit: "rem" },
 
   { kind: "numeric", group: "Stats", label: "Stats font size", property: "--xcc-stats-font-size", min: 0.25, max: 5, step: 0.01, unit: "rem" },
   { kind: "numeric", group: "Stats", label: "Vertical gap between stat rows", property: "--xcc-stats-row-gap", min: 0, max: 10, step: 0.01, unit: "rem" },
-  { kind: "choice", group: "Stats", label: "Whole stats block horizontal alignment", property: "--xcc-stats-horizontal-alignment", options: blockAlignmentOptions },
   { kind: "choice", group: "Stats", label: "Base stats column vertical alignment", property: "--xcc-base-stats-vertical-alignment", options: verticalColumnAlignmentOptions },
   { kind: "choice", group: "Stats", label: "Secondary stats column vertical alignment", property: "--xcc-secondary-stats-vertical-alignment", options: verticalColumnAlignmentOptions },
   { kind: "choice", group: "Stats", label: "Cells within each stats row", property: "--xcc-stats-row-vertical-alignment", options: rowAlignmentOptions },
-  { kind: "choice", group: "Stats", label: "Base label column text alignment", property: "--xcc-base-stat-label-text-align", options: textAlignmentOptions },
-  { kind: "choice", group: "Stats", label: "Base score column text alignment", property: "--xcc-base-stat-score-text-align", options: textAlignmentOptions },
-  { kind: "choice", group: "Stats", label: "Base modifier column text alignment", property: "--xcc-base-stat-modifier-text-align", options: textAlignmentOptions },
-  { kind: "choice", group: "Stats", label: "Secondary label column text alignment", property: "--xcc-secondary-stat-label-text-align", options: textAlignmentOptions },
-  { kind: "choice", group: "Stats", label: "Secondary value column text alignment", property: "--xcc-secondary-stat-value-text-align", options: textAlignmentOptions },
   { kind: "numeric", group: "Stats", label: "Gap between base/secondary columns", property: "--xcc-stats-column-gap", min: 0, max: 20, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Stats", label: "Base stats column width weight", property: "--xcc-stats-base-column-weight", min: 0.1, max: 10, step: 0.01, unit: "fr" },
-  { kind: "numeric", group: "Stats", label: "Secondary stats column width weight", property: "--xcc-stats-secondary-column-weight", min: 0.1, max: 10, step: 0.01, unit: "fr" },
   { kind: "numeric", group: "Stats", label: "Gap inside base-stat columns", property: "--xcc-base-stat-column-gap", min: 0, max: 10, step: 0.01, unit: "rem" },
   { kind: "numeric", group: "Stats", label: "Gap inside secondary-stat columns", property: "--xcc-secondary-stat-column-gap", min: 0, max: 10, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Stats", label: "Base label column width weight", property: "--xcc-base-stat-label-column-weight", min: 0.1, max: 10, step: 0.01, unit: "fr" },
-  { kind: "numeric", group: "Stats", label: "Base score column width weight", property: "--xcc-base-stat-score-column-weight", min: 0.1, max: 10, step: 0.01, unit: "fr" },
-  { kind: "numeric", group: "Stats", label: "Base modifier column width weight", property: "--xcc-base-stat-modifier-column-weight", min: 0.1, max: 10, step: 0.01, unit: "fr" },
 
   { kind: "numeric", group: "Weapon / Armor", label: "Weapon/armor font size", property: "--xcc-weapon-armor-font-size", min: 0.25, max: 5, step: 0.01, unit: "rem" },
-  { kind: "choice", group: "Weapon / Armor", label: "Whole weapon/armor block horizontal alignment", property: "--xcc-weapon-armor-horizontal-alignment", options: blockAlignmentOptions },
   { kind: "choice", group: "Weapon / Armor", label: "Cells within each weapon/armor row", property: "--xcc-weapon-armor-row-vertical-alignment", options: rowAlignmentOptions },
-  { kind: "choice", group: "Weapon / Armor", label: "Left label column text alignment", property: "--xcc-weapon-left-label-text-align", options: textAlignmentOptions },
-  { kind: "choice", group: "Weapon / Armor", label: "Left value column text alignment", property: "--xcc-weapon-left-value-text-align", options: textAlignmentOptions },
-  { kind: "choice", group: "Weapon / Armor", label: "Right label column text alignment", property: "--xcc-weapon-right-label-text-align", options: textAlignmentOptions },
-  { kind: "choice", group: "Weapon / Armor", label: "Right value column text alignment", property: "--xcc-weapon-right-value-text-align", options: textAlignmentOptions },
-  { kind: "numeric", group: "Weapon / Armor", label: "Gap between weapon/armor columns", property: "--xcc-weapon-armor-column-gap", min: 0, max: 15, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Weapon / Armor", label: "Gap within/between label/value pairs", property: "--xcc-weapon-armor-column-gap", min: 0, max: 15, step: 0.01, unit: "rem" },
   { kind: "numeric", group: "Weapon / Armor", label: "Gap between weapon/armor rows", property: "--xcc-weapon-armor-row-gap", min: 0, max: 15, step: 0.01, unit: "rem" },
-  { kind: "numeric", group: "Weapon / Armor", label: "Left value column width weight", property: "--xcc-weapon-left-value-column-weight", min: 0.1, max: 10, step: 0.01, unit: "fr" },
-  { kind: "numeric", group: "Weapon / Armor", label: "Right value column width weight", property: "--xcc-weapon-right-value-column-weight", min: 0.1, max: 10, step: 0.01, unit: "fr" },
 
   { kind: "color", group: "Divider styling", label: "Shared divider color", property: "--xcc-divider-color" },
 
@@ -567,8 +549,26 @@ controls.forEach((control, index) => {
       applyProperty(control.property, `${value}${control.unit}`);
     };
 
+    const applyExactValue = (): void => {
+      const value = exact.valueAsNumber;
+      if (!Number.isFinite(value) || !exact.validity.valid) return;
+
+      range.value = String(value);
+      applyProperty(control.property, `${value}${control.unit}`);
+    };
+
     range.addEventListener("input", () => setValue(range.valueAsNumber));
-    exact.addEventListener("input", () => setValue(exact.valueAsNumber));
+    // Do not rewrite the number box on every keystroke. Intermediate values
+    // such as "1." are temporarily invalid, but must remain editable so the
+    // user can finish typing a fractional value such as "1.25".
+    exact.addEventListener("input", applyExactValue);
+    exact.addEventListener("change", () => {
+      if (exact.validity.valid) {
+        applyExactValue();
+      } else {
+        exact.value = range.value;
+      }
+    });
     reset.addEventListener("click", () => setValue(defaultValue));
     fieldResets.push(() => setValue(defaultValue));
     field.append(range, exact, reset);

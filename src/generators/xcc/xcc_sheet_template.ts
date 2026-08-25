@@ -39,7 +39,7 @@ const XCC_SHEET_MARKUP = `
           <div class="stat-line"><span>PER</span><span data-field="personalityScore">8</span><span data-field="personalityMod">0</span></div>
           <div class="stat-line"><span>INT</span><span data-field="intelligenceScore">7</span><span data-field="intelligenceMod">-1</span></div>
           <div class="stat-line"><span>LCK</span><span data-field="luckScore">14</span><span data-field="luckMod">+1</span></div>
-          <div class="stat-line wide-value"><span>ALIGN</span><span data-field="alignment">Chaotic</span></div>
+          <div class="stat-line wide-value"><span>BIAS</span><span data-field="alignment">Chaotic</span></div>
         </section>
 
         <div class="xcc-divider xcc-divider--vertical xcc-divider--stats-columns" aria-hidden="true"><span class="xcc-divider-line"></span></div>
@@ -58,16 +58,32 @@ const XCC_SHEET_MARKUP = `
       <div class="xcc-divider xcc-divider--horizontal xcc-divider--stats-weapon-armor" aria-hidden="true"><span class="xcc-divider-line"></span></div>
 
       <section class="weapon-armor-section" aria-label="Weapon and armor statistics">
-        <span class="weapon-label">Weapon</span>
-        <span class="weapon-armor-value" data-field="weaponDisplay">Dagger</span>
-        <span class="weapon-label">ATK</span>
-        <span class="weapon-armor-value" data-field="attackBonus">+1</span>
-        <span class="weapon-label">DMG</span>
-        <span class="weapon-armor-value" data-field="weaponDamage">1d4+1</span>
-        <span class="weapon-label" data-field="weaponRangeLabel">Range</span>
-        <span class="weapon-armor-value" data-field="weaponRange">10/20/30</span>
-        <span class="weapon-label">Armor</span>
-        <span class="weapon-armor-value armor-value" data-field="armorName">Armored Jacket</span>
+        <div class="weapon-armor-row">
+          <div class="weapon-armor-pair">
+            <span class="weapon-label">Weapon</span>
+            <span class="weapon-armor-value" data-field="weaponDisplay">Dagger</span>
+          </div>
+          <div class="weapon-armor-pair">
+            <span class="weapon-label">ATK</span>
+            <span class="weapon-armor-value" data-field="attackBonus">+1</span>
+          </div>
+        </div>
+        <div class="weapon-armor-row">
+          <div class="weapon-armor-pair">
+            <span class="weapon-label">DMG</span>
+            <span class="weapon-armor-value" data-field="weaponDamage">1d4+1</span>
+          </div>
+          <div class="weapon-armor-pair">
+            <span class="weapon-label" data-field="weaponRangeLabel">Range</span>
+            <span class="weapon-armor-value" data-field="weaponRange">10/20/30</span>
+          </div>
+        </div>
+        <div class="weapon-armor-row">
+          <div class="weapon-armor-pair">
+            <span class="weapon-label">Armor</span>
+            <span class="weapon-armor-value" data-field="armorName">Armored Jacket</span>
+          </div>
+        </div>
       </section>
     </div>
 

@@ -5,6 +5,7 @@ import {
 } from "../../../framework";
 import { buildXccSheet } from "../populate_xcc_template";
 import { default_build } from "../xcc_impl";
+import { buildSyntheticLongestXccCharacter } from "../xcc_visual_fixtures";
 import { captureXccSheet } from "./capture_xcc_sheet";
 import {
   WebGlSheetRenderer,
@@ -57,12 +58,18 @@ void renderCharacter();
 async function renderCharacter(): Promise<void> {
   const version = ++renderVersion;
   const seed = ensureSeedInUrl();
-  const generated = default_build(seed);
-  const sheet = buildXccSheet(generated.objects);
+  const isSyntheticLongest = new URLSearchParams(window.location.search)
+    .get("fixture") === "longest";
+  const characters = isSyntheticLongest
+    ? [buildSyntheticLongestXccCharacter()]
+    : default_build(seed).objects;
+  const sheet = buildXccSheet(characters);
 
   currentSheet = sheet;
   sourceHost.replaceChildren(sheet);
-  seedLabel.textContent = `Seed: ${seed}`;
+  seedLabel.textContent = isSyntheticLongest
+    ? "Fixture: synthetic longest"
+    : `Seed: ${seed}`;
 
   await captureAndUpload(sheet, version);
 }
