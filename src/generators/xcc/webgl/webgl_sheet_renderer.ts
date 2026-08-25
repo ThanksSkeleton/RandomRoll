@@ -12,39 +12,103 @@ void main() {
 }
 `;
 
-// This deliberately exaggerated shader is only an end-to-end proof. It will
-// be replaced by the supplied MIT-licensed CRT shader after the spike passes.
-const HELLO_WORLD_FRAGMENT_SHADER = `#version 300 es
+// Adapted from the supplied CC0 Shadertoy shader in temp/SHADER. Shadertoy's
+// iChannel1 noise texture is replaced with deterministic procedural noise so
+// the effect remains a self-contained, single-source-texture WebGL2 pass.
+const VHS_FRAGMENT_SHADER = `#version 300 es
 precision highp float;
 
 uniform sampler2D uSheet;
 uniform vec2 uResolution;
 uniform float uTime;
 
-in vec2 vUv;
 out vec4 outColor;
+
+const float interference = 1.0;
+const float effectResolution = 256.0;
+const float pi = 3.14159265359;
+const float scanlineAlpha = 0.2;
+const float constantNoise = 0.1;
+const float scrollingNoise = 0.8;
+const vec3 noiseColor = vec3(0.8);
+const float horizontalDistortDistance = 0.02;
+const float verticalScrollDistance = 0.05;
+const float constantChromaticAberration = 0.005;
+const float distortChromaticAberration = 0.02;
 
 float hash(vec2 value) {
   return fract(sin(dot(value, vec2(12.9898, 78.233))) * 43758.5453);
 }
 
+float noiseTexture(vec2 uv) {
+  vec2 position = fract(uv) * effectResolution;
+  vec2 cell = floor(position);
+  vec2 blend = fract(position);
+  blend = blend * blend * (3.0 - 2.0 * blend);
+
+  float lowerLeft = hash(mod(cell, effectResolution));
+  float lowerRight = hash(mod(cell + vec2(1.0, 0.0), effectResolution));
+  float upperLeft = hash(mod(cell + vec2(0.0, 1.0), effectResolution));
+  float upperRight = hash(mod(cell + vec2(1.0), effectResolution));
+
+  return mix(
+    mix(lowerLeft, lowerRight, blend.x),
+    mix(upperLeft, upperRight, blend.x),
+    blend.y
+  );
+}
+
+vec3 sampleSheet(vec2 uv) {
+  return texture(uSheet, clamp(uv, vec2(0.0), vec2(1.0))).rgb;
+}
+
 void main() {
-  vec2 pixel = 1.0 / uResolution;
-  float rasterBand = floor(vUv.y * uResolution.y / 3.0);
-  float wobblePixels =
-    sin(rasterBand * 0.085 + uTime * 4.0) * 2.75 +
-    sin(rasterBand * 0.021 - uTime * 2.3) * 1.25;
-  vec2 warpedUv = vUv + vec2(wobblePixels * pixel.x, 0.0);
+  vec2 uv = gl_FragCoord.xy / uResolution;
 
-  float red = texture(uSheet, warpedUv + vec2(pixel.x * 3.0, 0.0)).r;
-  float green = texture(uSheet, warpedUv + vec2(pixel.x, 0.0)).g;
-  float blue = texture(uSheet, warpedUv).b;
+  float lineInterference = max(
+    0.0,
+    sin(uv.y * (8.1 - interference * 4.3) + uTime * 1.4) *
+      sin(uv.y * (3.2 - interference * 2.6) + uTime * 2.3)
+  ) * interference;
 
-  float scanline = 1.0 - 0.15 * (0.5 + 0.5 * sin(vUv.y * uResolution.y * 3.14159265));
-  float noise = (hash(vec2(gl_FragCoord.xy + uTime * 173.0)) - 0.5) * 0.045;
-  vec3 color = vec3(red, green, blue) * scanline + noise;
+  float horizontalDistortion = (
+    sin(uv.y * 2.0 + uTime) +
+    sin(uv.y * 50.0 + uTime * 5.7) * 0.3 +
+    sin(uv.y * 500.0 + uTime * 20.0) * 0.1
+  ) * horizontalDistortDistance * lineInterference;
 
-  outColor = vec4(color, 1.0);
+  float verticalDistortion =
+    sin(uv.y * 2.5 + 5.1 + uTime * 1.4) *
+    sign(sin(uv.y * 3.6 + uTime * 2.4)) *
+    verticalScrollDistance *
+    lineInterference;
+
+  vec2 roundedUv = round(uv * effectResolution) / effectResolution;
+  vec2 scatter = vec2(noiseTexture(uv + vec2(uTime)), 0.0) *
+    max(0.0, lineInterference - 0.5) * 0.1;
+  float aberrationStrength = constantChromaticAberration +
+    distortChromaticAberration * (0.1 + lineInterference);
+  float noiseAlpha = (
+    constantNoise * interference + lineInterference * scrollingNoise * 0.3
+  ) * sin(uTime * 23.4 + noiseTexture(roundedUv) * 123.4);
+
+  vec2 imageUv = vec2(
+    uv.x + horizontalDistortion,
+    uv.y + verticalDistortion
+  ) + scatter;
+  float scanline = scanlineAlpha *
+    sin(uv.y * effectResolution * pi * 2.0);
+
+  vec3 imageColor = min(
+    noiseAlpha * noiseColor + vec3(
+      sampleSheet(imageUv - vec2(aberrationStrength, 0.0)).r,
+      sampleSheet(imageUv).g,
+      sampleSheet(imageUv + vec2(aberrationStrength, 0.0)).b
+    ),
+    vec3(1.0)
+  ) - scanline;
+
+  outColor = vec4(clamp(imageColor, vec3(0.0), vec3(1.0)), 1.0);
 }
 `;
 
@@ -87,7 +151,7 @@ export class WebGlSheetRenderer {
     }
 
     this.gl = gl;
-    this.program = createProgram(gl, VERTEX_SHADER, HELLO_WORLD_FRAGMENT_SHADER);
+    this.program = createProgram(gl, VERTEX_SHADER, VHS_FRAGMENT_SHADER);
 
     const texture = gl.createTexture();
     const vertexArray = gl.createVertexArray();
@@ -95,7 +159,7 @@ export class WebGlSheetRenderer {
     const resolutionUniform = gl.getUniformLocation(this.program, "uResolution");
 
     if (!texture || !vertexArray || !timeUniform || !resolutionUniform) {
-      throw new Error("WebGL could not allocate the hello-world renderer resources.");
+      throw new Error("WebGL could not allocate the shader renderer resources.");
     }
 
     this.texture = texture;
