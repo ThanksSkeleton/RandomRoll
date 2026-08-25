@@ -23,6 +23,7 @@ const seedLabel = requiredElement<HTMLElement>("seed-label");
 const status = requiredElement<HTMLElement>("pipeline-status");
 const fallbackMessage = requiredElement<HTMLElement>("fallback-message");
 const cedalionPanel = requiredElement<HTMLElement>("cedalion-panel");
+const didYouKnowOverlay = requiredElement<HTMLElement>("did-you-know-overlay");
 
 let renderer: WebGlSheetRenderer | null = null;
 let currentSheet: HTMLElement | null = null;
@@ -65,6 +66,7 @@ void renderCharacter();
 
 async function renderCharacter(): Promise<void> {
   const version = ++renderVersion;
+  setOutputLoading(true);
   const seed = ensureSeedInUrl();
   const isSyntheticLongest = new URLSearchParams(window.location.search)
     .get("fixture") === "longest";
@@ -74,6 +76,7 @@ async function renderCharacter(): Promise<void> {
   const sheet = buildXccSheet(characters);
 
   currentSheet = sheet;
+  updateDidYouKnowOverlay(sheet);
   sourceHost.replaceChildren(sheet);
   seedLabel.textContent = isSyntheticLongest
     ? "Fixture: synthetic longest"
@@ -82,10 +85,23 @@ async function renderCharacter(): Promise<void> {
   await captureAndUpload(sheet, version);
 }
 
+function updateDidYouKnowOverlay(sheet: HTMLElement): void {
+  const bubble = sheet.querySelector<HTMLElement>("[data-field=\"didYouKnow\"]");
+  if (!bubble) {
+    throw new Error("XCC template is missing the Did You Know bubble.");
+  }
+
+  const overlayBubble = bubble.cloneNode(true) as HTMLElement;
+  overlayBubble.removeAttribute("data-field");
+  overlayBubble.removeAttribute("data-html2canvas-ignore");
+  didYouKnowOverlay.replaceChildren(overlayBubble);
+}
+
 async function captureAndUpload(
   sheet: HTMLElement,
   version: number,
 ): Promise<void> {
+  setOutputLoading(true);
   setBusy(true);
   setStatus("Capturing source DOM…", "working");
 
@@ -99,6 +115,7 @@ async function captureAndUpload(
     if (renderer) {
       renderer.updateTexture(capture);
       renderer.start();
+      setOutputLoading(false);
       setStatus(
         `Ready — ${capture.width}×${capture.height}, capture ${captureCount}, texture upload ${renderer.textureUploadCount}`,
         "ready",
@@ -107,6 +124,7 @@ async function captureAndUpload(
     }
 
     showFallback(capture);
+    setOutputLoading(false);
     setStatus(
       `DOM capture passed (${capture.width}×${capture.height}); WebGL2 unavailable`,
       "ready",
@@ -119,6 +137,11 @@ async function captureAndUpload(
       setBusy(false);
     }
   }
+}
+
+function setOutputLoading(loading: boolean): void {
+  didYouKnowOverlay.hidden = loading;
+  renderer?.setLoading(loading);
 }
 
 function showFallback(capture: HTMLCanvasElement): void {

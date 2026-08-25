@@ -93,6 +93,19 @@ const XCC_SHEET_MARKUP = `
         <span data-field="identityStripeLabel">Elf</span>
       </div>
     </div>
+
+    <aside
+      class="xcc-did-you-know"
+      data-field="didYouKnow"
+      data-html2canvas-ignore="true"
+    >
+      <strong>Did You Know?</strong>
+      <span data-field="didYouKnowActor">Actor Name</span>
+      portrayed
+      <span data-field="didYouKnowCharacter">Character Name</span>
+      in
+      <cite data-field="didYouKnowMovie">[Goofy XCrawl Movie Name]</cite>.
+    </aside>
   </article>
 `;
 

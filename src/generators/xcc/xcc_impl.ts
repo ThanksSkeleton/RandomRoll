@@ -22,6 +22,8 @@ import {
 import rawWeapons from "../../table_data/Weapons.json";
 import type { XccCelebrityHeadshotsRow } from "../../table_data/xcc_celebrity_headshots";
 import rawHeadshots from "../../table_data/xcc_celebrity_headshots.json";
+import type { XccMovieNamesRow } from "../../table_data/xcc_movie_names";
+import rawMovieNames from "../../table_data/xcc_movie_names.json";
 import {
   buildBlankDccCoreCharacter,
   buildDccCoreCharacter,
@@ -62,6 +64,7 @@ const occupations = (rawProfessions as ProfessionsRow[])
   .map(toProfession)
   .filter(profession => profession.Source === "XCC");
 const headshots = rawHeadshots as XccCelebrityHeadshotsRow[];
+const movieNames = rawMovieNames as XccMovieNamesRow[];
 const xccItems: ItemsNice[] = (rawItems as ItemsRow[])
   .map(toItemsNice)
   .filter(item => item.Source === "XCC" && item.Random);
@@ -121,6 +124,7 @@ export type XccCharacter = DccCoreCharacter & {
   packContents: string;
   portraitImagePath: string;
   portraitActorName: string;
+  movieTitle: string;
 };
 
 export type BlankXccCharacter = BlankDccCoreCharacter & {
@@ -138,6 +142,7 @@ export type BlankXccCharacter = BlankDccCoreCharacter & {
   packContents: string;
   portraitImagePath: string;
   portraitActorName: string;
+  movieTitle: string;
 };
 
 const BLANK_XCC_CHARACTER: BlankXccCharacter = {
@@ -156,6 +161,7 @@ const BLANK_XCC_CHARACTER: BlankXccCharacter = {
   packContents: "",
   portraitImagePath: "",
   portraitActorName: "",
+  movieTitle: "",
 };
 
 export function buildBlankXccCharacter(): BlankXccCharacter {
@@ -217,6 +223,7 @@ export function buildXccCharacter(rng: seedrandom.PRNG): XccCharacter {
       - armor.speedPenalty,
   });
   const luckySign = requireRolledLuckySign(rolledLuckySign.value);
+  const movieTitle = random_multi(rng, movieNames).TITLE;
 
   return {
     firstName,
@@ -236,6 +243,7 @@ export function buildXccCharacter(rng: seedrandom.PRNG): XccCharacter {
     packContents,
     portraitImagePath: xccPortraitImagePath(portrait),
     portraitActorName: portrait.NAME,
+    movieTitle,
   };
 }
 

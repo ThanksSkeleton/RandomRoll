@@ -27,6 +27,7 @@ precision highp float;
 uniform sampler2D uSheet;
 uniform vec2 uResolution;
 uniform float uTime;
+uniform float uLoading;
 uniform float uTapeWaveAmount;
 uniform float uTapeJitterAmount;
 uniform float uTapeJitterFrequency;
@@ -46,6 +47,8 @@ uniform float uAcBeatSpeed;
 uniform float uAcBeatStrength;
 uniform float uAcBeatThreshold;
 uniform float uAcBeatMaximum;
+uniform float uBarrelDistortion;
+uniform float uVignetteStrength;
 
 out vec4 outColor;
 
@@ -61,6 +64,20 @@ vec3 tex2D(sampler2D source, vec2 uv) {
 
 float hash(vec2 value) {
   return fract(sin(dot(value, vec2(89.44, 19.36))) * 22189.22);
+}
+
+// Adapted from the user-supplied, freely usable Shadertoy TV-static shader.
+// Tiny lower bounds preserve its output while preventing division by zero at
+// the exact point where the long evolution loop wraps.
+float tvStaticNoise(vec2 position, float evolve) {
+  float evolution = max(fract(evolve * 0.01), 0.000001);
+  float cx = position.x * evolution;
+  float cy = max(position.y * evolution, 0.000001);
+  float divisor = fract(
+    fract(cx * 2.4 / cy * 23.0) *
+    fract(cx * evolve / pow(abs(cy), 0.05))
+  );
+  return fract(23.0 * fract(2.0 / max(divisor, 0.000001)));
 }
 
 float interpolatedHash(vec2 value, vec2 resolution) {
@@ -88,7 +105,16 @@ float noise(vec2 value) {
 
 void main() {
   vec2 uv = gl_FragCoord.xy / uResolution;
-  vec2 noisyUv = uv;
+
+  if (uLoading > 0.5) {
+    outColor = vec4(vec3(tvStaticNoise(gl_FragCoord.xy, uTime)), 1.0);
+    return;
+  }
+
+  vec2 centeredUv = uv * 2.0 - 1.0;
+  float radiusSquared = dot(centeredUv, centeredUv);
+  vec2 noisyUv = centeredUv * (1.0 + uBarrelDistortion * radiusSquared);
+  noisyUv = noisyUv * 0.5 + 0.5;
 
   // Tape wave.
   noisyUv.x += (noise(vec2(noisyUv.y, uTime)) - 0.5) * uTapeWaveAmount;
@@ -139,6 +165,10 @@ void main() {
     uAcBeatMaximum
   );
 
+  float vignette = 1.0 - uVignetteStrength *
+    smoothstep(0.2, 1.0, radiusSquared);
+  color *= max(vignette, 0.0);
+
   outColor = vec4(color, 1.0);
 }
 `;
@@ -159,6 +189,7 @@ export class WebGlSheetRenderer {
   private readonly vertexArray: WebGLVertexArrayObject;
   private readonly timeUniform: WebGLUniformLocation;
   private readonly resolutionUniform: WebGLUniformLocation;
+  private readonly loadingUniform: WebGLUniformLocation;
   private readonly settingUniforms: Record<XccShaderSettingName, WebGLUniformLocation>;
   private settings: XccShaderSettings;
   private animationFrame: number | null = null;
@@ -166,6 +197,7 @@ export class WebGlSheetRenderer {
   private lastDrawTime = 0;
   private frameCount = 0;
   private hasTexture = false;
+  private loading = false;
   private destroyed = false;
 
   constructor(canvas: HTMLCanvasElement, initialSettings: XccShaderSettings) {
@@ -190,8 +222,9 @@ export class WebGlSheetRenderer {
     const vertexArray = gl.createVertexArray();
     const timeUniform = gl.getUniformLocation(this.program, "uTime");
     const resolutionUniform = gl.getUniformLocation(this.program, "uResolution");
+    const loadingUniform = gl.getUniformLocation(this.program, "uLoading");
 
-    if (!texture || !vertexArray || !timeUniform || !resolutionUniform) {
+    if (!texture || !vertexArray || !timeUniform || !resolutionUniform || !loadingUniform) {
       throw new Error("WebGL could not allocate the shader renderer resources.");
     }
 
@@ -199,6 +232,7 @@ export class WebGlSheetRenderer {
     this.vertexArray = vertexArray;
     this.timeUniform = timeUniform;
     this.resolutionUniform = resolutionUniform;
+    this.loadingUniform = loadingUniform;
     this.settings = { ...initialSettings };
     this.settingUniforms = Object.fromEntries(
       XCC_SHADER_CONTROLS.map(({ name }) => {
@@ -223,6 +257,7 @@ export class WebGlSheetRenderer {
     canvas.dataset.webglReady = "true";
     canvas.dataset.textureUploads = "0";
     canvas.dataset.framesDrawn = "0";
+    canvas.dataset.signal = "sheet";
   }
 
   updateTexture(source: HTMLCanvasElement): void {
@@ -266,9 +301,20 @@ export class WebGlSheetRenderer {
     this.draw(performance.now());
   }
 
+  setLoading(loading: boolean): void {
+    this.assertActive();
+    this.loading = loading;
+    this.canvas.dataset.signal = loading ? "static" : "sheet";
+
+    if (loading) {
+      this.start();
+    }
+    this.draw(performance.now());
+  }
+
   start(): void {
     this.assertActive();
-    if (this.animationFrame !== null || !this.hasTexture) {
+    if (this.animationFrame !== null || (!this.hasTexture && !this.loading)) {
       return;
     }
 
@@ -307,7 +353,7 @@ export class WebGlSheetRenderer {
   };
 
   private draw(now: number): void {
-    if (!this.hasTexture || this.destroyed) {
+    if ((!this.hasTexture && !this.loading) || this.destroyed) {
       return;
     }
 
@@ -319,6 +365,7 @@ export class WebGlSheetRenderer {
     gl.bindTexture(gl.TEXTURE_2D, this.texture);
     gl.uniform1f(this.timeUniform, (now - this.startTime) * 0.001);
     gl.uniform2f(this.resolutionUniform, this.canvas.width, this.canvas.height);
+    gl.uniform1f(this.loadingUniform, this.loading ? 1 : 0);
     for (const { name } of XCC_SHADER_CONTROLS) {
       gl.uniform1f(this.settingUniforms[name], this.settings[name]);
     }

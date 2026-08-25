@@ -31,13 +31,16 @@
           <h2 id="output-title">WebGL2 output</h2>
           <span>Animated GPU post-process</span>
         </div>
-        <div id="output-host" class="canvas-host">
-          <canvas
-            id="shader-output"
-            width="960"
-            height="720"
-            aria-label="Animated shader rendering of the XCC character sheet"
-          ></canvas>
+        <div class="shader-viewport">
+          <div id="output-host" class="canvas-host">
+            <canvas
+              id="shader-output"
+              width="960"
+              height="720"
+              aria-label="Animated shader rendering of the XCC character sheet"
+            ></canvas>
+          </div>
+          <div id="did-you-know-overlay" class="did-you-know-overlay"></div>
         </div>
         <p id="fallback-message" class="fallback-message" hidden></p>
       </section>

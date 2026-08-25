@@ -223,6 +223,7 @@
     3.5px 8.75px 0 0 rgb(79, 75, 138),
     4px 10px 0 0 rgb(11, 23, 193);
 
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 1rem;
@@ -246,6 +247,33 @@
   letter-spacing: 0.015em;
   text-align: var(--xcc-text-align);
   text-transform: uppercase;
+}
+
+.xcc-did-you-know {
+  position: absolute;
+  z-index: 5;
+  top: 1rem;
+  right: 1rem;
+  width: min(22rem, calc(100% - 2rem));
+  padding: 0.75rem 0.9rem;
+  box-sizing: border-box;
+  border: 2px solid #77afd2;
+  border-radius: 1.1rem;
+  color: #123247;
+  background: #cceeff;
+  box-shadow: 0 0.3rem 0.8rem rgb(0 0 0 / 0.3);
+  font: 500 0.9rem/1.35 system-ui, sans-serif;
+  letter-spacing: normal;
+  text-align: left;
+  text-transform: none;
+}
+
+.xcc-did-you-know strong {
+  font-weight: 850;
+}
+
+.xcc-did-you-know cite {
+  font-style: italic;
 }
 
 .xcc-sheet *,

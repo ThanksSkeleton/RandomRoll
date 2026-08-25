@@ -35,6 +35,8 @@ import rawLucky from "../table_data/Lucky.json";
 
 import type { XccCelebrityHeadshotsRow } from "../table_data/xcc_celebrity_headshots";
 import rawXccHeadshots from "../table_data/xcc_celebrity_headshots.json";
+import type { XccMovieNamesRow } from "../table_data/xcc_movie_names";
+import rawXccMovieNames from "../table_data/xcc_movie_names.json";
 import rawXccArmor from "../table_data/XCC_Armor.json";
 import rawXccPacks from "../table_data/Starting_Adventurer_Packs.json";
 import rawRaceNotes from "../table_data/RaceNotes.json";
@@ -55,6 +57,7 @@ const weaponsNice: WeaponsNice[] = weapons.map(toWeaponsNice);
 
 const lucky: LuckyRow[] = rawLucky;
 const xccHeadshots: XccCelebrityHeadshotsRow[] = rawXccHeadshots;
+const xccMovieNames: XccMovieNamesRow[] = rawXccMovieNames;
 
 function nonEmpty(value: string): boolean {
   return value.trim() !== "";
@@ -281,6 +284,7 @@ describe("XCC character data integrity", () => {
     expect(character.portraitImagePath).toBe(
       portrait ? xccPortraitImagePath(portrait) : undefined,
     );
+    expect(xccMovieNames.map(movie => movie.TITLE)).toContain(character.movieTitle);
     expect(["Lawful", "Neutral", "Chaotic"]).toContain(character.alignment);
     expect(character.armorAC).toBeGreaterThanOrEqual(10);
     expect(character.hitPoints).toBeGreaterThanOrEqual(1);
@@ -324,6 +328,7 @@ describe("XCC character data integrity", () => {
       expect(portraitNames.has(character.portraitActorName)).toBe(true);
       expect(character.portraitImagePath).toMatch(/\/xcc\/headshots\/[^/]+\.jpg$/);
       expect(character.portraitImagePath).not.toContain("image.tmdb.org");
+      expect(xccMovieNames.map(movie => movie.TITLE)).toContain(character.movieTitle);
       expect(character.strengthScore).toBeGreaterThanOrEqual(3);
       expect(character.strengthScore).toBeLessThanOrEqual(18);
       expect(character.equipment2).toBe("");
@@ -345,6 +350,21 @@ describe("XCC character data integrity", () => {
       expect(character).not.toHaveProperty("shieldName");
       expect(character).not.toHaveProperty("shieldACBonus");
     }
+  });
+
+  it("contains the complete XCrawl movie title table", () => {
+    expect(xccMovieNames.map(movie => movie.TITLE)).toEqual([
+      "XCrawl 0: Origins",
+      "XCrawl: Tyrant's Tale",
+      "XCrawl II: Roundhouse",
+      "XCrawl III: The Revenge",
+      "XCrawl IV: Orclord",
+      "XCrawl X: Overclocked",
+      "XCrawl 2K: Endgame",
+      "XCrawl Legacy",
+      "XCrawl Redux",
+      "XCrawl: Cry Harder",
+    ]);
   });
 
   it("has a checked-in local image for every XCC headshot record", () => {

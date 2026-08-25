@@ -17,6 +17,7 @@ export function populateXccTemplate(
   setText(root, "lastName", character.lastName);
   setText(root, "professionTitle", character.professionPresentation);
   setPortrait(root, character);
+  setDidYouKnow(root, character);
 
   setText(root, "strengthScore", character.strengthScore);
   setText(root, "strengthMod", formatModifier(character.strengthMod));
@@ -53,6 +54,16 @@ export function populateXccTemplate(
   setWeaponRange(root, character.weaponRange);
 
   return root;
+}
+
+function setDidYouKnow(root: ParentNode, character: XccCharacter): void {
+  setText(root, "didYouKnowActor", character.portraitActorName);
+  setText(
+    root,
+    "didYouKnowCharacter",
+    `${character.firstName} ${character.lastName}`,
+  );
+  setText(root, "didYouKnowMovie", character.movieTitle);
 }
 
 function setText(root: ParentNode, field: string, value: string | number): void {
