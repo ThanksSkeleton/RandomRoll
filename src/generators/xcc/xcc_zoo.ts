@@ -113,6 +113,7 @@ const controls: CedalionControl[] = [
   { kind: "numeric", group: "Font sizes", label: "Spotlight subtitle font size", property: "--xcc-logo-subtitle-font-size", min: 0.35, max: 6, step: 0.01, unit: "rem" },
   { kind: "numeric", group: "Font sizes", label: "Other banner text size", property: "--identity-stripe-font-size", min: 0.25, max: 5, step: 0.01, unit: "rem" },
   { kind: "numeric", group: "Font sizes", label: "Halfling / Half-Orc banner text size", property: "--identity-stripe-long-label-font-size", min: 0.25, max: 5, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Logo", label: "Bottom margin below logo", property: "--xcc-logo-margin-bottom", min: -10, max: 15, step: 0.01, unit: "rem" },
   { kind: "choice", group: "Alignment", label: "All sheet text alignment", property: "--xcc-text-align", options: textAlignmentOptions },
   { kind: "choice", group: "Alignment", label: "Logo horizontal alignment", property: "--xcc-logo-horizontal-alignment", options: elementAlignmentOptions },
   { kind: "choice", group: "Alignment", label: "Portrait horizontal alignment", property: "--xcc-portrait-horizontal-alignment", options: elementAlignmentOptions },
@@ -125,6 +126,7 @@ const controls: CedalionControl[] = [
   { kind: "numeric", group: "Banner geometry", label: "Banner height", property: "--identity-stripe-height", min: 0.25, max: 15, step: 0.01, unit: "rem" },
 
   { kind: "numeric", group: "Bio", label: "Bio font size", property: "--xcc-bio-font-size", min: 0.25, max: 5, step: 0.01, unit: "rem" },
+  { kind: "numeric", group: "Bio", label: "Name font size", property: "--xcc-name-font-size", min: 0.5, max: 10, step: 0.01, unit: "rem" },
   { kind: "choice", group: "Bio", label: "Label/value vertical alignment", property: "--xcc-bio-row-vertical-alignment", options: rowAlignmentOptions },
   { kind: "numeric", group: "Bio", label: "Gap within label/value pairs", property: "--xcc-bio-column-gap", min: 0, max: 15, step: 0.01, unit: "rem" },
   { kind: "numeric", group: "Bio", label: "Gap between bio rows", property: "--xcc-bio-row-gap", min: 0, max: 15, step: 0.01, unit: "rem" },

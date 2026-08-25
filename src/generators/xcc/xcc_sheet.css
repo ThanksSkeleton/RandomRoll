@@ -9,6 +9,8 @@
   --xcc-sheet-padding-left: 1.75rem;
   --xcc-logo-name-font-size: 3.56rem;
   --xcc-logo-subtitle-font-size: 1.64rem;
+  --xcc-logo-margin-bottom: 0.72rem;
+  --xcc-name-font-size: 3.35rem;
   --xcc-text-align: left;
   --xcc-logo-horizontal-alignment: start;
   --xcc-portrait-horizontal-alignment: end;
@@ -33,8 +35,8 @@
   --xcc-divider-stats-columns-display: none;
   --xcc-divider-stats-columns-width: 0.1rem;
   --xcc-divider-stats-columns-height: 100%;
-  --xcc-divider-stats-columns-margin-left: 0rem;
-  --xcc-divider-stats-columns-margin-right: 0rem;
+  --xcc-divider-stats-columns-margin-left: -5.12rem;
+  --xcc-divider-stats-columns-margin-right: 1.41rem;
   --xcc-divider-stats-weapon-armor-display: block;
   --xcc-divider-stats-weapon-armor-width: 100%;
   --xcc-divider-stats-weapon-armor-height: 0.1rem;
@@ -54,7 +56,7 @@
   --xcc-stats-font-size: 1.98rem;
   --xcc-stats-row-vertical-alignment: center;
   --xcc-stats-row-gap: 1.22rem;
-  --xcc-stats-column-gap: 6.91rem;
+  --xcc-stats-column-gap: 2.09rem;
   --xcc-base-stats-vertical-alignment: center;
   --xcc-secondary-stats-vertical-alignment: center;
   --xcc-base-stat-column-gap: 1.38rem;
@@ -272,7 +274,7 @@
   grid-template-columns: max-content auto 1fr;
   align-items: center;
   gap: 0;
-  margin-bottom: 2rem;
+  margin-bottom: var(--xcc-logo-margin-bottom);
   min-width: 0;
   justify-content: var(--xcc-logo-horizontal-alignment);
 }
@@ -398,7 +400,7 @@
 
 .bio-row {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   gap: var(--xcc-bio-column-gap);
   align-items: var(--xcc-bio-row-vertical-alignment);
   width: 100%;
@@ -419,7 +421,16 @@
 .bio-value {
   min-width: 0;
   overflow-wrap: anywhere;
-  text-align: right;
+  text-align: center;
+}
+
+.bio-value--name {
+  font-size: var(--xcc-name-font-size);
+  line-height: 0.95;
+}
+
+.bio-value--name [data-field] {
+  display: block;
 }
 
 .bio-value,
@@ -484,7 +495,7 @@
 .base-stats,
 .secondary-stats {
   display: grid;
-  grid-template-rows: repeat(7, minmax(1.5rem, auto));
+  grid-template-rows: repeat(7, minmax(1.05em, auto));
   row-gap: var(--xcc-stats-row-gap);
 }
 

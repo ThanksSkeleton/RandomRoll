@@ -16,7 +16,6 @@ export function populateXccTemplate(
   setText(root, "firstName", character.firstName);
   setText(root, "lastName", character.lastName);
   setText(root, "professionTitle", character.professionPresentation);
-  setText(root, "luckySignName", character.luckySignName);
   setPortrait(root, character);
 
   setText(root, "strengthScore", character.strengthScore);
@@ -35,7 +34,6 @@ export function populateXccTemplate(
   setText(root, "fortitudeSave", formatModifier(character.saveFort));
   setText(root, "reflexSave", formatModifier(character.saveReflex));
   setText(root, "willSave", formatModifier(character.saveWill));
-  setText(root, "alignment", character.alignment);
   setIdentityStripe(root, character);
 
   setText(root, "hitPoints", character.hitPoints);

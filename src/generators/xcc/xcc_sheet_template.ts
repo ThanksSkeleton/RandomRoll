@@ -11,20 +11,14 @@ const XCC_SHEET_MARKUP = `
         <div class="xcc-divider xcc-divider--horizontal xcc-divider--logo-bio" aria-hidden="true"><span class="xcc-divider-line"></span></div>
 
         <div class="bio">
-          <div class="bio-row">
-            <span class="bio-label">Name</span>
-            <span class="bio-value">
+          <div class="bio-row bio-row--name">
+            <span class="bio-value bio-value--name">
               <span data-field="firstName">Alice</span>
               <span data-field="lastName">Cooper</span>
             </span>
           </div>
-          <div class="bio-row">
-            <span class="bio-label">Occupation</span>
+          <div class="bio-row bio-row--occupation">
             <span class="bio-value" data-field="professionTitle">Bootblack</span>
-          </div>
-          <div class="bio-row">
-            <span class="bio-label">Olympian Boon</span>
-            <span class="bio-value" data-field="luckySignName">Guided by Hera</span>
           </div>
         </div>
       </section>
@@ -39,7 +33,7 @@ const XCC_SHEET_MARKUP = `
           <div class="stat-line"><span>PER</span><span data-field="personalityScore">8</span><span data-field="personalityMod">0</span></div>
           <div class="stat-line"><span>INT</span><span data-field="intelligenceScore">7</span><span data-field="intelligenceMod">-1</span></div>
           <div class="stat-line"><span>LCK</span><span data-field="luckScore">14</span><span data-field="luckMod">+1</span></div>
-          <div class="stat-line wide-value"><span>BIAS</span><span data-field="alignment">Chaotic</span></div>
+          <div class="stat-line wide-value blank" aria-hidden="true"><span></span><span></span></div>
         </section>
 
         <div class="xcc-divider xcc-divider--vertical xcc-divider--stats-columns" aria-hidden="true"><span class="xcc-divider-line"></span></div>
