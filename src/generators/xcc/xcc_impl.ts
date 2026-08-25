@@ -80,6 +80,7 @@ const DEFAULT_MOJO = 0;
 const DEFAULT_FAME = 0;
 const DEFAULT_WEALTH = 11;
 const EXTRA_GEAR = "extra piece of gear";
+const XCC_HEADSHOT_DIRECTORY = "xcc/headshots/";
 
 export type XccCharacter = DccCoreCharacter & {
   firstName: string;
@@ -209,9 +210,43 @@ export function buildXccCharacter(rng: seedrandom.PRNG): XccCharacter {
     fame: DEFAULT_FAME,
     wealth: DEFAULT_WEALTH,
     packContents,
-    portraitImagePath: portrait.HEADSHOT_URL,
+    portraitImagePath: xccPortraitImagePath(portrait),
     portraitActorName: portrait.NAME,
   };
+}
+
+export function xccPortraitImagePath(
+  portrait: XccCelebrityHeadshotsRow,
+): string {
+  return `${import.meta.env.BASE_URL}${XCC_HEADSHOT_DIRECTORY}${encodeURIComponent(xccPortraitFileName(portrait))}`;
+}
+
+export function xccPortraitFileName(
+  portrait: XccCelebrityHeadshotsRow,
+): string {
+  const extension = new URL(portrait.HEADSHOT_URL).pathname
+    .match(/\.[^./]+$/)?.[0]
+    ?.toLowerCase();
+
+  if (!extension) {
+    throw new Error(`Headshot URL has no file extension: ${portrait.HEADSHOT_URL}`);
+  }
+
+  // Keep this Windows-safe conversion aligned with download_xcc_headshots.ps1.
+  let stem = portrait.NAME
+    .replace(/[<>:"/\\|?*\x00-\x1f]/g, "_")
+    .trim()
+    .replace(/[ .]+$/g, "");
+
+  if (/^(con|prn|aux|nul|com[1-9]|lpt[1-9])$/i.test(stem)) {
+    stem = `_${stem}`;
+  }
+
+  if (!stem) {
+    throw new Error(`Actor name has no usable filename characters: ${portrait.NAME}`);
+  }
+
+  return `${stem}${extension}`;
 }
 
 function chooseWeapon(rng: seedrandom.PRNG): DccCoreWeapon {

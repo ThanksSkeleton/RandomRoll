@@ -10,7 +10,11 @@ import {
 import {
   buildBlankXccCharacter,
   default_build as buildXcc,
+  xccPortraitFileName,
+  xccPortraitImagePath,
 } from "../generators/xcc/xcc_impl";
+import { existsSync } from "node:fs";
+import { resolve } from "node:path";
 
 import { type ItemsNice, type ItemsRow, toItemsNice } from "../table_data/Items";
 import rawItems from "../table_data/Items.json";
@@ -273,7 +277,9 @@ describe("XCC character data integrity", () => {
       rawRaceNotes[character.race as keyof typeof rawRaceNotes].racialLanguage,
     );
     expect(character.languages).toContain("English");
-    expect(character.portraitImagePath).toBe(portrait?.HEADSHOT_URL);
+    expect(character.portraitImagePath).toBe(
+      portrait ? xccPortraitImagePath(portrait) : undefined,
+    );
     expect(["Lawful", "Neutral", "Chaotic"]).toContain(character.alignment);
     expect(character.armorAC).toBeGreaterThanOrEqual(10);
     expect(character.hitPoints).toBeGreaterThanOrEqual(1);
@@ -315,7 +321,8 @@ describe("XCC character data integrity", () => {
       expect(character.professionPresentation).toBe(occupation?.XCCPresentation);
       expect(raceNames.has(character.race)).toBe(true);
       expect(portraitNames.has(character.portraitActorName)).toBe(true);
-      expect(character.portraitImagePath).toMatch(/^https:\/\/image\.tmdb\.org\//);
+      expect(character.portraitImagePath).toMatch(/\/xcc\/headshots\/[^/]+\.jpg$/);
+      expect(character.portraitImagePath).not.toContain("image.tmdb.org");
       expect(character.strengthScore).toBeGreaterThanOrEqual(3);
       expect(character.strengthScore).toBeLessThanOrEqual(18);
       expect(character.equipment2).toBe("");
@@ -333,6 +340,16 @@ describe("XCC character data integrity", () => {
       )).toBe(true);
       expect(character).not.toHaveProperty("shieldName");
       expect(character).not.toHaveProperty("shieldACBonus");
+    }
+  });
+
+  it("has a checked-in local image for every XCC headshot record", () => {
+    for (const portrait of xccHeadshots) {
+      const fileName = xccPortraitFileName(portrait);
+      expect(
+        existsSync(resolve("public", "xcc", "headshots", fileName)),
+        `Missing local headshot for ${portrait.NAME}: ${fileName}`,
+      ).toBe(true);
     }
   });
 });
