@@ -41,7 +41,7 @@ button:disabled {
 }
 
 .webgl-demo {
-  width: min(126rem, calc(100% - 2rem));
+  width: min(calc(60rem + 1.6rem + 2px), calc(100% - 2rem));
   margin: 0 auto;
   padding: 2.5rem 0 4rem;
 }
@@ -103,17 +103,8 @@ button:disabled {
   color: #ff9999;
 }
 
-.demo-comparison {
-  display: grid;
-  grid-template-columns: repeat(2, calc(60rem + 1.6rem + 2px));
-  gap: 1.25rem;
-  align-items: start;
-  justify-content: center;
-  overflow-x: auto;
-}
-
-.demo-panel {
-  min-width: 0;
+.shader-stage {
+  width: 100%;
   padding: 0.8rem;
   border: 1px solid #303951;
   border-radius: 0.65rem;
@@ -139,12 +130,21 @@ button:disabled {
   font-size: 0.75rem;
 }
 
-.sheet-host,
 .canvas-host {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #03040a;
+}
+
+.capture-source {
+  position: fixed;
+  top: 0;
+  left: -10000px;
   width: 960px;
   height: 720px;
   overflow: hidden;
-  background: #03040a;
+  pointer-events: none;
 }
 
 #shader-output,
@@ -180,26 +180,10 @@ button:disabled {
   margin-top: 0.35rem;
 }
 
-@media (max-width: 100rem) {
-  .demo-comparison {
-    grid-template-columns: calc(60rem + 1.6rem + 2px);
-  }
-}
-
 @media (max-width: 48rem) {
   .webgl-demo {
     width: 100%;
     padding-inline: 0.5rem;
-  }
-
-  .demo-comparison {
-    display: block;
-    overflow-x: auto;
-  }
-
-  .demo-panel {
-    width: calc(60rem + 1.6rem + 2px);
-    margin-bottom: 1rem;
   }
 
   #pipeline-status {

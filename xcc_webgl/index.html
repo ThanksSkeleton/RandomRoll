@@ -4,18 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/randomroll/favicon.svg" />
-    <title>XCC WebGL Shader Spike</title>
+    <title>XCC Shader Lab</title>
     <link rel="stylesheet" href="/src/generators/xcc/xcc_sheet.css" />
     <link rel="stylesheet" href="/src/generators/xcc/webgl/xcc_webgl.css" />
   </head>
   <body>
     <main class="webgl-demo">
       <header class="demo-header">
-        <p class="demo-kicker">XCC rendering spike</p>
-        <h1>HTML sheet → WebGL2 texture</h1>
+        <p class="demo-kicker">XCC shader lab</p>
+        <h1>Broadcast character sheet</h1>
         <p>
-          The source sheet is captured only when its character changes. The
-          canvas animation is generated entirely by a hello-world fragment shader.
+          The character sheet is captured when its content changes, then rendered
+          as an animated WebGL effect.
         </p>
       </header>
 
@@ -26,34 +26,26 @@
         <span id="pipeline-status" role="status" aria-live="polite">Starting…</span>
       </div>
 
-      <div class="demo-comparison">
-        <section class="demo-panel" aria-labelledby="source-title">
-          <div class="panel-heading">
-            <h2 id="source-title">Authoritative HTML/CSS</h2>
-            <span>Static source DOM</span>
-          </div>
-          <div id="source-host" class="sheet-host"></div>
-        </section>
+      <section class="shader-stage" aria-labelledby="output-title">
+        <div class="panel-heading">
+          <h2 id="output-title">WebGL2 output</h2>
+          <span>Animated GPU post-process</span>
+        </div>
+        <div id="output-host" class="canvas-host">
+          <canvas
+            id="shader-output"
+            width="960"
+            height="720"
+            aria-label="Animated shader rendering of the XCC character sheet"
+          ></canvas>
+        </div>
+        <p id="fallback-message" class="fallback-message" hidden></p>
+      </section>
 
-        <section class="demo-panel" aria-labelledby="output-title">
-          <div class="panel-heading">
-            <h2 id="output-title">WebGL2 output</h2>
-            <span>Animated GPU post-process</span>
-          </div>
-          <div id="output-host" class="canvas-host">
-            <canvas
-              id="shader-output"
-              width="960"
-              height="720"
-              aria-label="Animated shader rendering of the XCC character sheet"
-            ></canvas>
-          </div>
-          <p id="fallback-message" class="fallback-message" hidden></p>
-        </section>
-      </div>
+      <div id="source-host" class="capture-source" aria-hidden="true"></div>
 
       <details class="implementation-notes">
-        <summary>What this spike proves</summary>
+        <summary>Rendering pipeline</summary>
         <ul>
           <li>The real XCC sheet and local portrait can be rasterized.</li>
           <li>The captured bitmap can be uploaded to WebGL2.</li>
