@@ -622,7 +622,7 @@
     "AC": "0",
     "Init": "0",
     "HP": "0",
-    "Speed": "1",
+    "Speed": "5",
     "inDCC": "true",
     "inXCC": "true",
     "XCCName": "Chased by Faunus",

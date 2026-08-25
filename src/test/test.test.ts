@@ -359,6 +359,10 @@ describe("Lucky sign variants", () => {
     const dccSigns = lucky.map(luckyRowToNice).filter((sign) => sign.inDCC);
 
     expect(dccSigns).toHaveLength(30);
+    expect(dccSigns).toContainEqual(expect.objectContaining({
+      Tarot: "The World",
+      Speed: 5,
+    }));
   });
 
   it("includes all 24 XCC lucky signs", () => {
@@ -374,6 +378,10 @@ describe("Lucky sign variants", () => {
       XCCName: "Taught by Diana",
       XCCWhen: "Early April",
       XCCGod: "Diana",
+    }));
+    expect(xccSigns).toContainEqual(expect.objectContaining({
+      XCCName: "Chased by Faunus",
+      Speed: 5,
     }));
   });
 });
