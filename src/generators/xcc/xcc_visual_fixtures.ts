@@ -71,6 +71,9 @@ export function buildSyntheticLongestXccCharacter(): XccCharacter {
     weaponRange: longestString(rangedWeapons.map(weapon => weapon.Range)),
     attackMod: 6,
     attackDamageMod: 3,
+    equipment: longestString(
+      professions.map(profession => profession.AdventurePack),
+    ),
     armorName: longestString(
       professions.map(profession => profession.ArmorEquipped),
     ),

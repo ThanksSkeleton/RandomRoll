@@ -73,7 +73,31 @@ const xccLuckySigns: LuckyNice[] = (rawLucky as LuckyRow[])
   .filter(sign => sign.inXCC);
 
 const GENDERS = ["Male", "Female"] as const;
-const ALIGNMENTS = ["Lawful", "Neutral", "Chaotic"] as const;
+const XCC_GOD_ALIGNMENTS = {
+  Apollo: "Chaotic",
+  Bacchus: "Chaotic",
+  Ceres: "Neutral",
+  Cupid: "Chaotic",
+  Diana: "Lawful",
+  Discordia: "Chaotic",
+  Faunus: "Chaotic",
+  Fortuna: "Chaotic",
+  Hercules: "Chaotic",
+  Hesta: "Lawful",
+  Juno: "Lawful",
+  Jupiter: "Lawful",
+  Mars: "Chaotic",
+  Mercury: "Lawful",
+  Minerva: "Lawful",
+  Neptune: "Chaotic",
+  Pluto: "Neutral",
+  Sol: "Lawful",
+  "The Furaie": "Lawful",
+  "The Kharites": "Neutral",
+  "The Mora": "Chaotic",
+  Trivia: "Neutral",
+  Vulcan: "Lawful",
+} as const;
 const NAME_GROUP = "US";
 const BASE_ARMOR_CLASS = 10;
 const DEFAULT_MOJO = 0;
@@ -159,7 +183,6 @@ export function buildXccCharacter(rng: seedrandom.PRNG): XccCharacter {
     "armor",
   );
   const weapon = chooseWeapon(rng);
-  const alignment = random_multi(rng, [...ALIGNMENTS]);
   const portrait = random_multi(
     rng,
     headshots.filter(candidate => candidate.GENDER === gender),
@@ -176,7 +199,7 @@ export function buildXccCharacter(rng: seedrandom.PRNG): XccCharacter {
     race: occupation.Race,
     racialTraits: race.racialTraits,
     languages: race.racialLanguage,
-    alignment,
+    alignment: "",
     armorName,
     armorAC,
     equipment: occupation.AdventurePack,
@@ -200,6 +223,7 @@ export function buildXccCharacter(rng: seedrandom.PRNG): XccCharacter {
     lastName,
     professionPresentation: occupation.XCCPresentation,
     ...core,
+    alignment: alignmentForXccGod(luckySign.god),
     languages: formatLanguages(race.racialLanguage, core.intelligenceMod),
     armorCheckPenalty: armor.checkPenalty,
     armorSpeedPenalty: armor.speedPenalty,
@@ -213,6 +237,20 @@ export function buildXccCharacter(rng: seedrandom.PRNG): XccCharacter {
     portraitImagePath: xccPortraitImagePath(portrait),
     portraitActorName: portrait.NAME,
   };
+}
+
+export function alignmentForXccGod(
+  god: string,
+): "Lawful" | "Neutral" | "Chaotic" {
+  const alignment = XCC_GOD_ALIGNMENTS[
+    god as keyof typeof XCC_GOD_ALIGNMENTS
+  ];
+
+  if (!alignment) {
+    throw new Error(`No XCC alignment is configured for boon god ${god}.`);
+  }
+
+  return alignment;
 }
 
 export function xccPortraitImagePath(

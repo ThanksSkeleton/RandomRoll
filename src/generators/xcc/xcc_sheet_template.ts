@@ -1,11 +1,11 @@
 const XCC_SHEET_MARKUP = `
   <article class="xcc-sheet">
     <div class="everything-else-column">
-      <section class="logo-bio" aria-label="Competitor biography">
+      <section class="logo-bio" aria-label="Crawler biography">
         <header class="xcc-logo">
           <span class="xcc-logo-name">XCrawl</span>
           <div class="xcc-divider xcc-divider--vertical xcc-divider--logo-name-subtitle" aria-hidden="true"><span class="xcc-divider-line"></span></div>
-          <span class="xcc-logo-subtitle">Competitor<br />Spotlight</span>
+          <span class="xcc-logo-subtitle">Crawler<br />Spotlight</span>
         </header>
 
         <div class="xcc-divider xcc-divider--horizontal xcc-divider--logo-bio" aria-hidden="true"><span class="xcc-divider-line"></span></div>
@@ -67,15 +67,19 @@ const XCC_SHEET_MARKUP = `
             <span class="weapon-label">ATK</span>
             <span class="weapon-armor-value" data-field="attackBonus">+1</span>
           </div>
-        </div>
-        <div class="weapon-armor-row">
           <div class="weapon-armor-pair">
             <span class="weapon-label">DMG</span>
             <span class="weapon-armor-value" data-field="weaponDamage">1d4+1</span>
           </div>
+        </div>
+        <div class="weapon-armor-row">
           <div class="weapon-armor-pair">
             <span class="weapon-label" data-field="weaponRangeLabel">Range</span>
             <span class="weapon-armor-value" data-field="weaponRange">10/20/30</span>
+          </div>
+          <div class="weapon-armor-pair weapon-armor-pair--right">
+            <span class="weapon-label">GEAR</span>
+            <span class="weapon-armor-value" data-field="pack">Pack A</span>
           </div>
         </div>
         <div class="weapon-armor-row">
@@ -87,7 +91,7 @@ const XCC_SHEET_MARKUP = `
       </section>
     </div>
 
-    <div class="portrait-column" aria-label="Competitor portrait">
+    <div class="portrait-column" aria-label="Crawler portrait">
       <div class="portrait-frame">
         <div class="portrait-image" data-field="portrait" role="img"></div>
       </div>

@@ -8,7 +8,7 @@
   --xcc-sheet-padding-bottom: 1.75rem;
   --xcc-sheet-padding-left: 1.75rem;
   --xcc-logo-name-font-size: 3.56rem;
-  --xcc-logo-subtitle-font-size: 1.24rem;
+  --xcc-logo-subtitle-font-size: 1.64rem;
   --xcc-text-align: left;
   --xcc-logo-horizontal-alignment: start;
   --xcc-portrait-horizontal-alignment: end;
@@ -55,11 +55,11 @@
   --xcc-stats-row-vertical-alignment: center;
   --xcc-stats-row-gap: 1.22rem;
   --xcc-stats-column-gap: 6.91rem;
-  --xcc-base-stats-vertical-alignment: start;
-  --xcc-secondary-stats-vertical-alignment: start;
-  --xcc-base-stat-column-gap: 1.37rem;
+  --xcc-base-stats-vertical-alignment: center;
+  --xcc-secondary-stats-vertical-alignment: center;
+  --xcc-base-stat-column-gap: 1.38rem;
   --xcc-secondary-stat-column-gap: 0rem;
-  --xcc-weapon-armor-font-size: 1.32rem;
+  --xcc-weapon-armor-font-size: 1.14rem;
   --xcc-weapon-armor-row-vertical-alignment: end;
   --xcc-weapon-armor-column-gap: 1.32rem;
   --xcc-weapon-armor-row-gap: 0.79rem;
@@ -524,6 +524,8 @@
 .weapon-armor-section {
   display: grid;
   justify-self: stretch;
+  width: 100%;
+  min-width: 0;
   row-gap: var(--xcc-weapon-armor-row-gap);
   font-size: var(--xcc-weapon-armor-font-size);
 }
@@ -534,6 +536,7 @@
   gap: var(--xcc-weapon-armor-column-gap);
   align-items: var(--xcc-weapon-armor-row-vertical-alignment);
   width: 100%;
+  min-width: 0;
 }
 
 .weapon-armor-pair {
@@ -541,17 +544,19 @@
   gap: var(--xcc-weapon-armor-column-gap);
   align-items: var(--xcc-weapon-armor-row-vertical-alignment);
   width: max-content;
+  min-width: 0;
 }
 
 .weapon-armor-pair > * {
   text-align: left;
 }
 
-.weapon-armor-row .weapon-armor-pair:last-child:not(:first-child) {
+.weapon-armor-pair--right {
   justify-content: flex-end;
+  margin-left: auto;
 }
 
-.weapon-armor-row .weapon-armor-pair:last-child:not(:first-child) > * {
+.weapon-armor-pair--right > * {
   text-align: right;
 }
 

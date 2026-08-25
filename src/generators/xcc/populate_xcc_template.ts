@@ -51,6 +51,7 @@ export function populateXccTemplate(
     "weaponDamage",
     formatDamage(character.weaponDamageBase, character.attackDamageMod),
   );
+  setText(root, "pack", character.equipment || "—");
   setWeaponRange(root, character.weaponRange);
 
   return root;
@@ -81,7 +82,7 @@ function setPortrait(root: ParentNode, character: XccCharacter): void {
   portrait.dataset.actor = character.portraitActorName;
   portrait.setAttribute(
     "aria-label",
-    `Competitor portrait represented by ${character.portraitActorName}`,
+    `Crawler portrait represented by ${character.portraitActorName}`,
   );
   portrait.style.backgroundImage = `url("${cssUrlEscape(character.portraitImagePath)}")`;
   portrait.style.backgroundSize = "cover";

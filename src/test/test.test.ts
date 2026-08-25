@@ -8,6 +8,7 @@ import {
   buildDccCoreCharacter,
 } from "../generators/dcc_core/dcc_core";
 import {
+  alignmentForXccGod,
   buildBlankXccCharacter,
   default_build as buildXcc,
   xccPortraitFileName,
@@ -332,6 +333,9 @@ describe("XCC character data integrity", () => {
       expect(character.armorCheckPenalty).toBe(armor.checkPenalty);
       expect(character.armorSpeedPenalty).toBe(armor.speedPenalty);
       expect(character.armorFumbleDie).toBe(`d${armor.fumbleDie}`);
+      expect(character.alignment).toBe(
+        alignmentForXccGod(character.luckySignGod),
+      );
 
       expect(weaponsNice.some(weapon =>
         weapon.Source === "XCC"
@@ -383,6 +387,19 @@ describe("Lucky sign variants", () => {
       XCCName: "Chased by Faunus",
       Speed: 5,
     }));
+  });
+
+  it("assigns every XCC boon god a deterministic alignment bias", () => {
+    const gods = new Set(
+      lucky
+        .map(luckyRowToNice)
+        .filter(sign => sign.inXCC)
+        .map(sign => sign.XCCGod),
+    );
+
+    expect([...gods].map(alignmentForXccGod)).toEqual(
+      expect.arrayContaining(["Lawful", "Neutral", "Chaotic"]),
+    );
   });
 });
 
