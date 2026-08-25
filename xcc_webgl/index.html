@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/randomroll/favicon.svg" />
+    <title>XCC WebGL Shader Spike</title>
+    <link rel="stylesheet" href="/src/generators/xcc/xcc_sheet.css" />
+    <link rel="stylesheet" href="/src/generators/xcc/webgl/xcc_webgl.css" />
+  </head>
+  <body>
+    <template id="xcc-character-sheet-template">
+      <article class="xcc-sheet">
+        <div class="everything-else-column">
+          <section class="logo-bio" aria-label="Competitor biography">
+            <header class="xcc-logo">
+              <span class="xcc-logo-name">XCrawl</span>
+              <div class="xcc-divider xcc-divider--vertical xcc-divider--logo-name-subtitle" aria-hidden="true"><span class="xcc-divider-line"></span></div>
+              <span class="xcc-logo-subtitle">Competitor<br />Spotlight</span>
+            </header>
+
+            <div class="xcc-divider xcc-divider--horizontal xcc-divider--logo-bio" aria-hidden="true"><span class="xcc-divider-line"></span></div>
+
+            <div class="bio">
+              <div class="bio-row">
+                <span class="bio-label">Name</span>
+                <span class="bio-value">
+                  <span data-field="firstName">Alice</span>
+                  <span data-field="lastName">Cooper</span>
+                </span>
+              </div>
+              <div class="bio-row">
+                <span class="bio-label">Occupation</span>
+                <span class="bio-value" data-field="professionTitle">Bootblack</span>
+              </div>
+              <div class="bio-row">
+                <span class="bio-label">Olympian Boon</span>
+                <span class="bio-value" data-field="luckySignName">Guided by Hera</span>
+              </div>
+            </div>
+          </section>
+
+          <div class="xcc-divider xcc-divider--horizontal xcc-divider--bio-stats" aria-hidden="true"><span class="xcc-divider-line"></span></div>
+
+          <div class="xcc-sheet-row stats-row">
+            <section class="base-stats" aria-label="Base statistics">
+              <div class="stat-line"><span>STR</span><span data-field="strengthScore">13</span><span data-field="strengthMod">+1</span></div>
+              <div class="stat-line"><span>AGI</span><span data-field="agilityScore">14</span><span data-field="agilityMod">+1</span></div>
+              <div class="stat-line"><span>STA</span><span data-field="staminaScore">13</span><span data-field="staminaMod">+1</span></div>
+              <div class="stat-line"><span>PER</span><span data-field="personalityScore">8</span><span data-field="personalityMod">0</span></div>
+              <div class="stat-line"><span>INT</span><span data-field="intelligenceScore">7</span><span data-field="intelligenceMod">-1</span></div>
+              <div class="stat-line"><span>LCK</span><span data-field="luckScore">14</span><span data-field="luckMod">+1</span></div>
+              <div class="stat-line wide-value"><span>ALIGN</span><span data-field="alignment">Chaotic</span></div>
+            </section>
+
+            <div class="xcc-divider xcc-divider--vertical xcc-divider--stats-columns" aria-hidden="true"><span class="xcc-divider-line"></span></div>
+
+            <section class="secondary-stats" aria-label="Secondary statistics">
+              <div class="stat-line"><span>FORT</span><span data-field="fortitudeSave">+1</span></div>
+              <div class="stat-line"><span>REF</span><span data-field="reflexSave">+1</span></div>
+              <div class="stat-line"><span>WILL</span><span data-field="willSave">0</span></div>
+              <div class="stat-line"><span>HP</span><span data-field="hitPoints">1</span></div>
+              <div class="stat-line"><span>AC</span><span data-field="armorClass">11</span></div>
+              <div class="stat-line"><span>INIT</span><span data-field="initiative">+1</span></div>
+              <div class="stat-line"><span>SPEED</span><span data-field="speed">30</span></div>
+            </section>
+          </div>
+
+          <div class="xcc-divider xcc-divider--horizontal xcc-divider--stats-weapon-armor" aria-hidden="true"><span class="xcc-divider-line"></span></div>
+
+          <section class="weapon-armor-section" aria-label="Weapon and armor statistics">
+            <span class="weapon-label">Weapon</span>
+            <span class="weapon-armor-value" data-field="weaponDisplay">Dagger</span>
+            <span class="weapon-label">ATK</span>
+            <span class="weapon-armor-value" data-field="attackBonus">+1</span>
+            <span class="weapon-label">DMG</span>
+            <span class="weapon-armor-value" data-field="weaponDamage">1d4+1</span>
+            <span class="weapon-label" data-field="weaponRangeLabel">Range</span>
+            <span class="weapon-armor-value" data-field="weaponRange">10/20/30</span>
+            <span class="weapon-label">Armor</span>
+            <span class="weapon-armor-value armor-value" data-field="armorName">Armored Jacket</span>
+          </section>
+        </div>
+
+        <div class="portrait-column" aria-label="Competitor portrait">
+          <div class="portrait-frame">
+            <div class="portrait-image" data-field="portrait" role="img"></div>
+          </div>
+          <div class="identity-stripe" data-field="identityStripe" hidden>
+            <span data-field="identityStripeLabel">Elf</span>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <main class="webgl-demo">
+      <header class="demo-header">
+        <p class="demo-kicker">XCC rendering spike</p>
+        <h1>HTML sheet → WebGL2 texture</h1>
+        <p>
+          The source sheet is captured only when its character changes. The
+          canvas animation is generated entirely by a hello-world fragment shader.
+        </p>
+      </header>
+
+      <div class="demo-toolbar" aria-label="Demo controls">
+        <button id="reroll" type="button">Reroll and recapture</button>
+        <button id="recapture" type="button">Recapture current sheet</button>
+        <span id="seed-label"></span>
+        <span id="pipeline-status" role="status" aria-live="polite">Starting…</span>
+      </div>
+
+      <div class="demo-comparison">
+        <section class="demo-panel" aria-labelledby="source-title">
+          <div class="panel-heading">
+            <h2 id="source-title">Authoritative HTML/CSS</h2>
+            <span>Static source DOM</span>
+          </div>
+          <div id="source-host" class="sheet-host"></div>
+        </section>
+
+        <section class="demo-panel" aria-labelledby="output-title">
+          <div class="panel-heading">
+            <h2 id="output-title">WebGL2 output</h2>
+            <span>Animated GPU post-process</span>
+          </div>
+          <div id="output-host" class="canvas-host">
+            <canvas
+              id="shader-output"
+              width="960"
+              height="720"
+              aria-label="Animated shader rendering of the XCC character sheet"
+            ></canvas>
+          </div>
+          <p id="fallback-message" class="fallback-message" hidden></p>
+        </section>
+      </div>
+
+      <details class="implementation-notes">
+        <summary>What this spike proves</summary>
+        <ul>
+          <li>The real XCC sheet and local portrait can be rasterized.</li>
+          <li>The captured bitmap can be uploaded to WebGL2.</li>
+          <li>The shader animates without recapturing the DOM every frame.</li>
+          <li>Rerolling updates the existing renderer's texture.</li>
+        </ul>
+      </details>
+    </main>
+
+    <script type="module" src="/src/generators/xcc/webgl/xcc_webgl.ts"></script>
+  </body>
+</html>
