@@ -180,6 +180,110 @@ button:disabled {
   margin-top: 0.35rem;
 }
 
+.cedalion-panel {
+  position: fixed;
+  z-index: 100;
+  inset: 0 0 0 auto;
+  display: flex;
+  width: 25rem;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 1rem;
+  border-left: 2px solid #5f6dff;
+  color: #181824;
+  background: #f7f7fb;
+  box-shadow: -0.4rem 0 1rem rgb(0 0 0 / 0.45);
+  font: 0.85rem/1.35 system-ui, sans-serif;
+}
+
+.cedalion-panel h2,
+.cedalion-panel h3,
+.cedalion-panel p {
+  margin: 0;
+}
+
+.cedalion-panel h2 {
+  font-size: 1.05rem;
+}
+
+.cedalion-state {
+  width: 100%;
+  min-height: 14rem;
+  resize: vertical;
+  font: 0.72rem/1.25 ui-monospace, monospace;
+}
+
+.cedalion-controls {
+  display: grid;
+  gap: 1rem;
+  overflow-y: auto;
+  padding-right: 0.35rem;
+}
+
+.cedalion-group {
+  border: 1px solid #aeb0bd;
+  background: #fff;
+}
+
+.cedalion-group h3 {
+  padding: 0.7rem;
+  border-bottom: 1px solid #d2d3dc;
+  font-size: 0.88rem;
+}
+
+.cedalion-group-fields {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.75rem;
+}
+
+.cedalion-field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 5.25rem auto;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.cedalion-field label {
+  grid-column: 1 / -1;
+  font-weight: 650;
+}
+
+.cedalion-field input[type="range"] {
+  width: 100%;
+}
+
+.cedalion-field input[type="number"],
+.cedalion-field button,
+.cedalion-reset-all {
+  min-height: 2rem;
+  padding: 0.3rem 0.45rem;
+  border-radius: 0.2rem;
+  font: inherit;
+}
+
+.cedalion-field button {
+  border-color: #777b8d;
+  color: #181824;
+  background: #ececf2;
+}
+
+.cedalion-reset-all {
+  border: 1px solid #8f1018;
+  color: #fff;
+  background: #c81e2b;
+  font-weight: 700;
+}
+
+.cedalion-reset-all:hover {
+  background: #a51420;
+}
+
+.cedalion-reset-all:focus-visible {
+  outline: 3px solid #ff7a84;
+  outline-offset: 2px;
+}
+
 @media (max-width: 48rem) {
   .webgl-demo {
     width: 100%;

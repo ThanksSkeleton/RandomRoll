@@ -7,6 +7,8 @@ import { buildXccSheet } from "../populate_xcc_template";
 import { default_build } from "../xcc_impl";
 import { buildSyntheticLongestXccCharacter } from "../xcc_visual_fixtures";
 import { captureXccSheet } from "./capture_xcc_sheet";
+import { mountCedalionShaderPanel } from "./cedalion_shader_panel";
+import { createDefaultXccShaderSettings } from "./shader_settings";
 import {
   WebGlSheetRenderer,
   WebGlUnavailableError,
@@ -20,19 +22,25 @@ const recaptureButton = requiredElement<HTMLButtonElement>("recapture");
 const seedLabel = requiredElement<HTMLElement>("seed-label");
 const status = requiredElement<HTMLElement>("pipeline-status");
 const fallbackMessage = requiredElement<HTMLElement>("fallback-message");
+const cedalionPanel = requiredElement<HTMLElement>("cedalion-panel");
 
 let renderer: WebGlSheetRenderer | null = null;
 let currentSheet: HTMLElement | null = null;
 let renderVersion = 0;
 let captureCount = 0;
+const shaderSettings = createDefaultXccShaderSettings();
 
 try {
-  renderer = new WebGlSheetRenderer(outputCanvas);
+  renderer = new WebGlSheetRenderer(outputCanvas, shaderSettings);
 } catch (error) {
   if (!(error instanceof WebGlUnavailableError)) {
     throw error;
   }
 }
+
+mountCedalionShaderPanel(cedalionPanel, shaderSettings, (settings) => {
+  renderer?.setSettings(settings);
+});
 
 rerollButton.addEventListener("click", () => {
   setSeedInUrl(randomSeed());
