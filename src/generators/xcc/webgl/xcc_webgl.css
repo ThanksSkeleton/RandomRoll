@@ -105,7 +105,7 @@ button:disabled {
 
 .demo-comparison {
   display: grid;
-  grid-template-columns: repeat(2, minmax(44rem, 60rem));
+  grid-template-columns: repeat(2, calc(60rem + 1.6rem + 2px));
   gap: 1.25rem;
   align-items: start;
   justify-content: center;
@@ -141,14 +141,10 @@ button:disabled {
 
 .sheet-host,
 .canvas-host {
-  width: 100%;
-  aspect-ratio: 4 / 3;
+  width: 960px;
+  height: 720px;
   overflow: hidden;
   background: #03040a;
-}
-
-.sheet-host .xcc-sheet {
-  width: 100%;
 }
 
 #shader-output,
@@ -186,7 +182,7 @@ button:disabled {
 
 @media (max-width: 100rem) {
   .demo-comparison {
-    grid-template-columns: minmax(44rem, 60rem);
+    grid-template-columns: calc(60rem + 1.6rem + 2px);
   }
 }
 
@@ -202,7 +198,7 @@ button:disabled {
   }
 
   .demo-panel {
-    width: 44rem;
+    width: calc(60rem + 1.6rem + 2px);
     margin-bottom: 1rem;
   }
 
